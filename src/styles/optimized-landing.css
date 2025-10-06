@@ -1,0 +1,67 @@
+/* Optimized Landing Page Styles */
+
+/* Optimized animations using CSS instead of JavaScript for better performance */
+@keyframes float {
+  0%, 100% { 
+    transform: translateY(0px) rotate(0deg); 
+  }
+  50% { 
+    transform: translateY(-20px) rotate(2deg); 
+  }
+}
+
+@keyframes sparkle {
+  0%, 100% { 
+    opacity: 0.3; 
+    transform: scale(1); 
+  }
+  50% { 
+    opacity: 1; 
+    transform: scale(1.2); 
+  }
+}
+
+@keyframes fadeInOut {
+  0%, 100% { 
+    opacity: 0.2; 
+  }
+  50% { 
+    opacity: 0.8; 
+  }
+}
+
+/* Optimized hero section */
+.optimized-hero {
+  will-change: opacity;
+  contain: layout style paint;
+}
+
+/* Optimized video background */
+.optimized-video {
+  will-change: opacity;
+  contain: strict;
+  pointer-events: none;
+}
+
+/* Hardware acceleration for smooth animations */
+.optimized-floating {
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Optimized button hover effects */
+.optimized-button {
+  will-change: transform;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.optimized-button:hover {
+  transform: translateY(-2px) scale(1.02);
+}
+
+/* Optimized logo */
+.optimized-logo {
+  will-change: auto;
+  contain: layout style;
+}

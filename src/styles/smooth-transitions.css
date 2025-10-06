@@ -1,0 +1,599 @@
+/* Enhanced Smooth Transitions for RISE Cosmetics - Optimized for Performance */
+
+/* Video Background Optimizations */
+.video-container {
+  will-change: transform;
+  backface-visibility: hidden;
+  transform: translate3d(0, 0, 0);
+}
+
+/* Enhanced Button Transitions */
+.smooth-button {
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform, box-shadow, background-color;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
+.smooth-button:hover {
+  transform: translateY(-2px) translateZ(0);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+/* Enhanced Link Transitions */
+.smooth-link {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.smooth-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0%;
+  height: 2px;
+  background: currentColor;
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.smooth-link:hover::after {
+  width: 100%;
+}
+
+/* Enhanced Product Card Hover Effects */
+.product-bottle {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform, box-shadow;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
+.product-bottle:hover {
+  transform: scale(1.02) translateY(-4px) translateZ(0);
+}
+
+/* Subtle hover scale for cards */
+.hover\:scale-102:hover {
+  transform: scale(1.02) translateZ(0);
+}
+
+/* GPU Acceleration and Performance Optimizations */
+.gpu-accelerated,
+.will-change-transform {
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  perspective: 1000px;
+  transform: translateZ(0);
+}
+
+/* Smooth Hardware-Accelerated Transitions */
+.smooth-transition {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform, opacity;
+  transform: translateZ(0);
+}
+
+/* Enhanced Parallax Elements */
+.floating-element {
+  animation: float 8s ease-in-out infinite;
+  will-change: transform;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
+@keyframes float {
+  0%, 100% { 
+    transform: translateY(0px) translateZ(0); 
+  }
+  50% { 
+    transform: translateY(-20px) translateZ(0); 
+  }
+}
+
+.elegant-element {
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+}
+
+.elegant-element:hover {
+  transform: scale(1.1) translateZ(0);
+  opacity: 0.8;
+}
+
+/* Navbar Smooth Scrolling Effects - Optimized */
+.navbar-scroll {
+  transform: translateY(0) translateZ(0);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform, backdrop-filter;
+  backface-visibility: hidden;
+}
+
+.navbar-scroll.scrolled {
+  transform: translateY(0) translateZ(0);
+  backdrop-filter: blur(12px);
+}
+
+/* Page Transitions - Hardware Accelerated */
+.fade-page-enter {
+  opacity: 0;
+  transform: translateY(20px) translateZ(0);
+}
+
+.fade-page-enter-active {
+  opacity: 1;
+  transform: translateY(0) translateZ(0);
+  transition: opacity 400ms cubic-bezier(0.4, 0, 0.2, 1), 
+              transform 400ms cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform, opacity;
+}
+
+.fade-page-exit {
+  opacity: 1;
+  transform: translateY(0) translateZ(0);
+}
+
+.fade-page-exit-active {
+  opacity: 0;
+  transform: translateY(-20px) translateZ(0);
+  transition: opacity 300ms cubic-bezier(0.4, 0, 0.2, 1), 
+              transform 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform, opacity;
+}
+
+/* Slide Page Transitions - Enhanced */
+.slide-page-enter {
+  opacity: 0;
+  transform: translateX(100%) translateZ(0);
+}
+
+.slide-page-enter-active {
+  opacity: 1;
+  transform: translateX(0) translateZ(0);
+  transition: opacity 500ms cubic-bezier(0.4, 0, 0.2, 1), 
+              transform 500ms cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform, opacity;
+}
+
+.slide-page-exit {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.slide-page-exit-active {
+  opacity: 0;
+  transform: translateX(-100%);
+  transition: opacity 400ms cubic-bezier(0.4, 0, 0.2, 1), 
+              transform 400ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Cart Drawer Transitions */
+.cart-drawer-enter {
+  opacity: 0;
+  transform: translateX(100%);
+}
+
+.cart-drawer-enter-active {
+  opacity: 1;
+  transform: translateX(0);
+  transition: opacity 300ms cubic-bezier(0.4, 0, 0.2, 1), 
+              transform 300ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.cart-drawer-exit {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.cart-drawer-exit-active {
+  opacity: 0;
+  transform: translateX(100%);
+  transition: opacity 250ms cubic-bezier(0.4, 0, 0.2, 1), 
+              transform 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Cart Item Transitions */
+.cart-item-enter {
+  opacity: 0;
+  transform: translateY(-10px) scale(0.95);
+  max-height: 0;
+}
+
+.cart-item-enter-active {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  max-height: 200px;
+  transition: opacity 300ms cubic-bezier(0.4, 0, 0.2, 1), 
+              transform 300ms cubic-bezier(0.4, 0, 0.2, 1),
+              max-height 300ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.cart-item-exit {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  max-height: 200px;
+}
+
+.cart-item-exit-active {
+  opacity: 0;
+  transform: translateY(-10px) scale(0.95);
+  max-height: 0;
+  transition: opacity 250ms cubic-bezier(0.4, 0, 0.2, 1), 
+              transform 250ms cubic-bezier(0.4, 0, 0.2, 1),
+              max-height 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Button Hover Transitions */
+.smooth-button {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: translateZ(0);
+  will-change: transform, box-shadow, background-color;
+}
+
+.smooth-button:hover {
+  transform: translateY(-2px) translateZ(0);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.smooth-button:active {
+  transform: translateY(0) translateZ(0);
+  transition: all 0.1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Link Transitions */
+.smooth-link {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.smooth-link::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #8b9071, #f8f6f0);
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.smooth-link:hover::before {
+  width: 100%;
+}
+
+.smooth-link:hover {
+  transform: translateY(-1px);
+  color: #8b9071;
+}
+
+/* Card Transitions */
+.smooth-card {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: translateZ(0);
+  will-change: transform, box-shadow;
+}
+
+.smooth-card:hover {
+  transform: translateY(-8px) translateZ(0);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
+
+/* Modal/Dialog Transitions */
+.modal-backdrop-enter {
+  opacity: 0;
+}
+
+.modal-backdrop-enter-active {
+  opacity: 1;
+  transition: opacity 200ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.modal-backdrop-exit {
+  opacity: 1;
+}
+
+.modal-backdrop-exit-active {
+  opacity: 0;
+  transition: opacity 150ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.modal-content-enter {
+  opacity: 0;
+  transform: scale(0.9) translateY(20px);
+}
+
+.modal-content-enter-active {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+  transition: opacity 250ms cubic-bezier(0.4, 0, 0.2, 1), 
+              transform 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.modal-content-exit {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+}
+
+.modal-content-exit-active {
+  opacity: 0;
+  transform: scale(0.9) translateY(20px);
+  transition: opacity 200ms cubic-bezier(0.4, 0, 0.2, 1), 
+              transform 200ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Loading Transitions */
+.loading-enter {
+  opacity: 0;
+  transform: scale(0.8);
+}
+
+.loading-enter-active {
+  opacity: 1;
+  transform: scale(1);
+  transition: opacity 200ms cubic-bezier(0.4, 0, 0.2, 1), 
+              transform 200ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.loading-exit {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.loading-exit-active {
+  opacity: 0;
+  transform: scale(0.8);
+  transition: opacity 150ms cubic-bezier(0.4, 0, 0.2, 1), 
+              transform 150ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Stagger Animation for Lists */
+.stagger-item {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: stagger-in 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes stagger-in {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.stagger-item:nth-child(1) { animation-delay: 0ms; }
+.stagger-item:nth-child(2) { animation-delay: 100ms; }
+.stagger-item:nth-child(3) { animation-delay: 200ms; }
+.stagger-item:nth-child(4) { animation-delay: 300ms; }
+.stagger-item:nth-child(5) { animation-delay: 400ms; }
+.stagger-item:nth-child(6) { animation-delay: 500ms; }
+
+/* Enhanced Focus Transitions */
+.smooth-focus {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.smooth-focus:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(139, 144, 113, 0.3);
+  transform: scale(1.02);
+}
+
+/* Quantity Button Animations */
+.quantity-button {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: translateZ(0);
+}
+
+.quantity-button:hover {
+  transform: scale(1.1) translateZ(0);
+  background-color: rgba(139, 144, 113, 0.1);
+}
+
+.quantity-button:active {
+  transform: scale(0.95) translateZ(0);
+}
+
+/* Cart Badge Animation */
+.cart-badge {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: translateZ(0);
+}
+
+.cart-badge.updated {
+  animation: cart-pulse 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes cart-pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+
+/* Accessibility: Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Performance optimizations */
+.gpu-accelerated-transition {
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  perspective: 1000px;
+  transform: translateZ(0);
+}
+
+/* Enhanced Reveal Animation Classes with Parallax Support */
+.reveal-element {
+  opacity: 0;
+  transform: translateY(30px) translateZ(0);
+  transition: opacity 800ms cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              transform 800ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+}
+
+.reveal-element.revealed {
+  opacity: 1;
+  transform: translateY(0) translateZ(0);
+}
+
+/* Enhanced Left Reveal with Parallax */
+.reveal-from-left {
+  opacity: 0;
+  transform: translateX(-50px) translateZ(0);
+  transition: opacity 1000ms cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              transform 1000ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+}
+
+.reveal-from-left.revealed {
+  opacity: 1;
+  transform: translateX(0) translateZ(0);
+}
+
+/* Enhanced Right Reveal with Parallax */
+.reveal-from-right {
+  opacity: 0;
+  transform: translateX(50px) translateZ(0);
+  transition: opacity 1000ms cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              transform 1000ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+}
+
+.reveal-from-right.revealed {
+  opacity: 1;
+  transform: translateX(0) translateZ(0);
+}
+
+/* Enhanced Bottom Reveal */
+.reveal-from-bottom {
+  opacity: 0;
+  transform: translateY(40px) translateZ(0);
+  transition: opacity 800ms cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              transform 800ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+}
+
+.reveal-from-bottom.revealed {
+  opacity: 1;
+  transform: translateY(0) translateZ(0);
+}
+
+/* Enhanced Top Reveal */
+.reveal-from-top {
+  opacity: 0;
+  transform: translateY(-40px) translateZ(0);
+  transition: opacity 800ms cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              transform 800ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+}
+
+.reveal-from-top.revealed {
+  opacity: 1;
+  transform: translateY(0) translateZ(0);
+}
+
+/* Advanced Parallax Container */
+.parallax-container {
+  transform-style: preserve-3d;
+  perspective: 1000px;
+  will-change: transform;
+}
+
+.parallax-layer {
+  will-change: transform;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
+/* Smooth Button Animations */
+.smooth-button {
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  will-change: transform, box-shadow;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
+.smooth-button:hover {
+  transform: translateY(-2px) translateZ(0);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.smooth-button:active {
+  transform: translateY(0) translateZ(0);
+  transition-duration: 0.1s;
+}
+
+/* Enhanced Link Animations */
+.smooth-link {
+  position: relative;
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  will-change: transform, color;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
+.smooth-link::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: currentColor;
+  transition: width 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  will-change: width;
+}
+
+.smooth-link:hover::after {
+  width: 100%;
+}
+
+/* Product Card Enhanced Animations */
+.product-bottle {
+  transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  will-change: transform, box-shadow;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
+.product-bottle:hover {
+  transform: translateY(-8px) scale(1.02) translateZ(0);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+}
+
+/* Optimized Smooth Transform */
+.smooth-transform {
+  transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  will-change: transform;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
+/* Performance Optimization Classes */
+.performance-optimized {
+  contain: layout style paint;
+  will-change: auto;
+}
+
+.performance-optimized:hover {
+  will-change: transform, opacity;
+}
+
+.performance-optimized:not(:hover) {
+  will-change: auto;
+}

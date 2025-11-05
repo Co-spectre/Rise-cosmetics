@@ -113,19 +113,6 @@ const ParallaxLandingPage = () => {
           <div className="absolute inset-0 bg-gradient-to-r from-olive-900/30 via-transparent to-olive-900/30" />
         </div>
 
-        {/* Video Control Button */}
-        <button
-          onClick={toggleVideoPlayback}
-          className="absolute top-6 right-6 z-20 p-3 bg-black/30 hover:bg-black/50 text-white rounded-full backdrop-blur-sm transition-all duration-300 border border-white/20"
-          aria-label={isVideoPlaying ? "Pause video" : "Play video"}
-        >
-          {isVideoPlaying ? (
-            <Pause className="w-5 h-5" />
-          ) : (
-            <Play className="w-5 h-5 ml-0.5" />
-          )}
-        </button>
-
         {/* Floating Parallax Elements */}
         <div className="absolute inset-0 pointer-events-none">
           {/* Organic floating shapes */}
@@ -175,8 +162,8 @@ const ParallaxLandingPage = () => {
         >
           <div className="text-center max-w-5xl">
             {/* Main Brand Title */}
-            <div className="mb-8">
-              <div className="flex justify-center mb-4">
+            <div className="mb-12">
+              <div className="flex justify-center mb-6">
                 <Logo 
                   size="lg" 
                   variant="light" 
@@ -185,79 +172,25 @@ const ParallaxLandingPage = () => {
               </div>
               
               <div 
-                className="text-sm md:text-base text-rice-200/90 tracking-[0.3em] uppercase font-light mb-6"
+                className="text-xs md:text-sm text-rice-200/80 tracking-[0.4em] uppercase font-light"
                 style={{
                   textShadow: '0 2px 10px rgba(0,0,0,0.7)'
                 }}
               >
-                Cosmetics
+                Natural Beauty · Italian Craftsmanship
               </div>
             </div>
             
-            {/* Tagline */}
+            {/* Minimalist Tagline */}
             <p 
-              className="text-xl md:text-2xl lg:text-3xl text-white/95 mb-4 font-light leading-relaxed max-w-3xl mx-auto"
+              className="text-lg md:text-xl lg:text-2xl text-white/90 mb-20 font-light leading-relaxed max-w-2xl mx-auto tracking-wide"
               style={{
                 textShadow: '0 2px 15px rgba(0,0,0,0.7), 0 1px 6px rgba(0,0,0,0.4)'
               }}
             >
-              Pure beauty through nature's finest ingredients
+              Where nature meets elegance
             </p>
 
-            {/* Subtitle */}
-            <p 
-              className="text-base md:text-lg text-rice-100/80 mb-12 font-light max-w-2xl mx-auto leading-relaxed"
-              style={{
-                textShadow: '0 2px 10px rgba(0,0,0,0.6)'
-              }}
-            >
-              Discover our luxurious collection of natural, vegan skincare crafted with Italian excellence
-            </p>
-
-            {/* Enhanced Call-to-Action Buttons */}
-            <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
-              <Link 
-                to="/products"
-                className="group relative inline-flex items-center gap-3 px-10 py-4 bg-white/95 text-olive-900 hover:bg-white hover:text-olive-800 transition-all duration-500 tracking-wide shadow-xl hover:shadow-2xl transform hover:scale-105 overflow-hidden"
-                style={{
-                  backdropFilter: 'blur(10px)',
-                  border: '1px solid rgba(255, 255, 255, 0.2)'
-                }}
-              >
-                <span className="relative z-10 font-medium text-base">Explore Collection</span>
-                <ArrowRight className="relative z-10 w-5 h-5 transition-transform duration-300 group-hover:translate-x-2" />
-                <div className="absolute inset-0 bg-gradient-to-r from-rice-50 to-olive-50 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              </Link>
-              
-              <Link 
-                to="/about"
-                className="group relative inline-flex items-center gap-3 px-10 py-4 border-2 border-white/80 text-white hover:bg-white/10 hover:border-white transition-all duration-500 tracking-wide backdrop-blur-sm transform hover:scale-105 overflow-hidden"
-              >
-                <span className="relative z-10 font-medium text-base">Our Story</span>
-                <div className="absolute inset-0 bg-gradient-to-r from-white/5 to-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              </Link>
-            </div>
-
-            {/* Brand Highlights */}
-            <div 
-              className="flex flex-wrap justify-center gap-8 mt-16 text-sm text-white/70"
-              style={{
-                transform: `translateY(${scrollY * 0.25}px)`
-              }}
-            >
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 bg-rice-300 rounded-full"></div>
-                <span className="tracking-wide">Natural & Vegan</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 bg-olive-300 rounded-full"></div>
-                <span className="tracking-wide">Made in Italy</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 bg-rice-300 rounded-full"></div>
-                <span className="tracking-wide">Rice-Based Formula</span>
-              </div>
-            </div>
           </div>
         </div>
 
@@ -286,7 +219,7 @@ const ParallaxLandingPage = () => {
 
       {/* Enhanced Featured Products Section with modern design */}
       <section 
-        className="py-24 bg-gradient-to-b from-white to-rice-50/30 relative overflow-hidden"
+        className="py-12 lg:py-16 bg-gradient-to-b from-rice-50 to-beige-50 relative overflow-hidden"
         style={{
           transform: `translateY(${scrollY * 0.03}px)`
         }}
@@ -312,26 +245,26 @@ const ParallaxLandingPage = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           {/* Enhanced Section Header */}
           <div 
-            className="text-center mb-20"
+            className="text-center mb-10 lg:mb-12"
             style={{
               transform: `translateY(${scrollY * 0.02}px)`
             }}
           >
-            <div className="mb-6">
-              <span className="text-sm text-olive-600 tracking-[0.3em] uppercase font-light">Featured</span>
+            <div className="mb-3">
+              <span className="text-xs text-stone-500 tracking-[0.3em] uppercase font-light">Featured</span>
             </div>
-            <h2 className="text-5xl md:text-6xl font-light text-olive-900 mb-6 tracking-wide leading-tight">
+            <h2 className="text-3xl md:text-4xl font-light text-stone-700 mb-4 tracking-wide leading-tight">
               Signature Collection
             </h2>
-            <div className="w-24 h-0.5 bg-gradient-to-r from-transparent via-olive-300 to-transparent mx-auto mb-8"></div>
-            <p className="text-lg text-olive-700/80 font-light max-w-2xl mx-auto leading-relaxed">
+            <div className="w-20 h-0.5 bg-gradient-to-r from-transparent via-olive-300 to-transparent mx-auto mb-4"></div>
+            <p className="text-sm text-stone-600/80 font-light max-w-xl mx-auto leading-relaxed">
               Discover our most beloved formulations, crafted with the finest natural ingredients and Italian precision
             </p>
           </div>
 
-          {/* Enhanced Product Grid */}
+          {/* Enhanced Product Grid - Compact Size */}
           <div 
-            className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12"
+            className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8"
             style={{
               transform: `translateY(${scrollY * 0.01}px)`
             }}
@@ -380,11 +313,11 @@ const ParallaxLandingPage = () => {
                   transitionDelay: `${index * 100}ms`
                 }}
               >
-                {/* Enhanced Product Image Area */}
+                {/* Enhanced Product Image Area - Smaller */}
                 <div 
-                  className={`aspect-[4/5] ${product.color} relative overflow-hidden flex items-center justify-center group-hover:scale-105 transition-transform duration-700`}
+                  className={`aspect-[3/4] ${product.color} relative overflow-hidden flex items-center justify-center group-hover:scale-105 transition-transform duration-700`}
                 >
-                  {/* Product Bottle Visualization */}
+                  {/* Product Bottle Visualization - Scaled Down */}
                   <div 
                     className="relative group-hover:scale-110 transition-transform duration-500"
                     style={{
@@ -392,24 +325,24 @@ const ParallaxLandingPage = () => {
                     }}
                   >
                     {product.image === 'serum' || product.image === 'drops' ? (
-                      <div className="w-10 h-32 bg-gradient-to-b from-olive-600 to-olive-800 relative shadow-2xl">
-                        <div className="absolute top-0 w-full h-5 bg-gradient-to-b from-olive-500 to-olive-600 rounded-t-sm" />
-                        <div className="absolute top-1 left-1/2 transform -translate-x-1/2 w-2.5 h-2.5 bg-rice-300 rounded-full" />
+                      <div className="w-8 h-24 bg-gradient-to-b from-olive-600 to-olive-800 relative shadow-2xl">
+                        <div className="absolute top-0 w-full h-4 bg-gradient-to-b from-olive-500 to-olive-600 rounded-t-sm" />
+                        <div className="absolute top-0.5 left-1/2 transform -translate-x-1/2 w-2 h-2 bg-rice-300 rounded-full" />
                         <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent" />
-                        <div className="absolute right-0.5 top-3 w-0.5 h-24 bg-white/30 rounded-full" />
+                        <div className="absolute right-0.5 top-2 w-0.5 h-18 bg-white/30 rounded-full" />
                       </div>
                     ) : (
-                      <div className="w-20 h-24 bg-gradient-to-b from-rice-600 to-rice-800 relative shadow-2xl rounded-sm">
-                        <div className="absolute top-0 w-full h-8 bg-gradient-to-b from-rice-500 to-rice-600 rounded-t-sm" />
+                      <div className="w-16 h-20 bg-gradient-to-b from-rice-600 to-rice-800 relative shadow-2xl rounded-sm">
+                        <div className="absolute top-0 w-full h-6 bg-gradient-to-b from-rice-500 to-rice-600 rounded-t-sm" />
                         <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent" />
-                        <div className="absolute right-1 top-2 w-0.5 h-16 bg-white/30 rounded-full" />
+                        <div className="absolute right-1 top-1.5 w-0.5 h-14 bg-white/30 rounded-full" />
                       </div>
                     )}
                   </div>
                   
                   {/* Special Badge */}
                   {product.special && (
-                    <div className="absolute top-4 right-4 bg-olive-700 text-white px-3 py-1 text-xs tracking-widest uppercase font-medium">
+                    <div className="absolute top-3 right-3 bg-olive-700 text-white px-2 py-0.5 text-[10px] tracking-widest uppercase font-medium">
                       Signature
                     </div>
                   )}
@@ -418,40 +351,40 @@ const ParallaxLandingPage = () => {
                   <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors duration-500" />
                 </div>
 
-                {/* Enhanced Product Info */}
-                <div className="p-8 space-y-6">
+                {/* Enhanced Product Info - Compact */}
+                <div className="p-5 space-y-3">
                   <div>
-                    <p className="text-olive-600 text-xs tracking-[0.2em] uppercase mb-3 font-medium">{product.type}</p>
-                    <h3 className="text-2xl font-light text-olive-900 mb-3 tracking-wide group-hover:text-olive-700 transition-colors duration-300">
+                    <p className="text-stone-500 text-[10px] tracking-[0.2em] uppercase mb-2 font-medium">{product.type}</p>
+                    <h3 className="text-lg font-light text-stone-700 mb-1.5 tracking-wide group-hover:text-stone-600 transition-colors duration-300">
                       {product.name}
                     </h3>
-                    <p className="text-olive-700/80 text-base tracking-wide font-light">{product.subtitle}</p>
+                    <p className="text-stone-600/80 text-xs tracking-wide font-light">{product.subtitle}</p>
                   </div>
                   
-                  <p className="text-olive-800/70 text-sm leading-relaxed font-light">
+                  <p className="text-stone-600/70 text-xs leading-relaxed font-light line-clamp-2">
                     {product.description}
                   </p>
                   
-                  <div className="flex items-center justify-between pt-6 border-t border-rice-100">
-                    <span className="text-2xl font-light text-olive-900 tracking-wide">
+                  <div className="flex items-center justify-between pt-3 border-t border-rice-100">
+                    <span className="text-lg font-light text-stone-700 tracking-wide">
                       {product.price}
                     </span>
-                    <div className="flex space-x-3">
+                    <div className="flex space-x-2">
                       <button 
                         onClick={(e) => e.preventDefault()}
-                        className="p-3 border border-olive-200 hover:bg-olive-600 hover:text-white hover:border-olive-600 transition-all duration-300 group/btn"
+                        className="p-2 border border-olive-200 hover:bg-stone-400 hover:text-white hover:border-stone-400 transition-all duration-300 group/btn"
                         aria-label="Add to wishlist"
                       >
-                        <Heart className="w-4 h-4 group-hover/btn:scale-110 transition-transform duration-200" strokeWidth={1.5} />
+                        <Heart className="w-3.5 h-3.5 group-hover/btn:scale-110 transition-transform duration-200" strokeWidth={1.5} />
                       </button>
                       <button 
                         onClick={(e) => e.preventDefault()}
-                        className="px-6 py-3 bg-olive-700 text-white border border-olive-700 hover:bg-olive-800 transition-all duration-300 group/btn"
+                        className="px-4 py-2 bg-olive-700 text-white border border-olive-700 hover:bg-olive-800 transition-all duration-300 group/btn"
                         aria-label="Add to cart"
                       >
-                        <div className="flex items-center gap-2">
-                          <ShoppingBag className="w-4 h-4 group-hover/btn:scale-110 transition-transform duration-200" strokeWidth={1.5} />
-                          <span className="text-sm font-medium tracking-wide">Add</span>
+                        <div className="flex items-center gap-1.5">
+                          <ShoppingBag className="w-3.5 h-3.5 group-hover/btn:scale-110 transition-transform duration-200" strokeWidth={1.5} />
+                          <span className="text-xs font-medium tracking-wide">Add</span>
                         </div>
                       </button>
                     </div>
@@ -470,7 +403,7 @@ const ParallaxLandingPage = () => {
           >
             <Link 
               to="/products"
-              className="group inline-flex items-center gap-3 px-8 py-4 border-2 border-olive-600 text-olive-600 hover:bg-olive-600 hover:text-white transition-all duration-500 tracking-wide transform hover:scale-105 relative overflow-hidden"
+              className="group inline-flex items-center gap-3 px-8 py-4 border-2 border-stone-400 text-stone-500 hover:bg-stone-400 hover:text-white transition-all duration-500 tracking-wide transform hover:scale-105 relative overflow-hidden"
             >
               <span className="relative z-10 font-medium text-base">View Complete Collection</span>
               <ArrowRight className="relative z-10 w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" strokeWidth={1.5} />
@@ -502,9 +435,9 @@ const ParallaxLandingPage = () => {
           {/* Section Header */}
           <div className="text-center mb-16">
             <div className="mb-6">
-              <span className="text-sm text-olive-600 tracking-[0.3em] uppercase font-light">Our Purpose</span>
+              <span className="text-sm text-stone-500 tracking-[0.3em] uppercase font-light">Our Purpose</span>
             </div>
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-light text-olive-900 mb-8 tracking-wide leading-tight">
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-light text-stone-700 mb-8 tracking-wide leading-tight">
               Our Mission
             </h2>
             <div className="w-24 h-0.5 bg-gradient-to-r from-transparent via-olive-300 to-transparent mx-auto mb-8"></div>
@@ -515,15 +448,15 @@ const ParallaxLandingPage = () => {
             {/* Mission Text */}
             <div className="space-y-8">
               <div className="space-y-6">
-                <h3 className="text-2xl md:text-3xl font-light text-olive-900 tracking-wide leading-relaxed">
+                <h3 className="text-2xl md:text-3xl font-light text-stone-700 tracking-wide leading-relaxed">
                   Celebrating Natural Beauty Through Italian Excellence
                 </h3>
-                <p className="text-lg text-olive-700/90 leading-relaxed font-light">
+                <p className="text-lg text-stone-600/90 leading-relaxed font-light">
                   At RISE Cosmetics, we believe that true beauty emerges when nature's finest ingredients 
                   meet Italian craftsmanship. Our mission is to create premium skincare products that 
                   honor your skin's natural radiance while respecting the environment.
                 </p>
-                <p className="text-lg text-olive-700/90 leading-relaxed font-light">
+                <p className="text-lg text-stone-600/90 leading-relaxed font-light">
                   Every formula is thoughtfully crafted with rice-based ingredients and botanical extracts, 
                   sourced sustainably and developed with the precision that has made Italian beauty legendary. 
                   We're committed to delivering not just products, but a transformative experience that 
@@ -537,22 +470,22 @@ const ParallaxLandingPage = () => {
                   <div className="w-12 h-12 bg-olive-600 rounded-full flex items-center justify-center mx-auto mb-4">
                     <div className="w-6 h-6 bg-rice-200 rounded-full"></div>
                   </div>
-                  <h4 className="text-olive-900 font-medium mb-2 tracking-wide">Natural & Vegan</h4>
-                  <p className="text-olive-700/80 text-sm">100% plant-based formulations</p>
+                  <h4 className="text-stone-700 font-medium mb-2 tracking-wide">Natural & Vegan</h4>
+                  <p className="text-stone-600/80 text-sm">100% plant-based formulations</p>
                 </div>
                 <div className="text-center p-6 bg-white/70 backdrop-blur-sm border border-olive-100/50 rounded-lg">
                   <div className="w-12 h-12 bg-rice-600 rounded-full flex items-center justify-center mx-auto mb-4">
                     <div className="w-6 h-6 bg-olive-200 rounded-full"></div>
                   </div>
-                  <h4 className="text-olive-900 font-medium mb-2 tracking-wide">Made in Italy</h4>
-                  <p className="text-olive-700/80 text-sm">Crafted with Italian precision</p>
+                  <h4 className="text-stone-700 font-medium mb-2 tracking-wide">Made in Italy</h4>
+                  <p className="text-stone-600/80 text-sm">Crafted with Italian precision</p>
                 </div>
                 <div className="text-center p-6 bg-white/70 backdrop-blur-sm border border-olive-100/50 rounded-lg">
                   <div className="w-12 h-12 bg-olive-600 rounded-full flex items-center justify-center mx-auto mb-4">
                     <div className="w-6 h-6 bg-rice-200 rounded-full"></div>
                   </div>
-                  <h4 className="text-olive-900 font-medium mb-2 tracking-wide">Rice Technology</h4>
-                  <p className="text-olive-700/80 text-sm">Powered by rice peptides</p>
+                  <h4 className="text-stone-700 font-medium mb-2 tracking-wide">Rice Technology</h4>
+                  <p className="text-stone-600/80 text-sm">Powered by rice peptides</p>
                 </div>
               </div>
 
@@ -560,7 +493,7 @@ const ParallaxLandingPage = () => {
               <div className="pt-8">
                 <Link 
                   to="/about"
-                  className="group inline-flex items-center gap-3 px-8 py-4 border-2 border-olive-600 text-olive-600 hover:bg-olive-600 hover:text-white transition-all duration-500 tracking-wide transform hover:scale-105 relative overflow-hidden"
+                  className="group inline-flex items-center gap-3 px-8 py-4 border-2 border-stone-400 text-stone-500 hover:bg-stone-400 hover:text-white transition-all duration-500 tracking-wide transform hover:scale-105 relative overflow-hidden"
                 >
                   <span className="relative z-10 font-medium text-base">Learn Our Story</span>
                   <ArrowRight className="relative z-10 w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" strokeWidth={1.5} />
@@ -588,8 +521,8 @@ const ParallaxLandingPage = () => {
                             1
                           </div>
                         </div>
-                        <p className="text-olive-900 text-sm font-medium">Radiance Serum</p>
-                        <p className="text-olive-600 text-xs">Rice Peptide Complex</p>
+                        <p className="text-stone-700 text-sm font-medium">Radiance Serum</p>
+                        <p className="text-stone-500 text-xs">Rice Peptide Complex</p>
                       </div>
                     </div>
                   </div>
@@ -610,8 +543,8 @@ const ParallaxLandingPage = () => {
                               2
                             </div>
                           </div>
-                          <p className="text-olive-900 text-xs font-medium">Eye Cream</p>
-                          <p className="text-olive-600 text-[10px]">Brightening</p>
+                          <p className="text-stone-700 text-xs font-medium">Eye Cream</p>
+                          <p className="text-stone-500 text-[10px]">Brightening</p>
                         </div>
                       </div>
                     </div>
@@ -630,8 +563,8 @@ const ParallaxLandingPage = () => {
                               3
                             </div>
                           </div>
-                          <p className="text-olive-900 text-xs font-medium">Day Cream</p>
-                          <p className="text-olive-600 text-[10px]">Nourishing</p>
+                          <p className="text-stone-700 text-xs font-medium">Day Cream</p>
+                          <p className="text-stone-500 text-[10px]">Nourishing</p>
                         </div>
                       </div>
                     </div>
@@ -647,13 +580,13 @@ const ParallaxLandingPage = () => {
                           <span className="text-green-600 text-xs font-bold">✓</span>
                         </div>
                         <div>
-                          <p className="text-olive-900 text-sm font-medium">100% Vegan</p>
-                          <p className="text-olive-600 text-xs">Cruelty Free</p>
+                          <p className="text-stone-700 text-sm font-medium">100% Vegan</p>
+                          <p className="text-stone-500 text-xs">Cruelty Free</p>
                         </div>
                       </div>
                       <div className="flex items-center gap-2">
                         <div className="w-6 h-6 bg-olive-100 rounded-full flex items-center justify-center">
-                          <span className="text-olive-600 text-xs">🌿</span>
+                          <span className="text-stone-500 text-xs">🌿</span>
                         </div>
                         <div className="w-6 h-6 bg-rice-100 rounded-full flex items-center justify-center">
                           <span className="text-rice-600 text-xs">🇮🇹</span>
@@ -666,7 +599,7 @@ const ParallaxLandingPage = () => {
                 {/* Overlay Text */}
                 <div className="absolute top-4 left-4 right-4">
                   <div className="text-center">
-                    <p className="text-olive-800 text-sm tracking-wide font-light bg-white/80 backdrop-blur-sm rounded-lg px-3 py-2 border border-olive-100/50">
+                    <p className="text-stone-600 text-sm tracking-wide font-light bg-white/80 backdrop-blur-sm rounded-lg px-3 py-2 border border-olive-100/50">
                       "Pure beauty through nature's finest ingredients"
                     </p>
                   </div>
@@ -702,9 +635,9 @@ const ParallaxLandingPage = () => {
               {/* Header */}
               <div>
                 <div className="mb-6">
-                  <span className="text-sm text-olive-600 tracking-[0.3em] uppercase font-light">Our Beliefs</span>
+                  <span className="text-sm text-stone-500 tracking-[0.3em] uppercase font-light">Our Beliefs</span>
                 </div>
-                <h2 className="text-4xl md:text-5xl lg:text-6xl font-light text-olive-900 mb-8 tracking-wide leading-tight">
+                <h2 className="text-4xl md:text-5xl lg:text-6xl font-light text-stone-700 mb-8 tracking-wide leading-tight">
                   Philosophy
                 </h2>
                 <div className="w-24 h-0.5 bg-gradient-to-r from-transparent via-olive-300 to-transparent mb-8"></div>
@@ -712,15 +645,15 @@ const ParallaxLandingPage = () => {
 
               {/* Philosophy Text */}
               <div className="space-y-6">
-                <p className="text-lg text-olive-700/90 leading-relaxed font-light">
-                  Embrace your natural essence with <span className="font-semibold text-olive-800">RISE</span>, where holistic beauty meets mindful care. 
+                <p className="text-lg text-stone-600/90 leading-relaxed font-light">
+                  Embrace your natural essence with <span className="font-semibold text-stone-600">RISE</span>, where holistic beauty meets mindful care. 
                   Our transformative ingredients connect you to the root of your radiance.
                 </p>
-                <p className="text-lg text-olive-700/90 leading-relaxed font-light">
+                <p className="text-lg text-stone-600/90 leading-relaxed font-light">
                   Crafted in Italy, we pride ourselves on using botanical and other healing ingredients 
                   to provide you with the glow your skin craves. Beauty is intention, so we treat it with respect.
                 </p>
-                <p className="text-lg text-olive-700/90 leading-relaxed font-light">
+                <p className="text-lg text-stone-600/90 leading-relaxed font-light">
                   Every product is a bridge between ancient wisdom and modern science, designed to nurture 
                   not just your skin, but your daily ritual of self-care and mindfulness.
                 </p>
@@ -731,29 +664,29 @@ const ParallaxLandingPage = () => {
                 <div className="flex items-start gap-4 p-6 bg-white/70 backdrop-blur-sm border border-olive-100/50 rounded-xl">
                   <div className="w-3 h-3 bg-olive-600 rounded-full mt-2 flex-shrink-0"></div>
                   <div>
-                    <h4 className="text-olive-900 font-medium mb-2 tracking-wide">Mindful Beauty</h4>
-                    <p className="text-olive-700/80 text-sm">Intentional skincare that honors your natural essence</p>
+                    <h4 className="text-stone-700 font-medium mb-2 tracking-wide">Mindful Beauty</h4>
+                    <p className="text-stone-600/80 text-sm">Intentional skincare that honors your natural essence</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-4 p-6 bg-white/70 backdrop-blur-sm border border-olive-100/50 rounded-xl">
                   <div className="w-3 h-3 bg-rice-600 rounded-full mt-2 flex-shrink-0"></div>
                   <div>
-                    <h4 className="text-olive-900 font-medium mb-2 tracking-wide">Ancient Wisdom</h4>
-                    <p className="text-olive-700/80 text-sm">Time-tested ingredients meet modern innovation</p>
+                    <h4 className="text-stone-700 font-medium mb-2 tracking-wide">Ancient Wisdom</h4>
+                    <p className="text-stone-600/80 text-sm">Time-tested ingredients meet modern innovation</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-4 p-6 bg-white/70 backdrop-blur-sm border border-olive-100/50 rounded-xl">
                   <div className="w-3 h-3 bg-olive-600 rounded-full mt-2 flex-shrink-0"></div>
                   <div>
-                    <h4 className="text-olive-900 font-medium mb-2 tracking-wide">Holistic Care</h4>
-                    <p className="text-olive-700/80 text-sm">Nurturing your skin, mind, and spirit together</p>
+                    <h4 className="text-stone-700 font-medium mb-2 tracking-wide">Holistic Care</h4>
+                    <p className="text-stone-600/80 text-sm">Nurturing your skin, mind, and spirit together</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-4 p-6 bg-white/70 backdrop-blur-sm border border-olive-100/50 rounded-xl">
                   <div className="w-3 h-3 bg-rice-600 rounded-full mt-2 flex-shrink-0"></div>
                   <div>
-                    <h4 className="text-olive-900 font-medium mb-2 tracking-wide">Ritual of Radiance</h4>
-                    <p className="text-olive-700/80 text-sm">Transforming daily care into meaningful moments</p>
+                    <h4 className="text-stone-700 font-medium mb-2 tracking-wide">Ritual of Radiance</h4>
+                    <p className="text-stone-600/80 text-sm">Transforming daily care into meaningful moments</p>
                   </div>
                 </div>
               </div>
@@ -772,7 +705,7 @@ const ParallaxLandingPage = () => {
                         alt="Serum"
                         className="w-12 h-12 object-cover rounded-lg shadow-sm"
                       />
-                      <p className="text-olive-900 text-xs font-medium mt-1 text-center">Serum</p>
+                      <p className="text-stone-700 text-xs font-medium mt-1 text-center">Serum</p>
                     </div>
                     <div className="bg-white/80 backdrop-blur-sm rounded-xl p-3 border border-olive-100/50 hover:shadow-md transition-all duration-300">
                       <img 
@@ -780,7 +713,7 @@ const ParallaxLandingPage = () => {
                         alt="Cream"
                         className="w-12 h-12 object-cover rounded-lg shadow-sm"
                       />
-                      <p className="text-olive-900 text-xs font-medium mt-1 text-center">Cream</p>
+                      <p className="text-stone-700 text-xs font-medium mt-1 text-center">Cream</p>
                     </div>
                   </div>
                   
@@ -788,7 +721,7 @@ const ParallaxLandingPage = () => {
                   <div className="flex-1 bg-gradient-to-br from-olive-100/50 to-rice-100/30 relative">
                     <div className="absolute inset-0 flex items-center justify-center">
                       <div className="w-24 h-24 bg-white/80 backdrop-blur-sm rounded-full flex items-center justify-center border border-olive-200/50 hover:bg-white hover:scale-105 transition-all duration-300 cursor-pointer group">
-                        <Play className="w-8 h-8 text-olive-600 ml-1 group-hover:text-olive-800 transition-colors" />
+                        <Play className="w-8 h-8 text-stone-500 ml-1 group-hover:text-stone-600 transition-colors" />
                       </div>
                     </div>
                   </div>
@@ -801,7 +734,7 @@ const ParallaxLandingPage = () => {
                         alt="Moisturizer"
                         className="w-12 h-12 object-cover rounded-lg shadow-sm"
                       />
-                      <p className="text-olive-900 text-xs font-medium mt-1 text-center">Moisturizer</p>
+                      <p className="text-stone-700 text-xs font-medium mt-1 text-center">Moisturizer</p>
                     </div>
                     <div className="bg-white/80 backdrop-blur-sm rounded-xl p-3 border border-olive-100/50 hover:shadow-md transition-all duration-300">
                       <img 
@@ -809,13 +742,13 @@ const ParallaxLandingPage = () => {
                         alt="Cleanser"
                         className="w-12 h-12 object-cover rounded-lg shadow-sm"
                       />
-                      <p className="text-olive-900 text-xs font-medium mt-1 text-center">Cleanser</p>
+                      <p className="text-stone-700 text-xs font-medium mt-1 text-center">Cleanser</p>
                     </div>
                   </div>
                   
                   {/* Text Footer */}
                   <div className="p-8 bg-white/70 backdrop-blur-sm border-t border-olive-100/50">
-                    <p className="text-olive-800 text-sm font-light text-center leading-relaxed">
+                    <p className="text-stone-600 text-sm font-light text-center leading-relaxed">
                       The Ritual of Radiance: Discover the philosophy behind our mindful beauty
                     </p>
                   </div>

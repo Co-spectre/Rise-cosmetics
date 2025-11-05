@@ -117,9 +117,7 @@ const Checkout = () => {
   ];
 
   const shippingOptions = [
-    { id: 'standard', name: 'Standard Delivery', price: 5.99, time: '5-7 business days' },
-    { id: 'express', name: 'Express Delivery', price: 12.99, time: '2-3 business days' },
-    { id: 'overnight', name: 'Overnight Express', price: 24.99, time: 'Next business day' }
+    { id: 'standard', name: 'Delivery', price: 7.90, time: '2-3 business days' }
   ];
 
   const [selectedShipping, setSelectedShipping] = useState('standard');
@@ -452,21 +450,12 @@ const Checkout = () => {
                     {shippingOptions.map((option) => (
                       <div
                         key={option.id}
-                        className={`p-6 border-2 rounded-xl cursor-pointer transition-all duration-300 hover:shadow-lg ${
-                          selectedShipping === option.id
-                            ? 'border-olive-400 bg-olive-50/50 shadow-md'
-                            : 'border-olive-200 hover:border-olive-300'
-                        }`}
-                        onClick={() => setSelectedShipping(option.id)}
+                        className="p-6 border-2 border-olive-200 bg-olive-50/30 rounded-xl"
                       >
                         <div className="flex items-center justify-between">
                           <div className="flex items-center gap-4">
-                            <div className={`w-5 h-5 rounded-full border-2 transition-colors ${
-                              selectedShipping === option.id ? 'border-olive-600 bg-olive-600' : 'border-gray-300'
-                            }`}>
-                              {selectedShipping === option.id && (
-                                <div className="w-3 h-3 bg-white rounded-full m-0.5"></div>
-                              )}
+                            <div className="w-12 h-12 bg-olive-100 rounded-full flex items-center justify-center">
+                              <Truck className="w-6 h-6 text-olive-600" />
                             </div>
                             <div>
                               <p className="font-semibold text-olive-900 text-lg">{option.name}</p>
@@ -475,11 +464,6 @@ const Checkout = () => {
                           </div>
                           <div className="text-right">
                             <span className="font-bold text-olive-900 text-xl">€{option.price.toFixed(2)}</span>
-                            {option.id === 'standard' && (
-                              <div className="text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full mt-1">
-                                Most Popular
-                              </div>
-                            )}
                           </div>
                         </div>
                       </div>

@@ -236,7 +236,7 @@ const Products = () => {
                           onError={(e) => {
                             // If image fails to load, hide it and show fallback
                             e.currentTarget.style.display = 'none';
-                            const fallback = e.currentTarget.nextElementSibling;
+                            const fallback = e.currentTarget.nextElementSibling as HTMLElement;
                             if (fallback) fallback.style.display = 'flex';
                           }}
                         />

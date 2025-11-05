@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import ParticleBackground from './ParticleBackground';
 
 const Hero = () => {
   const [scrollY, setScrollY] = useState(0);
@@ -11,127 +9,117 @@ const Hero = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const featuredProducts = [
-    {
-      id: 1,
-      name: 'Radiance Serum',
-      type: 'Serum',
-      color: 'bg-gradient-to-br from-rice-100 to-rice-200'
-    },
-    {
-      id: 2,
-      name: 'Soulrise Cream',
-      type: 'Cream',
-      color: 'bg-gradient-to-br from-olive-100 to-olive-200'
-    },
-    {
-      id: 3,
-      name: 'Eye Luce Drops',
-      type: 'Drops',
-      color: 'bg-gradient-to-br from-rice-50 to-olive-100'
-    }
-  ];
-
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Particle Background */}
-      <ParticleBackground />
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-[#8B7355] via-[#9B8568] to-[#6B5D4F]">
+      {/* Subtle texture overlay */}
+      <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGQ9Ik0zNiAzNGM0LjQxOCAwIDgtMy41ODIgOC04cy0zLjU4Mi04LTgtOC04IDMuNTgyLTggOCAzLjU4MiA4IDggOHoiIGZpbGw9IiMwMDAiIGZpbGwtb3BhY2l0eT0iLjAyIi8+PC9nPjwvc3ZnPg==')] opacity-30" />
       
-      {/* Local MP4 Video Background */}
-      <div className="absolute inset-0 w-full h-full flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 bg-black/50 z-10" />
-        <video
-          autoPlay
-          muted
-          loop
-          playsInline
-          className="w-full h-full object-cover opacity-60"
-          style={{ minHeight: '100%', minWidth: '100%' }}
-        >
-          <source src="/videos/6811826-uhd_4096_2160_24fps.mp4" type="video/mp4" />
-          {/* Fallback gradient background if video doesn't load */}
-        </video>
-      </div>
+      {/* Main content grid */}
+      <div className="relative z-20 w-full h-screen grid grid-cols-1 lg:grid-cols-2 items-center px-6 md:px-12 lg:px-20 max-w-[1600px] mx-auto">
+        
+        {/* Left side - Text content */}
+        <div className="flex flex-col justify-center space-y-8 md:space-y-12 py-20 lg:py-0">
+          <div className="space-y-4 md:space-y-6">
+            <p className="text-white/60 text-xs md:text-sm tracking-[0.3em] uppercase font-light">
+              RISE
+            </p>
+            
+            <h1 className="text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-light text-white leading-[1.1] tracking-tight">
+              Depth of<br />Perfection
+            </h1>
+            
+            <div className="space-y-3 md:space-y-4 text-white/70 font-light text-sm md:text-base max-w-md">
+              <p className="leading-relaxed">
+                자연 성분의 깊이있는 힘으로, 피부의 진정한 아름다움을
+              </p>
+              <p className="leading-relaxed">
+                그 깊이에서 끌어내다
+              </p>
+            </div>
+          </div>
 
-      {/* Main content */}
-      <div className="relative z-20 text-center px-4 sm:px-6 lg:px-8 max-w-6xl w-full mt-20">
-        <div className="animate-slide-up">
-          <h1 
-            className="text-7xl sm:text-8xl lg:text-9xl font-playfair font-light text-white mb-8 leading-none tracking-tight"
-            style={{
-              textShadow: '2px 2px 4px rgba(0, 0, 0, 0.8), -1px -1px 2px rgba(0, 0, 0, 0.5)'
+          {/* Navigation dots */}
+          <div className="flex items-center gap-3">
+            <button className="w-2 h-2 rounded-full bg-white transition-all duration-300" />
+            <button className="w-2 h-2 rounded-full bg-white/30 hover:bg-white/50 transition-all duration-300" />
+            <button className="w-2 h-2 rounded-full bg-white/30 hover:bg-white/50 transition-all duration-300" />
+            <button className="w-2 h-2 rounded-full bg-white/30 hover:bg-white/50 transition-all duration-300" />
+          </div>
+        </div>
+
+        {/* Right side - Product showcase */}
+        <div className="relative flex items-center justify-center h-full py-20 lg:py-0">
+          {/* Decorative circular element */}
+          <div className="absolute right-8 md:right-16 bottom-20 md:bottom-32 w-32 h-32 md:w-40 md:h-40 rounded-full border border-white/20 flex items-center justify-center backdrop-blur-sm">
+            <div className="text-center">
+              <p className="text-white text-xs md:text-sm tracking-[0.2em] transform -rotate-12">
+                Depth of
+              </p>
+              <p className="text-white text-xs md:text-sm tracking-[0.2em] transform -rotate-12">
+                Perfection
+              </p>
+            </div>
+          </div>
+
+          {/* Main product image */}
+          <div 
+            className="relative z-10 transition-transform duration-700 ease-out"
+            style={{ 
+              transform: `translateY(${scrollY * 0.15}px)` 
             }}
           >
-            RISE
-          </h1>
-          
-          <div className="w-24 h-px bg-white mx-auto mb-8" />
-          
-          <p className="text-xl sm:text-2xl text-white/90 mb-4 font-light tracking-wide">
-            Natural Cosmetics
-          </p>
-          
-          <p className="text-sm text-white/70 mb-16 tracking-widest uppercase">
-            100% Vegan • Made in Italy
-          </p>
-
-          <div className="space-y-4 sm:space-y-0 sm:space-x-8 sm:flex sm:justify-center mb-20">
-            <Link 
-              to="/products"
-              className="inline-block w-full sm:w-auto px-16 py-5 bg-olive-600 text-white font-light text-sm tracking-widest uppercase hover:bg-olive-700 transition-all duration-300 hover-lift"
-            >
-              Explore Collection
-            </Link>
-            <Link
-              to="/about"
-              className="inline-block w-full sm:w-auto px-16 py-5 border border-rice-200 text-white font-light text-sm tracking-widest uppercase hover:bg-rice-100 hover:text-olive-900 transition-all duration-300"
-            >
-              Our Story
-            </Link>
-          </div>
-
-          {/* Featured Products Preview */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-16">
-            {featuredProducts.map((product, index) => (
-              <div 
-                key={product.id}
-                className={`${product.color} p-6 rounded-lg backdrop-blur-sm bg-opacity-80 hover:bg-opacity-90 transition-all duration-300 hover-lift`}
-                style={{ 
-                  animationDelay: `${index * 0.2}s`,
-                  transform: `translateY(${scrollY * 0.1}px)`
-                }}
-              >
-                <div className="w-12 h-12 bg-white/20 rounded-full mb-4 mx-auto" />
-                <h3 className="text-lg font-light text-olive-800 mb-2">{product.name}</h3>
-                <p className="text-sm text-olive-600 uppercase tracking-wide">{product.type}</p>
+            {/* Product bottle placeholder - replace with actual product image */}
+            <div className="relative w-48 h-96 md:w-56 md:h-[28rem] lg:w-64 lg:h-[32rem]">
+              <div className="absolute inset-0 bg-gradient-to-b from-white/90 to-white/70 rounded-full backdrop-blur-xl shadow-2xl" 
+                   style={{ 
+                     boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 0 100px rgba(255, 255, 255, 0.1)' 
+                   }}
+              />
+              <div className="absolute inset-x-0 top-4 h-16 bg-gradient-to-b from-gray-200 to-gray-300 rounded-t-full" />
+              
+              {/* Label area */}
+              <div className="absolute inset-x-0 top-1/3 flex flex-col items-center justify-center space-y-2 px-8">
+                <p className="text-olive-800 text-xs tracking-[0.3em] uppercase">Skincare</p>
+                <p className="text-olive-900 font-light text-lg tracking-wider">B5</p>
+                <p className="text-olive-700 text-[10px] tracking-wide">Calming B5</p>
+                <div className="w-12 border-t border-olive-300 my-2" />
+                <p className="text-olive-600 text-[8px] text-center leading-relaxed">
+                  Soothing & Strengthening<br />
+                  for Irritated Skin
+                </p>
               </div>
-            ))}
-          </div>
-        </div>
 
-        {/* Scroll indicator */}
-        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-30">
-          <div className="flex flex-col items-center animate-bounce">
-            <p className="text-white/70 text-xs uppercase tracking-widest mb-2">Scroll to explore</p>
-            <div className="w-px h-8 bg-white/50" />
-            <div className="w-2 h-2 bg-white rounded-full mt-1" />
+              {/* Vertical lines decoration */}
+              <div className="absolute inset-x-0 bottom-1/4 flex justify-center gap-[2px] px-12">
+                {[...Array(20)].map((_, i) => (
+                  <div key={i} className="w-[2px] h-16 bg-olive-200/40" />
+                ))}
+              </div>
+            </div>
           </div>
-        </div>
 
-        {/* Floating elements */}
-        <div className="absolute inset-0 pointer-events-none">
-          {[...Array(6)].map((_, i) => (
-            <div
-              key={i}
-              className="absolute w-2 h-2 bg-rice-200/30 rounded-full animate-float"
-              style={{
-                left: `${20 + i * 15}%`,
-                top: `${30 + (i % 2) * 40}%`,
-                animationDelay: `${i * 0.5}s`,
-                animationDuration: `${3 + i * 0.5}s`
-              }}
-            />
-          ))}
+          {/* Background decorative elements */}
+          <div className="absolute top-1/4 left-8 w-32 h-32 md:w-48 md:h-48 rounded-full bg-[#A0826D] opacity-40 blur-3xl" />
+          <div className="absolute bottom-1/3 right-12 w-40 h-40 md:w-56 md:h-56 rounded-full bg-[#8B7355] opacity-30 blur-3xl" />
+        </div>
+      </div>
+
+      {/* Bottom navigation */}
+      <div className="absolute bottom-8 md:bottom-12 left-6 md:left-12 lg:left-20 z-30 flex items-center gap-6 md:gap-8 text-white/60 text-xs tracking-widest uppercase">
+        <button className="hover:text-white transition-colors duration-300 font-light">Instagram</button>
+        <span className="w-px h-4 bg-white/30" />
+        <button className="hover:text-white transition-colors duration-300 font-light">Facebook</button>
+        <span className="w-px h-4 bg-white/30" />
+        <button className="hover:text-white transition-colors duration-300 font-light">Pinterest</button>
+        <span className="w-px h-4 bg-white/30" />
+        <button className="hover:text-white transition-colors duration-300 font-light">Healthy Skin</button>
+      </div>
+
+      {/* Scroll indicator */}
+      <div className="absolute bottom-8 md:bottom-12 right-6 md:right-12 lg:right-20 z-30">
+        <div className="flex flex-col items-center animate-bounce">
+          <div className="w-px h-12 bg-white/30" />
+          <div className="w-2 h-2 bg-white/50 rounded-full mt-2" />
         </div>
       </div>
     </section>

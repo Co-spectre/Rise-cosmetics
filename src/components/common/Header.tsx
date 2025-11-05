@@ -17,34 +17,28 @@ const Header = () => {
   const { user, logout } = useAuth();
   const { isCartNotificationVisible, hideCartNotification } = useNotification();
 
-  // Move isLanding up to avoid variable declaration issues
   const isLanding = location.pathname === '/';
 
-  // Optimized scroll handler with better performance
-  const handleScroll = useCallback(() => {
-    const scrolled = window.scrollY > 10; // Reduced threshold for faster response
-    if (scrolled !== isScrolled) {
-      setIsScrolled(scrolled);
-    }
-  }, [isScrolled]);
-
+  // Scroll detection
   useEffect(() => {
-    let ticking = false;
-    
-    const throttledScroll = () => {
-      if (!ticking) {
-        requestAnimationFrame(() => {
-          handleScroll();
-          ticking = false;
-        });
-        ticking = true;
-      }
+    const handleScroll = () => {
+      const scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
+      const shouldShowNavbar = scrollPosition > 100;
+      setIsScrolled(shouldShowNavbar);
     };
 
-    window.addEventListener('scroll', throttledScroll, { passive: true });
-    handleScroll(); // Call immediately to set initial state
-    return () => window.removeEventListener('scroll', throttledScroll);
-  }, [handleScroll]);
+    // Run on mount
+    handleScroll();
+    
+    // Listen to scroll
+    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('resize', handleScroll);
+    
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleScroll);
+    };
+  }, []);
 
   // Memoize navigation items to prevent unnecessary re-renders
   const navItems = useMemo(() => [
@@ -55,41 +49,58 @@ const Header = () => {
     // Removed admin panel from navbar - it's now only accessible via user menu
   ], []);
 
-  // Memoize style classes for better performance - Updated for scroll-based styling
+  // Navbar styling based on scroll position and page
   const styleClasses = useMemo(() => {
+    // Homepage hero section (not scrolled) - completely invisible
     if (isLanding && !isScrolled) {
-      // Semi-transparent navbar for landing page when not scrolled - improved visibility
       return {
-        navbar: 'bg-black/20 backdrop-blur-md border-b border-white/10',
-        text: 'text-white hover:text-white/80 drop-shadow-sm',
-        icon: 'text-white group-hover:text-white/80 drop-shadow-sm',
-        button: 'border-white/30 bg-white/10 hover:bg-white/20 text-white backdrop-blur-sm',
+        navbar: 'bg-transparent border-b border-transparent',
+        text: 'text-white hover:text-white/90 drop-shadow-lg',
+        icon: 'text-white group-hover:text-white/90 drop-shadow-lg',
+        button: 'border-white/40 bg-transparent hover:bg-white/10 text-white',
+        authButton: 'px-6 py-2 text-sm font-light tracking-wide border border-white/40 text-white hover:bg-white/10 transition-all duration-300',
         mobileMenu: 'bg-slate-900/95 backdrop-blur-md border-t border-white/20',
         mobileText: 'text-white hover:bg-white/10 font-medium'
       };
-    } else {
-      // Solid white navbar with container for scrolled state or non-landing pages
+    }
+    
+    // Homepage scrolled past hero - glossy transparent navbar
+    if (isLanding && isScrolled) {
       return {
-        navbar: 'bg-white shadow-lg border-b border-gray-200',
-        text: 'text-gray-900 hover:text-olive-600',
-        icon: 'text-gray-900 group-hover:text-olive-600',
-        button: 'border-gray-300 bg-gray-50 hover:bg-gray-100 text-gray-900',
-        mobileMenu: 'bg-white border-t border-gray-200',
-        mobileText: 'text-gray-900 hover:bg-gray-100 font-medium'
+        navbar: 'bg-white/80 backdrop-blur-xl border-b border-white/20 shadow-lg',
+        text: 'text-stone-800 hover:text-stone-950',
+        icon: 'text-stone-800 group-hover:text-stone-950',
+        button: 'border-stone-400 bg-white/50 hover:bg-white/70 text-stone-800',
+        authButton: 'px-6 py-2 text-sm font-light tracking-wide border border-stone-500 text-stone-800 hover:bg-stone-500 hover:text-white transition-all duration-300',
+        mobileMenu: 'bg-white/90 backdrop-blur-md border-t border-stone-200',
+        mobileText: 'text-stone-700 hover:bg-stone-100 font-medium'
       };
     }
+    
+    // Other pages - soft beige navbar
+    return {
+      navbar: 'bg-rice-50 shadow-md border-b border-stone-200',
+      text: 'text-stone-700 hover:text-stone-900',
+      icon: 'text-stone-700 group-hover:text-stone-900',
+      button: 'border-stone-300 bg-stone-50 hover:bg-stone-100 text-stone-700',
+      authButton: 'px-6 py-2 text-sm font-light tracking-wide border border-stone-400 text-stone-600 hover:bg-stone-400 hover:text-white transition-all duration-300',
+      mobileMenu: 'bg-rice-50 border-t border-stone-200',
+      mobileText: 'text-stone-700 hover:bg-stone-100 font-medium'
+    };
   }, [isLanding, isScrolled]);
 
   return (
     <header 
-      className={`fixed top-0 left-0 right-0 w-full z-[9999] transition-all duration-500 ease-in-out ${styleClasses.navbar}`}
+      className={`fixed top-0 left-0 right-0 w-full z-[9999] transition-all duration-700 ease-in-out ${styleClasses.navbar}`}
       style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 9999 }}
+      data-scrolled={isScrolled}
+      data-landing={isLanding}
     >
       <CartDrawer />
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-20">
-        <Link to="/">
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 flex items-center justify-between h-16 sm:h-20">
+        <Link to="/" className="flex-shrink-0">
           <Logo 
-            size="md"
+            size="lg"
             variant={isLanding && !isScrolled ? "light" : "dark"}
             className="transition-colors duration-500"
           />
@@ -105,40 +116,28 @@ const Header = () => {
             </Link>
           ))}
         </nav>
-        <div className="flex items-center space-x-4">
-          <Link to="/favorites" className="relative group smooth-button">
-            <span className="sr-only">Favorites</span>
-            <svg className={`w-6 h-6 ${styleClasses.icon}`} fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 3.75a5.25 5.25 0 0 1 4.5 8.25c-1.5 2.25-6.75 7.5-7.5 8.25a.75.75 0 0 1-1 0c-.75-.75-6-6-7.5-8.25a5.25 5.25 0 1 1 8.5-6.25 5.25 5.25 0 0 1 8.5 6.25z" />
-            </svg>
-          </Link>
+        <div className="flex items-center space-x-2 sm:space-x-4">
           {/* User Profile/Auth Section */}
           {user ? (
-            <div className="relative group">
-              <div className="flex items-center space-x-2">
-                <Link to="/profile" className="relative group flex items-center space-x-1">
-                  <span className="sr-only">Profile</span>
-                  <User className={`w-6 h-6 transition-colors duration-300 ${styleClasses.icon}`} strokeWidth={1.5} />
-                  {user.name && (
-                    <span className={`text-sm font-medium transition-colors duration-300 ${styleClasses.text}`}>
-                      {user.name.split(' ')[0]}
-                    </span>
-                  )}
-                </Link>
-                <button
-                  onClick={logout}
-                  className={`relative p-2 rounded-full border transition-all duration-300 ${styleClasses.button}`}
-                  title="Logout"
-                  aria-label="Logout"
-                >
-                  <LogOut className={`w-5 h-5 transition-colors duration-300 ${styleClasses.icon}`} strokeWidth={1.5} />
-                </button>
-              </div>
+            <div className="relative group hidden sm:flex items-center space-x-3">
+              <Link to="/profile" className={`flex items-center space-x-2 ${styleClasses.authButton}`}>
+                <User className="w-4 h-4" strokeWidth={1.5} />
+                <span className="hidden lg:inline">
+                  {user.name ? user.name.split(' ')[0] : 'Profile'}
+                </span>
+              </Link>
+              <button
+                onClick={logout}
+                className={`p-2 rounded-full border transition-all duration-300 ${styleClasses.button}`}
+                title="Logout"
+                aria-label="Logout"
+              >
+                <LogOut className="w-4 h-4" strokeWidth={1.5} />
+              </button>
             </div>
           ) : (
-            <Link to="/auth" className="relative group">
-              <span className="sr-only">Login/Register</span>
-              <User className={`w-6 h-6 transition-colors duration-300 ${styleClasses.icon}`} strokeWidth={1.5} />
+            <Link to="/auth" className={`hidden sm:flex items-center space-x-2 ${styleClasses.authButton}`}>
+              <span>Sign In</span>
             </Link>
           )}
           
@@ -146,22 +145,22 @@ const Header = () => {
           {(user?.role === 'admin' || user?.role === 'manager') && (
             <Link 
               to="/admin" 
-              className="relative group flex items-center space-x-1 px-3 py-2 rounded-lg transition-all duration-300 bg-gray-900 hover:bg-gray-800 text-white border border-gray-700 shadow-md"
+              className="relative group flex items-center space-x-1 px-2 py-1.5 sm:px-3 sm:py-2 rounded-lg transition-all duration-300 bg-gray-900 hover:bg-gray-800 text-white border border-gray-700 shadow-md hidden sm:flex"
               title="Admin Dashboard"
             >
-              <Settings className="w-5 h-5" strokeWidth={1.5} />
-              <span className="text-sm font-medium">Admin</span>
+              <Settings className="w-4 h-4 sm:w-5 sm:h-5" strokeWidth={1.5} />
+              <span className="text-xs sm:text-sm font-medium hidden lg:inline">Admin</span>
             </Link>
           )}
           <button
-            className={`relative p-2 rounded-full border smooth-button ${styleClasses.button}`}
+            className={`relative p-1.5 sm:p-2 rounded-full border smooth-button ${styleClasses.button}`}
             onClick={toggleCart}
             aria-label="Cart"
           >
-            <ShoppingBag className={`w-6 h-6 ${styleClasses.icon}`} strokeWidth={1.5} />
+            <ShoppingBag className={`w-5 h-5 sm:w-6 sm:h-6 ${styleClasses.icon}`} strokeWidth={1.5} />
             {/* Real cart count */}
             {totalItems > 0 && (
-              <span className="absolute -top-1 -right-1 text-xs rounded-full px-1.5 py-0.5 font-bold cart-badge bg-rose-500 text-white">
+              <span className="absolute -top-1 -right-1 text-[10px] sm:text-xs rounded-full px-1 sm:px-1.5 py-0.5 font-bold cart-badge bg-rose-500 text-white min-w-[18px] sm:min-w-[20px] flex items-center justify-center">
                 {totalItems}
               </span>
             )}
@@ -171,10 +170,10 @@ const Header = () => {
               onHide={hideCartNotification}
             />
           </button>
-          <button className="md:hidden ml-2 smooth-button" onClick={() => setIsMenuOpen(!isMenuOpen)} aria-label="Open menu">
-            <span className={`block w-6 h-0.5 mb-1 transition-colors duration-300 ${styleClasses.icon}`} />
-            <span className={`block w-6 h-0.5 mb-1 transition-colors duration-300 ${styleClasses.icon}`} />
-            <span className={`block w-6 h-0.5 transition-colors duration-300 ${styleClasses.icon}`} />
+          <button className="md:hidden ml-1 smooth-button" onClick={() => setIsMenuOpen(!isMenuOpen)} aria-label="Open menu">
+            <span className={`block w-5 h-0.5 mb-1 transition-colors duration-300 ${styleClasses.icon}`} />
+            <span className={`block w-5 h-0.5 mb-1 transition-colors duration-300 ${styleClasses.icon}`} />
+            <span className={`block w-5 h-0.5 transition-colors duration-300 ${styleClasses.icon}`} />
           </button>
         </div>
       </div>

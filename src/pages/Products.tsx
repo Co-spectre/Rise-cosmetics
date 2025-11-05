@@ -247,67 +247,45 @@ const Products = () => {
                         className="absolute inset-0 flex items-center justify-center"
                         style={{ display: product.images && product.images[0] ? 'none' : 'flex' }}
                       >
-                        {product.category === 'Serums' || product.category === 'Eye Care' ? (
-                          <div className="w-20 h-32 bg-gradient-to-b from-olive-600 to-olive-800 relative shadow-2xl">
-                            <div className="absolute top-0 w-full h-6 bg-gradient-to-b from-olive-500 to-olive-600 rounded-t-sm" />
-                            <div className="absolute top-1 left-1/2 transform -translate-x-1/2 w-3 h-3 bg-rice-300 rounded-full" />
-                            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent" />
-                            <div className="absolute right-1 top-3 w-0.5 h-24 bg-white/30 rounded-full" />
-                          </div>
-                        ) : (
-                          <div className="w-24 h-30 bg-gradient-to-b from-rice-600 to-rice-800 relative shadow-2xl rounded-sm">
-                            <div className="absolute top-0 w-full h-8 bg-gradient-to-b from-rice-500 to-rice-600 rounded-t-sm" />
-                            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent" />
-                            <div className="absolute right-1 top-2 w-0.5 h-20 bg-white/30 rounded-full" />
-                          </div>
-                        )}
                       </div>
-                    </div>
-                    
-                    {/* Special Badge for featured products */}
-                    {(product.featured || index < 3) && (
-                      <div className="absolute top-4 right-4 bg-olive-700 text-white px-3 py-1 text-xs tracking-widest uppercase font-medium">
-                        Signature
-                      </div>
-                    )}
-
-                    {/* Hover Overlay */}
-                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors duration-500" />
-                  </div>
-
-                  {/* Product Info */}
-                  <div className="p-6 space-y-4">
-                    <div>
-                      <p className="text-olive-600 text-xs tracking-[0.2em] uppercase mb-2 font-medium">{product.category}</p>
-                      <h3 className="text-xl font-light text-olive-900 mb-3 tracking-wide group-hover:text-olive-700 transition-colors duration-300 line-clamp-2">
-                        {product.name}
-                      </h3>
-                    </div>
-                    
-                    <p className="text-olive-800/70 text-sm leading-relaxed font-light line-clamp-2">
-                      {product.shortDescription || product.description}
-                    </p>
-                    
-                    {/* Rating Display */}
-                    {product.rating && (
-                      <div className="flex items-center gap-2">
-                        <div className="flex items-center">
-                          {[...Array(5)].map((_, i) => (
-                            <Star 
-                              key={i} 
-                              className={`w-4 h-4 ${i < Math.floor(product.rating) ? 'fill-olive-400 text-olive-400' : 'text-olive-200'}`}
-                              strokeWidth={1}
-                            />
-                          ))}
-                        </div>
-                        <span className="text-sm text-olive-600/70">({product.rating})</span>
-                      </div>
-                    )}
-                    
-                    <div className="flex items-center justify-between pt-4 border-t border-rice-100">
-                      <span className="text-2xl font-light text-olive-900 tracking-wide">
-                        €{product.price}
-                      </span>
+                            /* Products Grid - Previous Layout */
+                            <div className="grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                              {filteredProducts.map((product) => (
+                                <Link
+                                  key={product.id}
+                                  to={`/product/${product.id}`}
+                                  className="group block bg-white border border-neutral-200 hover:border-olive-200 hover:shadow-lg transition-all duration-300 transform hover:scale-[1.02] overflow-hidden"
+                                >
+                                  <div className="relative aspect-square bg-neutral-50 rounded-lg mb-4 overflow-hidden border border-neutral-200 group-hover:border-olive-200 transition-colors">
+                                    {product.images && product.images[0] ? (
+                                      <img
+                                        src={product.images[0]}
+                                        alt={product.name}
+                                        className="w-full h-full object-cover"
+                                      />
+                                    ) : (
+                                      <div className="w-full h-full flex items-center justify-center bg-rice-100">
+                                        <ShoppingBag className="w-16 h-16 text-gray-400" />
+                                      </div>
+                                    )}
+                                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-all duration-300" />
+                                  </div>
+                                  <div className="space-y-2 px-4 pb-4">
+                                    <p className="text-olive-600 text-xs uppercase tracking-wider font-medium">{product.category}</p>
+                                    <h3 className="text-lg font-medium text-neutral-900 group-hover:text-olive-700 transition-colors line-clamp-2">{product.name}</h3>
+                                    {product.shortDescription && (
+                                      <p className="text-neutral-600 text-sm line-clamp-2">{product.shortDescription}</p>
+                                    )}
+                                    <div className="flex items-center gap-2 pt-2">
+                                      <span className="text-lg font-semibold text-neutral-900">€{product.price}</span>
+                                      {product.compareAtPrice && product.compareAtPrice > product.price && (
+                                        <span className="text-sm text-neutral-500 line-through">€{product.compareAtPrice}</span>
+                                      )}
+                                    </div>
+                                  </div>
+                                </Link>
+                              ))}
+                            </div>
                       <div className="flex space-x-3">
                         <button 
                           onClick={(e) => {

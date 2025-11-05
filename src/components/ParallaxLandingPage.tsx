@@ -414,201 +414,20 @@ const ParallaxLandingPage = () => {
       </section>
 
       {/* Our Mission Section */}
-      <section className="py-24 bg-gradient-to-b from-rice-50/50 to-olive-50/50 relative overflow-hidden">
-        {/* Subtle background elements */}
-        <div className="absolute inset-0 pointer-events-none">
-          <div 
-            className="absolute top-20 right-16 w-96 h-96 rounded-full bg-gradient-to-r from-rice-100/30 to-olive-100/20 blur-3xl"
-            style={{
-              animation: 'float 25s ease-in-out infinite'
-            }}
-          />
-          <div 
-            className="absolute bottom-32 left-20 w-80 h-80 rounded-full bg-gradient-to-r from-olive-100/25 to-rice-100/15 blur-3xl"
-            style={{
-              animation: 'float 30s ease-in-out infinite reverse'
-            }}
-          />
-        </div>
-
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          {/* Section Header */}
-          <div className="text-center mb-16">
-            <div className="mb-6">
-              <span className="text-sm text-stone-500 tracking-[0.3em] uppercase font-light">Our Purpose</span>
-            </div>
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-light text-stone-700 mb-8 tracking-wide leading-tight">
-              Our Mission
-            </h2>
-            <div className="w-24 h-0.5 bg-gradient-to-r from-transparent via-olive-300 to-transparent mx-auto mb-8"></div>
-          </div>
-
-          {/* Mission Content Grid */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            {/* Mission Text */}
-            <div className="space-y-8">
-              <div className="space-y-6">
-                <h3 className="text-2xl md:text-3xl font-light text-stone-700 tracking-wide leading-relaxed">
-                  Celebrating Natural Beauty Through Italian Excellence
-                </h3>
-                <p className="text-lg text-stone-600/90 leading-relaxed font-light">
-                  At RISE Cosmetics, we believe that true beauty emerges when nature's finest ingredients 
-                  meet Italian craftsmanship. Our mission is to create premium skincare products that 
-                  honor your skin's natural radiance while respecting the environment.
-                </p>
-                <p className="text-lg text-stone-600/90 leading-relaxed font-light">
-                  Every formula is thoughtfully crafted with rice-based ingredients and botanical extracts, 
-                  sourced sustainably and developed with the precision that has made Italian beauty legendary. 
-                  We're committed to delivering not just products, but a transformative experience that 
-                  elevates your daily skincare ritual.
-                </p>
-              </div>
-
-              {/* Mission Values */}
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-                <div className="text-center p-6 bg-white/70 backdrop-blur-sm border border-olive-100/50 rounded-lg">
-                  <div className="w-12 h-12 bg-olive-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <div className="w-6 h-6 bg-rice-200 rounded-full"></div>
-                  </div>
-                  <h4 className="text-stone-700 font-medium mb-2 tracking-wide">Natural & Vegan</h4>
-                  <p className="text-stone-600/80 text-sm">100% plant-based formulations</p>
-                </div>
-                <div className="text-center p-6 bg-white/70 backdrop-blur-sm border border-olive-100/50 rounded-lg">
-                  <div className="w-12 h-12 bg-rice-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <div className="w-6 h-6 bg-olive-200 rounded-full"></div>
-                  </div>
-                  <h4 className="text-stone-700 font-medium mb-2 tracking-wide">Made in Italy</h4>
-                  <p className="text-stone-600/80 text-sm">Crafted with Italian precision</p>
-                </div>
-                <div className="text-center p-6 bg-white/70 backdrop-blur-sm border border-olive-100/50 rounded-lg">
-                  <div className="w-12 h-12 bg-olive-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <div className="w-6 h-6 bg-rice-200 rounded-full"></div>
-                  </div>
-                  <h4 className="text-stone-700 font-medium mb-2 tracking-wide">Rice Technology</h4>
-                  <p className="text-stone-600/80 text-sm">Powered by rice peptides</p>
-                </div>
-              </div>
-
-              {/* Call to Action */}
-              <div className="pt-8">
-                <Link 
-                  to="/about"
-                  className="group inline-flex items-center gap-3 px-8 py-4 border-2 border-stone-400 text-stone-500 hover:bg-stone-400 hover:text-white transition-all duration-500 tracking-wide transform hover:scale-105 relative overflow-hidden"
-                >
-                  <span className="relative z-10 font-medium text-base">Learn Our Story</span>
-                  <ArrowRight className="relative z-10 w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" strokeWidth={1.5} />
-                  <div className="absolute inset-0 bg-olive-600 scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
-                </Link>
-              </div>
-            </div>
-
-            {/* Mission Visual with Product Images */}
-            <div className="relative">
-              <div className="aspect-[4/5] bg-gradient-to-br from-olive-50 to-rice-50 rounded-2xl overflow-hidden relative">
-                {/* Product Images Grid */}
-                <div className="absolute inset-0 flex flex-col gap-4 p-6">
-                  {/* Top Product - Radiance Serum */}
-                  <div className="flex-1 bg-white/80 backdrop-blur-sm rounded-xl border border-olive-100/50 overflow-hidden group hover:shadow-lg transition-all duration-300">
-                    <div className="h-full flex items-center justify-center p-4">
-                      <div className="text-center">
-                        <div className="relative mb-3">
-                          <img 
-                            src="https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=200&h=240&fit=crop&crop=center" 
-                            alt="RISE Radiance Serum"
-                            className="w-20 h-24 object-cover rounded-lg shadow-lg mx-auto"
-                          />
-                          <div className="absolute -top-1 -right-1 w-6 h-6 bg-olive-600 text-white text-xs rounded-full flex items-center justify-center font-bold">
-                            1
-                          </div>
-                        </div>
-                        <p className="text-stone-700 text-sm font-medium">Radiance Serum</p>
-                        <p className="text-stone-500 text-xs">Rice Peptide Complex</p>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  {/* Bottom Row */}
-                  <div className="flex gap-4 flex-1">
-                    {/* Eye Cream */}
-                    <div className="flex-1 bg-white/80 backdrop-blur-sm rounded-xl border border-olive-100/50 overflow-hidden group hover:shadow-lg transition-all duration-300">
-                      <div className="h-full flex items-center justify-center p-3">
-                        <div className="text-center">
-                          <div className="relative mb-2">
-                            <img 
-                              src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=140&h=80&fit=crop&crop=center" 
-                              alt="RISE Eye Cream"
-                              className="w-14 h-8 object-cover rounded-lg shadow-md mx-auto"
-                            />
-                            <div className="absolute -top-1 -right-1 w-4 h-4 bg-rice-600 text-white text-[10px] rounded-full flex items-center justify-center font-bold">
-                              2
-                            </div>
-                          </div>
-                          <p className="text-stone-700 text-xs font-medium">Eye Cream</p>
-                          <p className="text-stone-500 text-[10px]">Brightening</p>
-                        </div>
-                      </div>
-                    </div>
-                    
-                    {/* Moisturizer */}
-                    <div className="flex-1 bg-white/80 backdrop-blur-sm rounded-xl border border-olive-100/50 overflow-hidden group hover:shadow-lg transition-all duration-300">
-                      <div className="h-full flex items-center justify-center p-3">
-                        <div className="text-center">
-                          <div className="relative mb-2">
-                            <img 
-                              src="https://images.unsplash.com/photo-1570194065650-d99fb4bedf0a?w=160&h=120&fit=crop&crop=center" 
-                              alt="RISE Day Cream"
-                              className="w-16 h-12 object-cover rounded-lg shadow-md mx-auto"
-                            />
-                            <div className="absolute -top-1 -right-1 w-4 h-4 bg-olive-600 text-white text-[10px] rounded-full flex items-center justify-center font-bold">
-                              3
-                            </div>
-                          </div>
-                          <p className="text-stone-700 text-xs font-medium">Day Cream</p>
-                          <p className="text-stone-500 text-[10px]">Nourishing</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Certification Badges */}
-                <div className="absolute bottom-4 left-4 right-4">
-                  <div className="bg-white/90 backdrop-blur-sm border border-olive-100/50 rounded-xl p-4">
-                    <div className="flex justify-between items-center">
-                      <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
-                          <span className="text-green-600 text-xs font-bold">✓</span>
-                        </div>
-                        <div>
-                          <p className="text-stone-700 text-sm font-medium">100% Vegan</p>
-                          <p className="text-stone-500 text-xs">Cruelty Free</p>
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <div className="w-6 h-6 bg-olive-100 rounded-full flex items-center justify-center">
-                          <span className="text-stone-500 text-xs">🌿</span>
-                        </div>
-                        <div className="w-6 h-6 bg-rice-100 rounded-full flex items-center justify-center">
-                          <span className="text-rice-600 text-xs">🇮🇹</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Overlay Text */}
-                <div className="absolute top-4 left-4 right-4">
-                  <div className="text-center">
-                    <p className="text-stone-600 text-sm tracking-wide font-light bg-white/80 backdrop-blur-sm rounded-lg px-3 py-2 border border-olive-100/50">
-                      "Pure beauty through nature's finest ingredients"
-                    </p>
-                  </div>
-                </div>
-              </div>
+        <section className="py-24 bg-rice-50">
+          <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-12">
+              <span className="text-xs text-stone-400 tracking-[0.2em] uppercase font-light">Our Mission</span>
+              <h2 className="text-3xl md:text-4xl font-light text-stone-700 mt-4 mb-6 tracking-wide leading-tight">
+                Premium skincare, inspired by nature and crafted with care.
+              </h2>
+              <div className="w-16 h-0.5 bg-olive-200 mx-auto mb-8"></div>
+              <p className="text-base text-stone-500 font-light max-w-xl mx-auto">
+                We create clean, effective skincare using rice-based ingredients and botanicals, with a focus on sustainability and simplicity. Our products are designed to elevate your daily routine and honor your skin’s natural radiance.
+              </p>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
       {/* Philosophy Section */}
       <section className="py-24 bg-gradient-to-b from-olive-50/50 to-white relative overflow-hidden">
@@ -655,7 +474,7 @@ const ParallaxLandingPage = () => {
                 </p>
                 <p className="text-lg text-stone-600/90 leading-relaxed font-light">
                   Every product is a bridge between ancient wisdom and modern science, designed to nurture 
-                  not just your skin, but your daily ritual of self-care and mindfulness.
+                  not just your skin, but your daily self-care and mindfulness.
                 </p>
               </div>
 
@@ -685,7 +504,7 @@ const ParallaxLandingPage = () => {
                 <div className="flex items-start gap-4 p-6 bg-white/70 backdrop-blur-sm border border-olive-100/50 rounded-xl">
                   <div className="w-3 h-3 bg-rice-600 rounded-full mt-2 flex-shrink-0"></div>
                   <div>
-                    <h4 className="text-stone-700 font-medium mb-2 tracking-wide">Ritual of Radiance</h4>
+                    <h4 className="text-stone-700 font-medium mb-2 tracking-wide">Radiance Philosophy</h4>
                     <p className="text-stone-600/80 text-sm">Transforming daily care into meaningful moments</p>
                   </div>
                 </div>
@@ -749,7 +568,7 @@ const ParallaxLandingPage = () => {
                   {/* Text Footer */}
                   <div className="p-8 bg-white/70 backdrop-blur-sm border-t border-olive-100/50">
                     <p className="text-stone-600 text-sm font-light text-center leading-relaxed">
-                      The Ritual of Radiance: Discover the philosophy behind our mindful beauty
+                      Discover the philosophy behind our mindful beauty
                     </p>
                   </div>
                 </div>

@@ -325,9 +325,9 @@ const ProductDetail = () => {
                   </div>
                   
                   <div className="space-y-4 md:space-y-6">
-                    {/* Ritual Cards - Morning & Evening */}
+                    {/* Cards - Morning & Evening */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5">
-                      {/* Morning Ritual */}
+                      {/* Morning Routine */}
                       <div className="p-4 md:p-5 bg-gradient-to-br from-amber-50/50 to-rice-50/50 rounded-xl md:rounded-2xl border border-amber-100/50">
                         <div className="flex items-center gap-2 md:gap-3 mb-3 md:mb-4">
                           <div className="w-7 h-7 md:w-8 md:h-8 bg-amber-100 rounded-lg flex items-center justify-center">
@@ -351,7 +351,7 @@ const ProductDetail = () => {
                         </div>
                       </div>
 
-                      {/* Evening Ritual */}
+                      {/* Evening Routine */}
                       <div className="p-4 md:p-5 bg-gradient-to-br from-indigo-50/50 to-rice-50/50 rounded-xl md:rounded-2xl border border-indigo-100/50">
                         <div className="flex items-center gap-2 md:gap-3 mb-3 md:mb-4">
                           <div className="w-7 h-7 md:w-8 md:h-8 bg-indigo-100 rounded-lg flex items-center justify-center">

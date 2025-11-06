@@ -89,7 +89,7 @@ const About = () => {
         {/* Cinematic Hero Section - Full Screen Video Background */}
         <div 
           ref={(el) => (sectionsRef.current[0] = el)}
-          className="min-h-screen relative flex flex-col items-center justify-center fade-in-element overflow-hidden"
+          className="min-h-screen relative flex flex-col items-center justify-center fade-in-element overflow-hidden px-4"
         >
           {/* Video Background */}
           <video
@@ -107,28 +107,28 @@ const About = () => {
           <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/20 to-black/40" />
 
           {/* Content */}
-          <div className="relative z-10 px-4 text-center">
-            <div className="mb-6 inline-block">
-              <span className="text-xs tracking-[0.4em] uppercase text-white/90 font-light border border-white/30 px-6 py-2 rounded-full backdrop-blur-sm">
+          <div className="relative z-10 text-center max-w-7xl mx-auto">
+            <div className="mb-4 sm:mb-6 inline-block">
+              <span className="text-[0.65rem] sm:text-xs tracking-[0.3em] sm:tracking-[0.4em] uppercase text-white/90 font-light border border-white/30 px-4 sm:px-6 py-1.5 sm:py-2 rounded-full backdrop-blur-sm">
                 Est. 2024
               </span>
             </div>
             
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-playfair font-light text-white mb-8 tracking-wider leading-tight">
+            <h1 className="text-3xl sm:text-5xl md:text-7xl lg:text-8xl font-playfair font-light text-white mb-6 sm:mb-8 tracking-wider leading-tight px-2">
               Nature. Science. Ritual.
             </h1>
             
-            <div className="max-w-3xl mx-auto space-y-6 mb-16">
-              <p className="text-xl md:text-2xl text-white/90 font-light leading-relaxed">
+            <div className="max-w-3xl mx-auto space-y-3 sm:space-y-6 mb-12 sm:mb-16 px-4">
+              <p className="text-base sm:text-xl md:text-2xl text-white/90 font-light leading-relaxed">
                 Where ancient botanical wisdom meets modern skincare innovation
               </p>
-              <p className="text-base md:text-lg text-white/70 font-light max-w-2xl mx-auto leading-relaxed">
+              <p className="text-sm sm:text-base md:text-lg text-white/70 font-light max-w-2xl mx-auto leading-relaxed">
                 Every formula is a bridge between tradition and science, crafted to honor your skin's natural radiance
               </p>
             </div>
 
             <div className="animate-bounce">
-              <ChevronDown className="w-10 h-10 text-white/80" strokeWidth={1} />
+              <ChevronDown className="w-8 h-8 sm:w-10 sm:h-10 text-white/80" strokeWidth={1} />
             </div>
           </div>
 
@@ -141,72 +141,70 @@ const About = () => {
         {/* Origin Story - Timeline - Soft beige/cream */}
         <div 
           ref={(el) => (sectionsRef.current[1] = el)}
-          className="py-32 px-4 max-w-6xl mx-auto fade-in-element"
+          className="py-16 sm:py-24 md:py-32 px-4 sm:px-6 max-w-6xl mx-auto fade-in-element"
           style={{ background: 'linear-gradient(to bottom, #f5f0e8 0%, #ebe5dc 100%)' }}
         >
-          <h2 className="text-xs tracking-[0.3em] uppercase text-stone-600 mb-16 text-center font-light">
+          <h2 className="text-xs sm:text-sm tracking-[0.3em] uppercase text-stone-600 mb-12 sm:mb-16 text-center font-light">
             Our Journey
           </h2>
-                    <div className="grid md:grid-cols-3 gap-16">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-12 lg:gap-16">
             <div className="text-center">
-              <div className="text-4xl font-playfair text-amber-700 mb-4">2024</div>
-              <h3 className="text-2xl font-playfair text-stone-700 mb-3">The Beginning</h3>
-              <p className="text-stone-600 font-light leading-relaxed">
+              <div className="text-3xl sm:text-4xl font-playfair text-amber-700 mb-3 sm:mb-4">2024</div>
+              <h3 className="text-xl sm:text-2xl font-playfair text-stone-700 mb-2 sm:mb-3">The Beginning</h3>
+              <p className="text-sm sm:text-base text-stone-600 font-light leading-relaxed">
                 Founded in Italy with a vision to merge nature's wisdom with scientific innovation
               </p>
             </div>
             <div className="text-center">
-              <div className="text-4xl font-playfair text-amber-700 mb-4">2020</div>
-              <h3 className="text-xl font-playfair text-stone-700 mb-4">Innovation</h3>
-              <p className="text-stone-600 font-light leading-relaxed">
-                Combining traditional ingredients with cutting-edge formulation science
+              <div className="text-3xl sm:text-4xl font-playfair text-amber-700 mb-3 sm:mb-4">2025</div>
+              <h3 className="text-xl sm:text-2xl font-playfair text-stone-700 mb-2 sm:mb-3">First Collection</h3>
+              <p className="text-sm sm:text-base text-stone-600 font-light leading-relaxed">
+                Launched our signature range of botanical-based skincare essentials
               </p>
             </div>
-            <div className="text-center">
-              <div className="text-4xl font-playfair text-amber-700 mb-4">Today</div>
-              <h3 className="text-xl font-playfair text-stone-700 mb-4">Global Impact</h3>
-              <p className="text-stone-600 font-light leading-relaxed">
-                Bringing natural luxury skincare to conscious consumers worldwide
+            <div className="text-center sm:col-span-2 lg:col-span-1">
+              <div className="text-3xl sm:text-4xl font-playfair text-amber-700 mb-3 sm:mb-4">Today</div>
+              <h3 className="text-xl sm:text-2xl font-playfair text-stone-700 mb-2 sm:mb-3">Growing Legacy</h3>
+              <p className="text-sm sm:text-base text-stone-600 font-light leading-relaxed">
+                Expanding our reach while staying true to our commitment to pure, sustainable beauty
               </p>
             </div>
           </div>
-        </div>
-
-        {/* Philosophy Section - Warm cream */}
+        </div>        {/* Philosophy Section - Warm cream */}
         <div 
           ref={(el) => (sectionsRef.current[2] = el)}
-          className="py-32 fade-in-element"
+          className="py-16 sm:py-24 md:py-32 fade-in-element"
           style={{ background: '#faf6f0' }}
         >
-          <div className="max-w-7xl mx-auto px-4">
-            <div className="grid md:grid-cols-2 gap-16 items-center mb-20">
-              <div className="space-y-8">
-                <h2 className="text-xs tracking-[0.3em] uppercase text-[#7d8c6a] font-light">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6">
+            <div className="grid md:grid-cols-2 gap-8 sm:gap-12 md:gap-16 items-center mb-12 sm:mb-16 md:mb-20">
+              <div className="space-y-4 sm:space-y-6 md:space-y-8">
+                <h2 className="text-xs sm:text-sm tracking-[0.3em] uppercase text-[#7d8c6a] font-light">
                   Our Philosophy
                 </h2>
-                <blockquote className="text-3xl md:text-4xl font-playfair font-light text-[#7d8c6a] leading-relaxed italic">
+                <blockquote className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-playfair font-light text-[#7d8c6a] leading-relaxed italic">
                   "True beauty emerges when nature's wisdom meets intentional care"
                 </blockquote>
-                <p className="text-lg text-[#797870] font-light leading-relaxed">
+                <p className="text-base sm:text-lg text-[#797870] font-light leading-relaxed">
                   We believe skincare should be a ritual—a moment of connection between you and the natural world. 
                   Each product is crafted to honor this sacred relationship.
                 </p>
               </div>
               <div className="aspect-square bg-[#ede9dd] rounded-lg flex items-center justify-center">
-                <Sparkles className="w-24 h-24 text-[#d6c083]" strokeWidth={0.5} />
+                <Sparkles className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 text-[#d6c083]" strokeWidth={0.5} />
               </div>
             </div>
 
             {/* Interactive 3D Product Carousel */}
             <div className="relative">
-              <h3 className="text-xs tracking-[0.3em] uppercase text-[#7d8c6a] mb-8 text-center font-light">
+              <h3 className="text-xs sm:text-sm tracking-[0.3em] uppercase text-[#7d8c6a] mb-6 sm:mb-8 text-center font-light">
                 Our Collection
               </h3>
-              <div className="overflow-x-auto scrollbar-hide py-12" style={{ perspective: '1200px' }}>
-                <div className="flex gap-8 px-8 min-w-max">
+              <div className="overflow-x-auto scrollbar-hide py-8 sm:py-12" style={{ perspective: '1200px' }}>
+                <div className="flex gap-4 sm:gap-6 md:gap-8 px-4 sm:px-8 min-w-max">
                   {/* Product 1 - COS1 */}
                   <div className="product-3d-card group cursor-pointer">
-                    <div className="w-80 h-[450px] bg-gradient-to-br from-[#FAF6F0] to-[#ede9dd] rounded-2xl shadow-2xl flex items-center justify-center relative overflow-hidden transition-all duration-500 hover:shadow-[0_20px_60px_rgba(125,140,106,0.3)] p-8">
+                    <div className="w-64 sm:w-72 md:w-80 h-[350px] sm:h-[400px] md:h-[450px] bg-gradient-to-br from-[#FAF6F0] to-[#ede9dd] rounded-2xl shadow-2xl flex items-center justify-center relative overflow-hidden transition-all duration-500 hover:shadow-[0_20px_60px_rgba(125,140,106,0.3)] p-6 sm:p-8">
                       {/* Subtle glow effect */}
                       <div className="absolute inset-0 bg-gradient-radial from-white/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                       
@@ -215,9 +213,9 @@ const About = () => {
                         <img 
                           src="/Rise-cosmetics/images/products/cos1.png" 
                           alt="RISE Signature Collection"
-                          className="w-full h-80 object-contain mb-6 filter drop-shadow-[0_10px_30px_rgba(0,0,0,0.15)] group-hover:drop-shadow-[0_15px_40px_rgba(125,140,106,0.3)] transition-all duration-500 group-hover:scale-105"
+                          className="w-full h-64 sm:h-72 md:h-80 object-contain mb-4 sm:mb-6 filter drop-shadow-[0_10px_30px_rgba(0,0,0,0.15)] group-hover:drop-shadow-[0_15px_40px_rgba(125,140,106,0.3)] transition-all duration-500 group-hover:scale-105"
                         />
-                        <p className="text-[#7d8c6a] font-playfair text-xl text-center font-light">Signature Collection</p>
+                        <p className="text-[#7d8c6a] font-playfair text-lg sm:text-xl text-center font-light">Signature Collection</p>
                       </div>
                       
                       {/* Shine Effect */}
@@ -227,16 +225,16 @@ const About = () => {
 
                   {/* Product 2 - COS2 */}
                   <div className="product-3d-card group cursor-pointer">
-                    <div className="w-80 h-[450px] bg-gradient-to-br from-[#f5f1e8] to-[#e8e4d8] rounded-2xl shadow-2xl flex items-center justify-center relative overflow-hidden transition-all duration-500 hover:shadow-[0_20px_60px_rgba(125,140,106,0.3)] p-8">
+                    <div className="w-64 sm:w-72 md:w-80 h-[350px] sm:h-[400px] md:h-[450px] bg-gradient-to-br from-[#f5f1e8] to-[#e8e4d8] rounded-2xl shadow-2xl flex items-center justify-center relative overflow-hidden transition-all duration-500 hover:shadow-[0_20px_60px_rgba(125,140,106,0.3)] p-6 sm:p-8">
                       <div className="absolute inset-0 bg-gradient-radial from-white/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                       
                       <div className="relative z-10 flex flex-col items-center justify-center h-full">
                         <img 
                           src="/Rise-cosmetics/images/products/cos2.png" 
                           alt="RISE Essential Collection"
-                          className="w-full h-80 object-contain mb-6 filter drop-shadow-[0_10px_30px_rgba(0,0,0,0.15)] group-hover:drop-shadow-[0_15px_40px_rgba(125,140,106,0.3)] transition-all duration-500 group-hover:scale-105"
+                          className="w-full h-64 sm:h-72 md:h-80 object-contain mb-4 sm:mb-6 filter drop-shadow-[0_10px_30px_rgba(0,0,0,0.15)] group-hover:drop-shadow-[0_15px_40px_rgba(125,140,106,0.3)] transition-all duration-500 group-hover:scale-105"
                         />
-                        <p className="text-[#7d8c6a] font-playfair text-xl text-center font-light">Essential Collection</p>
+                        <p className="text-[#7d8c6a] font-playfair text-lg sm:text-xl text-center font-light">Essential Collection</p>
                       </div>
                       
                       <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/20 to-transparent transform -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
@@ -245,16 +243,16 @@ const About = () => {
 
                   {/* Product 3 - COS1 (alternate) */}
                   <div className="product-3d-card group cursor-pointer">
-                    <div className="w-80 h-[450px] bg-gradient-to-br from-[#FAF6F0] to-[#ede9dd] rounded-2xl shadow-2xl flex items-center justify-center relative overflow-hidden transition-all duration-500 hover:shadow-[0_20px_60px_rgba(125,140,106,0.3)] p-8">
+                    <div className="w-64 sm:w-72 md:w-80 h-[350px] sm:h-[400px] md:h-[450px] bg-gradient-to-br from-[#FAF6F0] to-[#ede9dd] rounded-2xl shadow-2xl flex items-center justify-center relative overflow-hidden transition-all duration-500 hover:shadow-[0_20px_60px_rgba(125,140,106,0.3)] p-6 sm:p-8">
                       <div className="absolute inset-0 bg-gradient-radial from-white/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                       
                       <div className="relative z-10 flex flex-col items-center justify-center h-full">
                         <img 
                           src="/Rise-cosmetics/images/products/cos1.png" 
                           alt="RISE Radiance Set"
-                          className="w-full h-80 object-contain mb-6 filter drop-shadow-[0_10px_30px_rgba(0,0,0,0.15)] group-hover:drop-shadow-[0_15px_40px_rgba(125,140,106,0.3)] transition-all duration-500 group-hover:scale-105"
+                          className="w-full h-64 sm:h-72 md:h-80 object-contain mb-4 sm:mb-6 filter drop-shadow-[0_10px_30px_rgba(0,0,0,0.15)] group-hover:drop-shadow-[0_15px_40px_rgba(125,140,106,0.3)] transition-all duration-500 group-hover:scale-105"
                         />
-                        <p className="text-[#7d8c6a] font-playfair text-xl text-center font-light">Radiance Set</p>
+                        <p className="text-[#7d8c6a] font-playfair text-lg sm:text-xl text-center font-light">Radiance Set</p>
                       </div>
                       
                       <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/20 to-transparent transform -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
@@ -263,16 +261,16 @@ const About = () => {
 
                   {/* Product 4 - COS2 (alternate) */}
                   <div className="product-3d-card group cursor-pointer">
-                    <div className="w-80 h-[450px] bg-gradient-to-br from-[#f5f1e8] to-[#e8e4d8] rounded-2xl shadow-2xl flex items-center justify-center relative overflow-hidden transition-all duration-500 hover:shadow-[0_20px_60px_rgba(125,140,106,0.3)] p-8">
+                    <div className="w-64 sm:w-72 md:w-80 h-[350px] sm:h-[400px] md:h-[450px] bg-gradient-to-br from-[#f5f1e8] to-[#e8e4d8] rounded-2xl shadow-2xl flex items-center justify-center relative overflow-hidden transition-all duration-500 hover:shadow-[0_20px_60px_rgba(125,140,106,0.3)] p-6 sm:p-8">
                       <div className="absolute inset-0 bg-gradient-radial from-white/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                       
                       <div className="relative z-10 flex flex-col items-center justify-center h-full">
                         <img 
                           src="/Rise-cosmetics/images/products/cos2.png" 
                           alt="RISE Ritual Collection"
-                          className="w-full h-80 object-contain mb-6 filter drop-shadow-[0_10px_30px_rgba(0,0,0,0.15)] group-hover:drop-shadow-[0_15px_40px_rgba(125,140,106,0.3)] transition-all duration-500 group-hover:scale-105"
+                          className="w-full h-64 sm:h-72 md:h-80 object-contain mb-4 sm:mb-6 filter drop-shadow-[0_10px_30px_rgba(0,0,0,0.15)] group-hover:drop-shadow-[0_15px_40px_rgba(125,140,106,0.3)] transition-all duration-500 group-hover:scale-105"
                         />
-                        <p className="text-[#7d8c6a] font-playfair text-xl text-center font-light">Ritual Collection</p>
+                        <p className="text-[#7d8c6a] font-playfair text-lg sm:text-xl text-center font-light">Ritual Collection</p>
                       </div>
                       
                       <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/20 to-transparent transform -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
@@ -282,7 +280,7 @@ const About = () => {
               </div>
               
               {/* Scroll Hint */}
-              <p className="text-center text-[#7d8c6a]/50 text-sm mt-6 font-light">
+              <p className="text-center text-[#7d8c6a]/50 text-xs sm:text-sm mt-4 sm:mt-6 font-light">
                 Scroll to explore →
               </p>
             </div>
@@ -292,21 +290,21 @@ const About = () => {
         {/* Ingredients Story - Cards - Soft sage green */}
         <div 
           ref={(el) => (sectionsRef.current[3] = el)}
-          className="py-32 px-4 max-w-6xl mx-auto fade-in-element"
+          className="py-16 sm:py-24 md:py-32 px-4 sm:px-6 max-w-6xl mx-auto fade-in-element"
           style={{ background: 'linear-gradient(to bottom, #e8ebe5 0%, #dfe3d9 100%)' }}
         >
-          <h2 className="text-xs tracking-[0.3em] uppercase text-stone-600 mb-16 text-center font-light">
+          <h2 className="text-xs sm:text-sm tracking-[0.3em] uppercase text-stone-600 mb-12 sm:mb-16 text-center font-light">
             Signature Ingredients
           </h2>
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8">
             {ingredients.map((ingredient, index) => (
               <div 
                 key={index}
-                className="group bg-white/60 backdrop-blur-sm p-8 rounded-lg border border-stone-200/50 hover:shadow-lg hover:shadow-stone-300/30 transition-all duration-500 hover:-translate-y-1"
+                className="group bg-white/60 backdrop-blur-sm p-6 sm:p-8 rounded-lg border border-stone-200/50 hover:shadow-lg hover:shadow-stone-300/30 transition-all duration-500 hover:-translate-y-1"
               >
-                <h3 className="text-2xl font-playfair text-stone-700 mb-3">{ingredient.name}</h3>
-                <p className="text-sm text-amber-700 mb-4 tracking-wide">{ingredient.origin}</p>
-                <p className="text-stone-600 font-light leading-relaxed">{ingredient.benefit}</p>
+                <h3 className="text-xl sm:text-2xl font-playfair text-stone-700 mb-2 sm:mb-3">{ingredient.name}</h3>
+                <p className="text-xs sm:text-sm text-amber-700 mb-3 sm:mb-4 tracking-wide">{ingredient.origin}</p>
+                <p className="text-sm sm:text-base text-stone-600 font-light leading-relaxed">{ingredient.benefit}</p>
               </div>
             ))}
           </div>
@@ -333,15 +331,15 @@ const About = () => {
             {/* Subtle gradient overlay */}
             <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-black/20 to-black/30" />
             
-            <div className="relative z-10 h-full flex items-center justify-center px-4">
+            <div className="relative z-10 h-full flex items-center justify-center px-4 sm:px-6">
               <div className="text-center max-w-4xl">
-                <span className="text-xs tracking-[0.4em] uppercase text-white/80 mb-6 block font-light">
+                <span className="text-[0.65rem] sm:text-xs tracking-[0.3em] sm:tracking-[0.4em] uppercase text-white/80 mb-4 sm:mb-6 block font-light">
                   Our Process
                 </span>
-                <h2 className="text-5xl md:text-6xl lg:text-7xl font-playfair font-light text-white mb-8 leading-tight">
+                <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-playfair font-light text-white mb-6 sm:mb-8 leading-tight px-4">
                   From Nature to Nourishment
                 </h2>
-                <p className="text-xl md:text-2xl text-white/90 font-light leading-relaxed max-w-2xl mx-auto">
+                <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-white/90 font-light leading-relaxed max-w-2xl mx-auto px-4">
                   Each ingredient undergoes a careful extraction process, preserving its potency and purity for your skin
                 </p>
               </div>
@@ -367,28 +365,28 @@ const About = () => {
             </div>
 
             {/* Right: Content */}
-            <div className="bg-gradient-to-br from-[#fdfcf9] to-[#f5f1e8] flex items-center justify-center p-8 md:p-16">
-              <div className="max-w-lg space-y-8">
+            <div className="bg-gradient-to-br from-[#fdfcf9] to-[#f5f1e8] flex items-center justify-center p-6 sm:p-8 md:p-12 lg:p-16">
+              <div className="max-w-lg space-y-6 sm:space-y-8">
                 <div>
-                  <span className="text-xs tracking-[0.4em] uppercase text-stone-600 mb-4 block font-light">
+                  <span className="text-[0.65rem] sm:text-xs tracking-[0.3em] sm:tracking-[0.4em] uppercase text-stone-600 mb-3 sm:mb-4 block font-light">
                     Ritual & Result
                   </span>
-                  <h3 className="text-4xl md:text-5xl font-playfair font-light text-stone-700 mb-6 leading-tight">
+                  <h3 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-playfair font-light text-stone-700 mb-4 sm:mb-6 leading-tight">
                     A Journey of Transformation
                   </h3>
                 </div>
                 
-                <div className="space-y-6">
-                  <div className="border-l-2 border-amber-700 pl-6">
-                    <h4 className="text-xl font-playfair text-stone-700 mb-2">Morning Ritual</h4>
-                    <p className="text-stone-600 font-light leading-relaxed">
+                <div className="space-y-4 sm:space-y-6">
+                  <div className="border-l-2 border-amber-700 pl-4 sm:pl-6">
+                    <h4 className="text-lg sm:text-xl font-playfair text-stone-700 mb-1 sm:mb-2">Morning Ritual</h4>
+                    <p className="text-sm sm:text-base text-stone-600 font-light leading-relaxed">
                       Begin your day with intention. Our formulas awaken your skin, preparing it for the day ahead with natural radiance.
                     </p>
                   </div>
                   
-                  <div className="border-l-2 border-amber-700 pl-6">
-                    <h4 className="text-xl font-playfair text-stone-700 mb-2">Evening Care</h4>
-                    <p className="text-stone-600 font-light leading-relaxed">
+                  <div className="border-l-2 border-amber-700 pl-4 sm:pl-6">
+                    <h4 className="text-lg sm:text-xl font-playfair text-stone-700 mb-1 sm:mb-2">Evening Care</h4>
+                    <p className="text-sm sm:text-base text-stone-600 font-light leading-relaxed">
                       As night falls, restore and rejuvenate. Let nature's wisdom work while you rest, revealing transformed skin by morning.
                     </p>
                   </div>
@@ -409,17 +407,17 @@ const About = () => {
         {/* Craftsmanship Section - Soft blush/sand theme */}
         <div 
           ref={(el) => (sectionsRef.current[5] = el)}
-          className="py-32 fade-in-element"
+          className="py-16 sm:py-24 md:py-32 fade-in-element"
           style={{ background: 'linear-gradient(to bottom, #f5ede8 0%, #ede5dd 100%)' }}
         >
-          <div className="max-w-4xl mx-auto px-4 text-center">
-            <h2 className="text-xs tracking-[0.3em] uppercase text-amber-700 mb-8 font-light">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center">
+            <h2 className="text-xs sm:text-sm tracking-[0.3em] uppercase text-amber-700 mb-6 sm:mb-8 font-light">
               Crafted with Care
             </h2>
-            <p className="text-4xl md:text-5xl font-playfair font-light text-stone-700 mb-12 leading-relaxed italic">
+            <p className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-playfair font-light text-stone-700 mb-8 sm:mb-12 leading-relaxed italic">
               Made in Italy
             </p>
-            <p className="text-lg text-stone-600 font-light leading-relaxed max-w-2xl mx-auto">
+            <p className="text-base sm:text-lg text-stone-600 font-light leading-relaxed max-w-2xl mx-auto">
               Every formula is meticulously developed in our Italian laboratory, where tradition meets innovation. 
               We take pride in the artisanal approach to modern skincare.
             </p>
@@ -429,22 +427,22 @@ const About = () => {
         {/* Values Grid - Warm sand theme */}
         <div 
           ref={(el) => (sectionsRef.current[6] = el)}
-          className="py-32 px-4 max-w-6xl mx-auto fade-in-element"
+          className="py-16 sm:py-24 md:py-32 px-4 sm:px-6 max-w-6xl mx-auto fade-in-element"
           style={{ background: 'linear-gradient(to bottom, #ede5dd 0%, #e8e1d5 100%)' }}
         >
-          <h2 className="text-xs tracking-[0.3em] uppercase text-amber-700 mb-16 text-center font-light">
+          <h2 className="text-xs sm:text-sm tracking-[0.3em] uppercase text-amber-700 mb-12 sm:mb-16 text-center font-light">
             Our Commitments
           </h2>
-          <div className="grid md:grid-cols-3 gap-12">
+          <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-8 sm:gap-10 md:gap-12">
             {values.map((value, index) => (
               <div key={index} className="text-center group">
-                <div className="w-16 h-16 mx-auto mb-6 flex items-center justify-center rounded-full border border-stone-300 group-hover:bg-stone-200 transition-all duration-300">
-                  <value.icon className="w-8 h-8 text-stone-600 group-hover:text-stone-700 transition-all duration-300" strokeWidth={1} />
+                <div className="w-14 h-14 sm:w-16 sm:h-16 mx-auto mb-4 sm:mb-6 flex items-center justify-center rounded-full border border-stone-300 group-hover:bg-stone-200 transition-all duration-300">
+                  <value.icon className="w-7 h-7 sm:w-8 sm:h-8 text-stone-600 group-hover:text-stone-700 transition-all duration-300" strokeWidth={1} />
                 </div>
-                <h3 className="text-2xl font-playfair text-stone-700 mb-4 tracking-wide">
+                <h3 className="text-xl sm:text-2xl font-playfair text-stone-700 mb-3 sm:mb-4 tracking-wide">
                   {value.title}
                 </h3>
-                <p className="text-stone-600 font-light leading-relaxed">
+                <p className="text-sm sm:text-base text-stone-600 font-light leading-relaxed">
                   {value.description}
                 </p>
               </div>
@@ -455,25 +453,25 @@ const About = () => {
         {/* Commitment Section - Stats - Soft cream theme */}
         <div 
           ref={(el) => (sectionsRef.current[7] = el)}
-          className="py-32 fade-in-element"
+          className="py-16 sm:py-24 md:py-32 fade-in-element"
           style={{ background: 'linear-gradient(to bottom, #e8e1d5 0%, #f5f0e8 100%)' }}
         >
-          <div className="max-w-5xl mx-auto px-4">
-            <h2 className="text-xs tracking-[0.3em] uppercase text-amber-700 mb-16 text-center font-light">
+          <div className="max-w-5xl mx-auto px-4 sm:px-6">
+            <h2 className="text-xs sm:text-sm tracking-[0.3em] uppercase text-amber-700 mb-12 sm:mb-16 text-center font-light">
               Sustainable Luxury
             </h2>
-            <div className="grid md:grid-cols-3 gap-12 text-center">
+            <div className="grid grid-cols-3 gap-6 sm:gap-8 md:gap-12 text-center">
               <div>
-                <div className="text-5xl font-playfair text-amber-700 mb-4">100%</div>
-                <p className="text-stone-600 font-light tracking-wide">Vegan & Cruelty-Free</p>
+                <div className="text-3xl sm:text-4xl md:text-5xl font-playfair text-amber-700 mb-2 sm:mb-4">100%</div>
+                <p className="text-xs sm:text-sm md:text-base text-stone-600 font-light tracking-wide">Vegan & Cruelty-Free</p>
               </div>
               <div>
-                <div className="text-5xl font-playfair text-amber-700 mb-4">95%</div>
-                <p className="text-stone-600 font-light tracking-wide">Natural Ingredients</p>
+                <div className="text-3xl sm:text-4xl md:text-5xl font-playfair text-amber-700 mb-2 sm:mb-4">95%</div>
+                <p className="text-xs sm:text-sm md:text-base text-stone-600 font-light tracking-wide">Natural Ingredients</p>
               </div>
               <div>
-                <div className="text-5xl font-playfair text-amber-700 mb-4">0%</div>
-                <p className="text-stone-600 font-light tracking-wide">Harmful Chemicals</p>
+                <div className="text-3xl sm:text-4xl md:text-5xl font-playfair text-amber-700 mb-2 sm:mb-4">0%</div>
+                <p className="text-xs sm:text-sm md:text-base text-stone-600 font-light tracking-wide">Harmful Chemicals</p>
               </div>
             </div>
           </div>
@@ -482,22 +480,22 @@ const About = () => {
         {/* Founder's Note - Light cream transition */}
         <div 
           ref={(el) => (sectionsRef.current[8] = el)}
-          className="py-32 px-4 max-w-3xl mx-auto text-center fade-in-element"
+          className="py-16 sm:py-24 md:py-32 px-4 sm:px-6 max-w-3xl mx-auto text-center fade-in-element"
           style={{ background: 'linear-gradient(to bottom, #f5f0e8 0%, #fdfcf9 100%)' }}
         >
-          <p className="text-xl md:text-2xl font-light text-stone-700 leading-relaxed mb-8 italic">
+          <p className="text-base sm:text-lg md:text-xl lg:text-2xl font-light text-stone-700 leading-relaxed mb-6 sm:mb-8 italic">
             "Our mission is simple: to create skincare that honors both your skin and the earth. 
             Every product is a love letter to nature's incredible healing power."
           </p>
-          <p className="text-lg font-playfair text-amber-900 mb-2">— The RISE Team</p>
-          <p className="text-sm text-amber-700 tracking-wide">Italy, 2025</p>
+          <p className="text-base sm:text-lg font-playfair text-amber-900 mb-1 sm:mb-2">— The RISE Team</p>
+          <p className="text-xs sm:text-sm text-amber-700 tracking-wide">Italy, 2025</p>
         </div>
 
         {/* CTA */}
-        <div className="py-20 text-center bg-[#fdfcf9]">
+        <div className="py-12 sm:py-16 md:py-20 text-center bg-[#fdfcf9] px-4">
           <a 
             href="/products"
-            className="inline-block px-12 py-4 border-2 border-amber-800 text-amber-900 font-light tracking-[0.2em] uppercase text-sm hover:bg-amber-800 hover:text-amber-50 transition-all duration-300 rounded-sm"
+            className="inline-block px-8 sm:px-10 md:px-12 py-3 sm:py-4 border-2 border-amber-800 text-amber-900 font-light tracking-[0.15em] sm:tracking-[0.2em] uppercase text-xs sm:text-sm hover:bg-amber-800 hover:text-amber-50 transition-all duration-300 rounded-sm"
           >
             Discover Our Collection
           </a>

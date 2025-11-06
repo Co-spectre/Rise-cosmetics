@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import Logo from './common/Logo';
 import IngredientSpotlight from './IngredientSpotlight';
 import { useCart } from '@/contexts/CartContext';
+import { getAssetPath } from '@/utils/assetPath';
 import '../styles/optimized-landing.css';
 import '../styles/luxury-animations.css';
 
@@ -130,7 +131,7 @@ const ParallaxLandingPage = () => {
             onLoadedData={handleVideoLoad}
             poster="" // Remove poster to prevent flash
           >
-            <source src="/videos/6811826-uhd_4096_2160_24fps.mp4" type="video/mp4" />
+            <source src={getAssetPath('/videos/6811826-uhd_4096_2160_24fps.mp4')} type="video/mp4" />
             Your browser does not support the video tag.
           </video>
           
@@ -305,7 +306,7 @@ const ParallaxLandingPage = () => {
                 type: 'Serums',
                 color: 'bg-gradient-to-br from-stone-100 to-neutral-100',
                 special: true,
-                image: '/images/products/IMG-20250808-WA0006.jpg'
+                image: getAssetPath('/images/products/IMG-20250808-WA0006.jpg')
               },
               {
                 id: 'rise-2',
@@ -316,7 +317,7 @@ const ParallaxLandingPage = () => {
                 type: 'Moisturizers',
                 color: 'bg-gradient-to-br from-neutral-100 to-stone-100',
                 special: true,
-                image: '/images/products/IMG-20250808-WA0007.jpg'
+                image: getAssetPath('/images/products/IMG-20250808-WA0007.jpg')
               },
               {
                 id: 'rise-3',
@@ -327,7 +328,7 @@ const ParallaxLandingPage = () => {
                 type: 'Eye Care',
                 color: 'bg-gradient-to-br from-stone-50 to-neutral-100',
                 special: true,
-                image: '/images/products/IMG-20250808-WA0008.jpg'
+                image: getAssetPath('/images/products/IMG-20250808-WA0008.jpg')
               }
             ].map((product, index) => (
               <div 

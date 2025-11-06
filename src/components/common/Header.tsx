@@ -17,26 +17,36 @@ const Header = () => {
   const { user, logout } = useAuth();
   const { isCartNotificationVisible, hideCartNotification } = useNotification();
 
-  const isLanding = location.pathname === '/';
+  const isLanding = location.pathname === '/' || location.pathname === '/Rise-cosmetics/' || location.pathname === '/Rise-cosmetics';
+  const isAboutPage = location.pathname === '/about' || location.pathname === '/Rise-cosmetics/about';
+  const isTransparentPage = isLanding || isAboutPage;
 
-  // Scroll detection
+  // Scroll detection with RAF for better performance
   useEffect(() => {
+    let ticking = false;
+    
     const handleScroll = () => {
-      const scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
-      const shouldShowNavbar = scrollPosition > 50; // Reduced threshold for faster response
-      setIsScrolled(shouldShowNavbar);
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const scrollPosition = window.scrollY || window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+          const shouldShowNavbar = scrollPosition > 50;
+          setIsScrolled(shouldShowNavbar);
+          ticking = false;
+        });
+        ticking = true;
+      }
     };
 
     // Run on mount
     handleScroll();
     
-    // Listen to scroll with passive for better performance
-    window.addEventListener('scroll', handleScroll, { passive: true });
+    // Listen to scroll - use capture phase to catch it before other handlers
+    window.addEventListener('scroll', handleScroll, { passive: true, capture: true });
     
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('scroll', handleScroll, true);
     };
-  }, []);
+  }, [isTransparentPage, location.pathname]);
 
   // Memoize navigation items to prevent unnecessary re-renders
   const navItems = useMemo(() => [
@@ -49,8 +59,8 @@ const Header = () => {
 
   // Navbar styling based on scroll position and page
   const styleClasses = useMemo(() => {
-    // Homepage hero section (not scrolled) - completely transparent
-    if (isLanding && !isScrolled) {
+    // Transparent pages (Homepage & About) - completely transparent when not scrolled
+    if (isTransparentPage && !isScrolled) {
       return {
         navbar: 'bg-transparent border-b border-transparent',
         text: 'text-white hover:text-white/90 drop-shadow-lg',
@@ -62,15 +72,15 @@ const Header = () => {
       };
     }
     
-    // Homepage scrolled past hero - solid white navbar (no longer transparent)
-    if (isLanding && isScrolled) {
+    // Transparent pages scrolled - glossy transparent navbar
+    if (isTransparentPage && isScrolled) {
       return {
-        navbar: 'bg-white border-b border-stone-200 shadow-md',
+        navbar: 'bg-white/70 backdrop-blur-xl border-b border-white/20 shadow-lg',
         text: 'text-stone-800 hover:text-stone-950',
         icon: 'text-stone-800 group-hover:text-stone-950',
-        button: 'border-stone-300 bg-stone-50 hover:bg-stone-100 text-stone-800',
-        authButton: 'px-6 py-2 text-sm font-light tracking-wide rounded-lg border border-stone-300 bg-stone-50 text-stone-800 hover:bg-stone-100 hover:border-stone-400 transition-all duration-300',
-        mobileMenu: 'bg-white border-t border-stone-200',
+        button: 'border-stone-300 bg-white/50 hover:bg-white/70 text-stone-800 backdrop-blur-sm',
+        authButton: 'px-6 py-2 text-sm font-light tracking-wide rounded-lg border border-stone-300 bg-white/50 text-stone-800 hover:bg-white/70 hover:border-stone-400 transition-all duration-300 backdrop-blur-sm',
+        mobileMenu: 'bg-white/90 backdrop-blur-xl border-t border-stone-200',
         mobileText: 'text-stone-700 hover:bg-stone-100 font-medium'
       };
     }
@@ -85,21 +95,33 @@ const Header = () => {
       mobileMenu: 'bg-rice-50 border-t border-stone-200',
       mobileText: 'text-stone-700 hover:bg-stone-100 font-medium'
     };
-  }, [isLanding, isScrolled]);
+  }, [isTransparentPage, isScrolled]);
 
   return (
     <header 
-      className={`fixed top-0 left-0 right-0 w-full z-[9999] transition-all duration-700 ease-in-out ${styleClasses.navbar}`}
-      style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 9999 }}
-      data-scrolled={isScrolled}
-      data-landing={isLanding}
+      className={`fixed top-0 left-0 right-0 w-full z-[9999] transition-all duration-700 ease-in-out`}
+      style={{ 
+        position: 'fixed', 
+        top: 0, 
+        left: 0, 
+        right: 0, 
+        zIndex: 9999,
+        transition: 'all 0.5s ease-in-out',
+        backgroundColor: isTransparentPage && isScrolled ? 'rgba(250, 246, 240, 0.75)' : (isTransparentPage ? 'transparent' : 'rgba(250, 249, 247, 1)'),
+        backdropFilter: isTransparentPage && isScrolled ? 'blur(20px)' : 'none',
+        WebkitBackdropFilter: isTransparentPage && isScrolled ? 'blur(20px)' : 'none',
+        boxShadow: isTransparentPage && isScrolled ? '0 4px 6px -1px rgba(0, 0, 0, 0.08)' : 'none',
+        borderBottom: isTransparentPage && isScrolled ? '1px solid rgba(212, 192, 165, 0.2)' : 'none'
+      }}
+      data-scrolled={isScrolled ? 'true' : 'false'}
+      data-landing={isTransparentPage ? 'true' : 'false'}
     >
       <CartDrawer />
       <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 flex items-center justify-between h-16 sm:h-20">
         <Link to="/" className="flex-shrink-0">
           <Logo 
-            size="xl"
-            variant={isLanding && !isScrolled ? "light" : "dark"}
+            size="lg"
+            variant={isTransparentPage && !isScrolled ? "light" : "dark"}
             className="transition-colors duration-500 scale-110"
           />
         </Link>

@@ -215,7 +215,7 @@ const ParallaxLandingPage = () => {
                 textShadow: '0 2px 15px rgba(0,0,0,0.7), 0 1px 6px rgba(0,0,0,0.4)'
               }}
             >
-              Where nature meets elegance
+              Natural Beauty, Timeless Radiance
             </p>
 
           </div>

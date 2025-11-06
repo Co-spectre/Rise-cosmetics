@@ -1,98 +1,549 @@
 
-import React from 'react';
-import { Leaf, Heart, Award } from 'lucide-react';
+import React, { useEffect, useRef, useState } from 'react';
+import { Leaf, Droplets, Heart, Sparkles, ChevronDown } from 'lucide-react';
 
 const About = () => {
+  const [scrollProgress, setScrollProgress] = useState(0);
+  const sectionsRef = useRef<(HTMLDivElement | null)[]>([]);
+
+  // Scroll progress bar
+  useEffect(() => {
+    const handleScroll = () => {
+      const totalScroll = document.documentElement.scrollHeight - window.innerHeight;
+      const currentScroll = window.scrollY;
+      setScrollProgress((currentScroll / totalScroll) * 100);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Intersection observer for fade-in animations
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('fade-in-visible');
+          }
+        });
+      },
+      { threshold: 0.1, rootMargin: '0px 0px -100px 0px' }
+    );
+
+    sectionsRef.current.forEach((section) => {
+      if (section) observer.observe(section);
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
+  const ingredients = [
+    {
+      name: 'Rice Extract',
+      origin: 'Northern Italy',
+      benefit: 'Brightening & Nourishing'
+    },
+    {
+      name: 'Olive Oil',
+      origin: 'Tuscan Groves',
+      benefit: 'Deep Hydration'
+    },
+    {
+      name: 'Botanical Blend',
+      origin: 'Mediterranean Coast',
+      benefit: 'Skin Renewal'
+    }
+  ];
+
   const values = [
     {
       icon: Leaf,
-      title: 'Natural',
-      description: 'Formulas harness the power of sprouted rice and carefully selected botanicals.'
+      title: 'Sustainable',
+      description: 'Ethically sourced ingredients from nature, for nature.'
+    },
+    {
+      icon: Droplets,
+      title: 'Pure',
+      description: 'No compromise on quality. Only the finest botanicals.'
     },
     {
       icon: Heart,
-      title: 'Vegan',
-      description: 'Compassionate beauty with no compromise on quality or effectiveness.'
-    },
-    {
-      icon: Award,
-      title: 'Sustainable',
-      description: 'Practices that honor our planet and minimize environmental impact.'
+      title: 'Transparent',
+      description: 'Complete honesty in every ingredient we choose.'
     }
   ];
 
   return (
-    <section id="about" className="py-32" style={{ background: '#f7f5ef' }}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid lg:grid-cols-2 gap-20 items-center">
-          {/* Text Content */}
-          <div className="animate-slide-up">
-            <h2 className="text-4xl sm:text-5xl font-playfair font-light mb-12 tracking-wide text-[#797870]">
-              Philosophy
-            </h2>
+    <>
+      {/* Progress Bar */}
+      <div 
+        className="fixed top-0 left-0 h-0.5 bg-gradient-to-r from-[#d6c083] to-[#7d8c6a] z-[10000] transition-all duration-300"
+        style={{ width: `${scrollProgress}%` }}
+      />
+
+      <section id="about" className="min-h-screen relative overflow-hidden" style={{
+        background: 'linear-gradient(to bottom, #fdfcf9 0%, #FAF6F0 50%, #f5f1e8 100%)'
+      }}>
+        
+        {/* Cinematic Hero Section - Full Screen Video Background */}
+        <div 
+          ref={(el) => (sectionsRef.current[0] = el)}
+          className="min-h-screen relative flex flex-col items-center justify-center fade-in-element overflow-hidden"
+        >
+          {/* Video Background */}
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="absolute inset-0 w-full h-full object-cover"
+            style={{ filter: 'brightness(0.7)' }}
+          >
+            <source src="/Rise-cosmetics/videos/vid1.mp4" type="video/mp4" />
+          </video>
+
+          {/* Subtle gradient overlay */}
+          <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/20 to-black/40" />
+
+          {/* Content */}
+          <div className="relative z-10 px-4 text-center">
+            <div className="mb-6 inline-block">
+              <span className="text-xs tracking-[0.4em] uppercase text-white/90 font-light border border-white/30 px-6 py-2 rounded-full backdrop-blur-sm">
+                Est. 2024
+              </span>
+            </div>
             
-            <div className="space-y-8 leading-relaxed font-light text-[#797870]">
-              <p className="text-lg">
-                Embrace your natural essence with <span className="font-semibold text-[#797870]">RISE</span>, where holistic beauty meets mindful care. 
-                Our transformative ingredients connect you to the root of your radiance.
+            <h1 className="text-5xl md:text-7xl lg:text-8xl font-playfair font-light text-white mb-8 tracking-wider leading-tight">
+              Nature. Science. Ritual.
+            </h1>
+            
+            <div className="max-w-3xl mx-auto space-y-6 mb-16">
+              <p className="text-xl md:text-2xl text-white/90 font-light leading-relaxed">
+                Where ancient botanical wisdom meets modern skincare innovation
               </p>
-              <p>
-                Crafted in Italy, we pride ourselves on using botanical and other healing ingredients 
-                to provide you with the glow your skin craves. Beauty is intention, so we treat it with respect.
+              <p className="text-base md:text-lg text-white/70 font-light max-w-2xl mx-auto leading-relaxed">
+                Every formula is a bridge between tradition and science, crafted to honor your skin's natural radiance
               </p>
             </div>
 
-            <button
-              className="mt-12 px-12 py-4 font-light text-sm tracking-widest uppercase transition-all duration-200"
-              style={{ background: '#cc7f3d', color: 'white' }}
-              onMouseOver={e => (e.currentTarget.style.background = '#d6d383')}
-              onMouseOut={e => (e.currentTarget.style.background = '#cc7f3d')}
-            >
-              Learn More
-            </button>
+            <div className="animate-bounce">
+              <ChevronDown className="w-10 h-10 text-white/80" strokeWidth={1} />
+            </div>
           </div>
 
-          {/* Video Container */}
-          <div className="relative">
-            <div className="rounded-3xl overflow-hidden shadow-xl border border-[#ede9dd] bg-[#f8f7f3] flex flex-col items-center">
-              <video
-                controls
-                poster="/philosophy-video-poster.jpg"
-                className="w-full max-w-3xl h-[20rem] object-cover bg-black"
-                style={{ background: '#eae7df' }}
-              >
-                <source src="/philosophy.mp4" type="video/mp4" />
-                Your browser does not support the video tag.
-              </video>
-              <div className="p-8 text-[#797870] text-xl font-light text-center">
-                The Ritual of Radiance: Discover the philosophy behind our mindful beauty.
-              </div>
+          {/* Subtle Vignette Effect */}
+          <div className="absolute inset-0 pointer-events-none" style={{
+            boxShadow: 'inset 0 0 100px rgba(0,0,0,0.3)'
+          }} />
+        </div>
+
+        {/* Origin Story - Timeline - Soft beige/cream */}
+        <div 
+          ref={(el) => (sectionsRef.current[1] = el)}
+          className="py-32 px-4 max-w-6xl mx-auto fade-in-element"
+          style={{ background: 'linear-gradient(to bottom, #f5f0e8 0%, #ebe5dc 100%)' }}
+        >
+          <h2 className="text-xs tracking-[0.3em] uppercase text-stone-600 mb-16 text-center font-light">
+            Our Journey
+          </h2>
+                    <div className="grid md:grid-cols-3 gap-16">
+            <div className="text-center">
+              <div className="text-4xl font-playfair text-amber-700 mb-4">2024</div>
+              <h3 className="text-2xl font-playfair text-stone-700 mb-3">The Beginning</h3>
+              <p className="text-stone-600 font-light leading-relaxed">
+                Founded in Italy with a vision to merge nature's wisdom with scientific innovation
+              </p>
+            </div>
+            <div className="text-center">
+              <div className="text-4xl font-playfair text-amber-700 mb-4">2020</div>
+              <h3 className="text-xl font-playfair text-stone-700 mb-4">Innovation</h3>
+              <p className="text-stone-600 font-light leading-relaxed">
+                Combining traditional ingredients with cutting-edge formulation science
+              </p>
+            </div>
+            <div className="text-center">
+              <div className="text-4xl font-playfair text-amber-700 mb-4">Today</div>
+              <h3 className="text-xl font-playfair text-stone-700 mb-4">Global Impact</h3>
+              <p className="text-stone-600 font-light leading-relaxed">
+                Bringing natural luxury skincare to conscious consumers worldwide
+              </p>
             </div>
           </div>
         </div>
 
-        {/* Values Section */}
-        <div className="mt-32 grid md:grid-cols-3 gap-0 border border-[#ede9dd]">
-          {values.map((value, index) => (
-            <div
-              key={index}
-              className={`text-center p-12 border-r border-[#ede9dd] last:border-r-0 transition-colors duration-300 bg-[#f8f7f3]`}
-            >
-              <div className="w-14 h-14 flex items-center justify-center mx-auto mb-8 rounded-full shadow-sm"
-                style={{ background: '#ede9dd', border: '2px solid #d6c083' }}>
-                <value.icon className="w-7 h-7" style={{ color: '#7d8c6a' }} strokeWidth={1.2} />
+        {/* Philosophy Section - Warm cream */}
+        <div 
+          ref={(el) => (sectionsRef.current[2] = el)}
+          className="py-32 fade-in-element"
+          style={{ background: '#faf6f0' }}
+        >
+          <div className="max-w-7xl mx-auto px-4">
+            <div className="grid md:grid-cols-2 gap-16 items-center mb-20">
+              <div className="space-y-8">
+                <h2 className="text-xs tracking-[0.3em] uppercase text-[#7d8c6a] font-light">
+                  Our Philosophy
+                </h2>
+                <blockquote className="text-3xl md:text-4xl font-playfair font-light text-[#7d8c6a] leading-relaxed italic">
+                  "True beauty emerges when nature's wisdom meets intentional care"
+                </blockquote>
+                <p className="text-lg text-[#797870] font-light leading-relaxed">
+                  We believe skincare should be a ritual—a moment of connection between you and the natural world. 
+                  Each product is crafted to honor this sacred relationship.
+                </p>
               </div>
-              <h3 className="text-lg font-playfair font-light mb-4 tracking-wide uppercase" style={{ color: '#7d8c6a', letterSpacing: '0.1em' }}>
-                {value.title}
+              <div className="aspect-square bg-[#ede9dd] rounded-lg flex items-center justify-center">
+                <Sparkles className="w-24 h-24 text-[#d6c083]" strokeWidth={0.5} />
+              </div>
+            </div>
+
+            {/* Interactive 3D Product Carousel */}
+            <div className="relative">
+              <h3 className="text-xs tracking-[0.3em] uppercase text-[#7d8c6a] mb-8 text-center font-light">
+                Our Collection
               </h3>
-              <p className="leading-relaxed font-light text-sm" style={{ color: '#7d8c6a' }}>
-                {value.description}
+              <div className="overflow-x-auto scrollbar-hide py-12" style={{ perspective: '1200px' }}>
+                <div className="flex gap-8 px-8 min-w-max">
+                  {/* Product 1 - COS1 */}
+                  <div className="product-3d-card group cursor-pointer">
+                    <div className="w-80 h-[450px] bg-gradient-to-br from-[#FAF6F0] to-[#ede9dd] rounded-2xl shadow-2xl flex items-center justify-center relative overflow-hidden transition-all duration-500 hover:shadow-[0_20px_60px_rgba(125,140,106,0.3)] p-8">
+                      {/* Subtle glow effect */}
+                      <div className="absolute inset-0 bg-gradient-radial from-white/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                      
+                      {/* Product Image */}
+                      <div className="relative z-10 flex flex-col items-center justify-center h-full">
+                        <img 
+                          src="/Rise-cosmetics/images/products/cos1.png" 
+                          alt="RISE Signature Collection"
+                          className="w-full h-80 object-contain mb-6 filter drop-shadow-[0_10px_30px_rgba(0,0,0,0.15)] group-hover:drop-shadow-[0_15px_40px_rgba(125,140,106,0.3)] transition-all duration-500 group-hover:scale-105"
+                        />
+                        <p className="text-[#7d8c6a] font-playfair text-xl text-center font-light">Signature Collection</p>
+                      </div>
+                      
+                      {/* Shine Effect */}
+                      <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/20 to-transparent transform -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
+                    </div>
+                  </div>
+
+                  {/* Product 2 - COS2 */}
+                  <div className="product-3d-card group cursor-pointer">
+                    <div className="w-80 h-[450px] bg-gradient-to-br from-[#f5f1e8] to-[#e8e4d8] rounded-2xl shadow-2xl flex items-center justify-center relative overflow-hidden transition-all duration-500 hover:shadow-[0_20px_60px_rgba(125,140,106,0.3)] p-8">
+                      <div className="absolute inset-0 bg-gradient-radial from-white/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                      
+                      <div className="relative z-10 flex flex-col items-center justify-center h-full">
+                        <img 
+                          src="/Rise-cosmetics/images/products/cos2.png" 
+                          alt="RISE Essential Collection"
+                          className="w-full h-80 object-contain mb-6 filter drop-shadow-[0_10px_30px_rgba(0,0,0,0.15)] group-hover:drop-shadow-[0_15px_40px_rgba(125,140,106,0.3)] transition-all duration-500 group-hover:scale-105"
+                        />
+                        <p className="text-[#7d8c6a] font-playfair text-xl text-center font-light">Essential Collection</p>
+                      </div>
+                      
+                      <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/20 to-transparent transform -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
+                    </div>
+                  </div>
+
+                  {/* Product 3 - COS1 (alternate) */}
+                  <div className="product-3d-card group cursor-pointer">
+                    <div className="w-80 h-[450px] bg-gradient-to-br from-[#FAF6F0] to-[#ede9dd] rounded-2xl shadow-2xl flex items-center justify-center relative overflow-hidden transition-all duration-500 hover:shadow-[0_20px_60px_rgba(125,140,106,0.3)] p-8">
+                      <div className="absolute inset-0 bg-gradient-radial from-white/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                      
+                      <div className="relative z-10 flex flex-col items-center justify-center h-full">
+                        <img 
+                          src="/Rise-cosmetics/images/products/cos1.png" 
+                          alt="RISE Radiance Set"
+                          className="w-full h-80 object-contain mb-6 filter drop-shadow-[0_10px_30px_rgba(0,0,0,0.15)] group-hover:drop-shadow-[0_15px_40px_rgba(125,140,106,0.3)] transition-all duration-500 group-hover:scale-105"
+                        />
+                        <p className="text-[#7d8c6a] font-playfair text-xl text-center font-light">Radiance Set</p>
+                      </div>
+                      
+                      <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/20 to-transparent transform -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
+                    </div>
+                  </div>
+
+                  {/* Product 4 - COS2 (alternate) */}
+                  <div className="product-3d-card group cursor-pointer">
+                    <div className="w-80 h-[450px] bg-gradient-to-br from-[#f5f1e8] to-[#e8e4d8] rounded-2xl shadow-2xl flex items-center justify-center relative overflow-hidden transition-all duration-500 hover:shadow-[0_20px_60px_rgba(125,140,106,0.3)] p-8">
+                      <div className="absolute inset-0 bg-gradient-radial from-white/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                      
+                      <div className="relative z-10 flex flex-col items-center justify-center h-full">
+                        <img 
+                          src="/Rise-cosmetics/images/products/cos2.png" 
+                          alt="RISE Ritual Collection"
+                          className="w-full h-80 object-contain mb-6 filter drop-shadow-[0_10px_30px_rgba(0,0,0,0.15)] group-hover:drop-shadow-[0_15px_40px_rgba(125,140,106,0.3)] transition-all duration-500 group-hover:scale-105"
+                        />
+                        <p className="text-[#7d8c6a] font-playfair text-xl text-center font-light">Ritual Collection</p>
+                      </div>
+                      
+                      <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/20 to-transparent transform -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Scroll Hint */}
+              <p className="text-center text-[#7d8c6a]/50 text-sm mt-6 font-light">
+                Scroll to explore →
               </p>
             </div>
-          ))}
+          </div>
         </div>
-      </div>
-    </section>
+
+        {/* Ingredients Story - Cards - Soft sage green */}
+        <div 
+          ref={(el) => (sectionsRef.current[3] = el)}
+          className="py-32 px-4 max-w-6xl mx-auto fade-in-element"
+          style={{ background: 'linear-gradient(to bottom, #e8ebe5 0%, #dfe3d9 100%)' }}
+        >
+          <h2 className="text-xs tracking-[0.3em] uppercase text-stone-600 mb-16 text-center font-light">
+            Signature Ingredients
+          </h2>
+          <div className="grid md:grid-cols-3 gap-8">
+            {ingredients.map((ingredient, index) => (
+              <div 
+                key={index}
+                className="group bg-white/60 backdrop-blur-sm p-8 rounded-lg border border-stone-200/50 hover:shadow-lg hover:shadow-stone-300/30 transition-all duration-500 hover:-translate-y-1"
+              >
+                <h3 className="text-2xl font-playfair text-stone-700 mb-3">{ingredient.name}</h3>
+                <p className="text-sm text-amber-700 mb-4 tracking-wide">{ingredient.origin}</p>
+                <p className="text-stone-600 font-light leading-relaxed">{ingredient.benefit}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Visual Storytelling - Dual Video Section */}
+        <div 
+          ref={(el) => (sectionsRef.current[4] = el)}
+          className="relative fade-in-element"
+        >
+          {/* First Video Story - Full Width with Overlay Text */}
+          <div className="relative h-screen">
+            <video
+              autoPlay
+              loop
+              muted
+              playsInline
+              className="absolute inset-0 w-full h-full object-cover"
+              style={{ filter: 'brightness(0.7)' }}
+            >
+              <source src="/Rise-cosmetics/videos/vid2.mp4" type="video/mp4" />
+            </video>
+            
+            {/* Subtle gradient overlay */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-black/20 to-black/30" />
+            
+            <div className="relative z-10 h-full flex items-center justify-center px-4">
+              <div className="text-center max-w-4xl">
+                <span className="text-xs tracking-[0.4em] uppercase text-white/80 mb-6 block font-light">
+                  Our Process
+                </span>
+                <h2 className="text-5xl md:text-6xl lg:text-7xl font-playfair font-light text-white mb-8 leading-tight">
+                  From Nature to Nourishment
+                </h2>
+                <p className="text-xl md:text-2xl text-white/90 font-light leading-relaxed max-w-2xl mx-auto">
+                  Each ingredient undergoes a careful extraction process, preserving its potency and purity for your skin
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Second Video Story - Split Screen Design */}
+          <div className="grid md:grid-cols-2 min-h-screen">
+            {/* Left: Video */}
+            <div className="relative min-h-[50vh] md:min-h-screen">
+              <video
+                autoPlay
+                loop
+                muted
+                playsInline
+                className="absolute inset-0 w-full h-full object-cover"
+                style={{ filter: 'brightness(0.7)' }}
+              >
+                <source src="/Rise-cosmetics/videos/vid3.mp4" type="video/mp4" />
+              </video>
+              {/* Minimal overlay */}
+              <div className="absolute inset-0 bg-gradient-to-br from-black/35 via-black/20 to-black/30" />
+            </div>
+
+            {/* Right: Content */}
+            <div className="bg-gradient-to-br from-[#fdfcf9] to-[#f5f1e8] flex items-center justify-center p-8 md:p-16">
+              <div className="max-w-lg space-y-8">
+                <div>
+                  <span className="text-xs tracking-[0.4em] uppercase text-stone-600 mb-4 block font-light">
+                    Ritual & Result
+                  </span>
+                  <h3 className="text-4xl md:text-5xl font-playfair font-light text-stone-700 mb-6 leading-tight">
+                    A Journey of Transformation
+                  </h3>
+                </div>
+                
+                <div className="space-y-6">
+                  <div className="border-l-2 border-amber-700 pl-6">
+                    <h4 className="text-xl font-playfair text-stone-700 mb-2">Morning Ritual</h4>
+                    <p className="text-stone-600 font-light leading-relaxed">
+                      Begin your day with intention. Our formulas awaken your skin, preparing it for the day ahead with natural radiance.
+                    </p>
+                  </div>
+                  
+                  <div className="border-l-2 border-amber-700 pl-6">
+                    <h4 className="text-xl font-playfair text-stone-700 mb-2">Evening Care</h4>
+                    <p className="text-stone-600 font-light leading-relaxed">
+                      As night falls, restore and rejuvenate. Let nature's wisdom work while you rest, revealing transformed skin by morning.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="pt-6">
+                  <div className="flex items-center gap-4 text-sm text-stone-600">
+                    <div className="flex-1 h-px bg-stone-300" />
+                    <span className="font-light tracking-wide">Since 2024</span>
+                    <div className="flex-1 h-px bg-stone-300" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Craftsmanship Section - Soft blush/sand theme */}
+        <div 
+          ref={(el) => (sectionsRef.current[5] = el)}
+          className="py-32 fade-in-element"
+          style={{ background: 'linear-gradient(to bottom, #f5ede8 0%, #ede5dd 100%)' }}
+        >
+          <div className="max-w-4xl mx-auto px-4 text-center">
+            <h2 className="text-xs tracking-[0.3em] uppercase text-amber-700 mb-8 font-light">
+              Crafted with Care
+            </h2>
+            <p className="text-4xl md:text-5xl font-playfair font-light text-stone-700 mb-12 leading-relaxed italic">
+              Made in Italy
+            </p>
+            <p className="text-lg text-stone-600 font-light leading-relaxed max-w-2xl mx-auto">
+              Every formula is meticulously developed in our Italian laboratory, where tradition meets innovation. 
+              We take pride in the artisanal approach to modern skincare.
+            </p>
+          </div>
+        </div>
+
+        {/* Values Grid - Warm sand theme */}
+        <div 
+          ref={(el) => (sectionsRef.current[6] = el)}
+          className="py-32 px-4 max-w-6xl mx-auto fade-in-element"
+          style={{ background: 'linear-gradient(to bottom, #ede5dd 0%, #e8e1d5 100%)' }}
+        >
+          <h2 className="text-xs tracking-[0.3em] uppercase text-amber-700 mb-16 text-center font-light">
+            Our Commitments
+          </h2>
+          <div className="grid md:grid-cols-3 gap-12">
+            {values.map((value, index) => (
+              <div key={index} className="text-center group">
+                <div className="w-16 h-16 mx-auto mb-6 flex items-center justify-center rounded-full border border-stone-300 group-hover:bg-stone-200 transition-all duration-300">
+                  <value.icon className="w-8 h-8 text-stone-600 group-hover:text-stone-700 transition-all duration-300" strokeWidth={1} />
+                </div>
+                <h3 className="text-2xl font-playfair text-stone-700 mb-4 tracking-wide">
+                  {value.title}
+                </h3>
+                <p className="text-stone-600 font-light leading-relaxed">
+                  {value.description}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Commitment Section - Stats - Soft cream theme */}
+        <div 
+          ref={(el) => (sectionsRef.current[7] = el)}
+          className="py-32 fade-in-element"
+          style={{ background: 'linear-gradient(to bottom, #e8e1d5 0%, #f5f0e8 100%)' }}
+        >
+          <div className="max-w-5xl mx-auto px-4">
+            <h2 className="text-xs tracking-[0.3em] uppercase text-amber-700 mb-16 text-center font-light">
+              Sustainable Luxury
+            </h2>
+            <div className="grid md:grid-cols-3 gap-12 text-center">
+              <div>
+                <div className="text-5xl font-playfair text-amber-700 mb-4">100%</div>
+                <p className="text-stone-600 font-light tracking-wide">Vegan & Cruelty-Free</p>
+              </div>
+              <div>
+                <div className="text-5xl font-playfair text-amber-700 mb-4">95%</div>
+                <p className="text-stone-600 font-light tracking-wide">Natural Ingredients</p>
+              </div>
+              <div>
+                <div className="text-5xl font-playfair text-amber-700 mb-4">0%</div>
+                <p className="text-stone-600 font-light tracking-wide">Harmful Chemicals</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Founder's Note - Light cream transition */}
+        <div 
+          ref={(el) => (sectionsRef.current[8] = el)}
+          className="py-32 px-4 max-w-3xl mx-auto text-center fade-in-element"
+          style={{ background: 'linear-gradient(to bottom, #f5f0e8 0%, #fdfcf9 100%)' }}
+        >
+          <p className="text-xl md:text-2xl font-light text-stone-700 leading-relaxed mb-8 italic">
+            "Our mission is simple: to create skincare that honors both your skin and the earth. 
+            Every product is a love letter to nature's incredible healing power."
+          </p>
+          <p className="text-lg font-playfair text-amber-900 mb-2">— The RISE Team</p>
+          <p className="text-sm text-amber-700 tracking-wide">Italy, 2025</p>
+        </div>
+
+        {/* CTA */}
+        <div className="py-20 text-center bg-[#fdfcf9]">
+          <a 
+            href="/products"
+            className="inline-block px-12 py-4 border-2 border-amber-800 text-amber-900 font-light tracking-[0.2em] uppercase text-sm hover:bg-amber-800 hover:text-amber-50 transition-all duration-300 rounded-sm"
+          >
+            Discover Our Collection
+          </a>
+        </div>
+
+      </section>
+
+      {/* Custom CSS for fade-in animations */}
+            <style>{`
+        .fade-in-element {
+          opacity: 0;
+          transform: translateY(30px);
+          transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+                      transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .fade-in-visible {
+          opacity: 1;
+          transform: translateY(0);
+        }
+
+        .scrollbar-hide::-webkit-scrollbar {
+          display: none;
+        }
+        
+        .scrollbar-hide {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+
+        .product-3d-card {
+          transform-style: preserve-3d;
+          transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .product-3d-card:hover {
+          transform: translateY(-10px) rotateY(5deg) scale(1.02);
+        }
+
+        .product-3d-card:hover > div {
+          box-shadow: 
+            0 25px 50px -12px rgba(0, 0, 0, 0.25),
+            0 0 60px rgba(214, 192, 131, 0.3);
+        }
+      `}</style>
+    </>
   );
 };
 

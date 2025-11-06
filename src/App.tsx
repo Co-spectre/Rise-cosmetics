@@ -89,7 +89,7 @@ const App = () => (
                             <NotificationProvider>
                               <Toaster />
                               <Sonner />
-                              <BrowserRouter>
+                              <BrowserRouter basename="/Rise-cosmetics">
                                 <AppRoutes />
                               </BrowserRouter>
                             </NotificationProvider>

@@ -23,20 +23,18 @@ const Header = () => {
   useEffect(() => {
     const handleScroll = () => {
       const scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
-      const shouldShowNavbar = scrollPosition > 100;
+      const shouldShowNavbar = scrollPosition > 50; // Reduced threshold for faster response
       setIsScrolled(shouldShowNavbar);
     };
 
     // Run on mount
     handleScroll();
     
-    // Listen to scroll
-    window.addEventListener('scroll', handleScroll);
-    window.addEventListener('resize', handleScroll);
+    // Listen to scroll with passive for better performance
+    window.addEventListener('scroll', handleScroll, { passive: true });
     
     return () => {
       window.removeEventListener('scroll', handleScroll);
-      window.removeEventListener('resize', handleScroll);
     };
   }, []);
 
@@ -51,28 +49,28 @@ const Header = () => {
 
   // Navbar styling based on scroll position and page
   const styleClasses = useMemo(() => {
-    // Homepage hero section (not scrolled) - completely invisible
+    // Homepage hero section (not scrolled) - completely transparent
     if (isLanding && !isScrolled) {
       return {
         navbar: 'bg-transparent border-b border-transparent',
         text: 'text-white hover:text-white/90 drop-shadow-lg',
         icon: 'text-white group-hover:text-white/90 drop-shadow-lg',
         button: 'border-white/40 bg-transparent hover:bg-white/10 text-white',
-        authButton: 'px-6 py-2 text-sm font-light tracking-wide border border-white/40 text-white hover:bg-white/10 transition-all duration-300',
+        authButton: 'px-6 py-2 text-sm font-light tracking-wide rounded-lg border border-white/30 bg-transparent text-white hover:bg-white/10 hover:border-white/50 transition-all duration-300',
         mobileMenu: 'bg-slate-900/95 backdrop-blur-md border-t border-white/20',
         mobileText: 'text-white hover:bg-white/10 font-medium'
       };
     }
     
-    // Homepage scrolled past hero - glossy transparent navbar
+    // Homepage scrolled past hero - solid white navbar (no longer transparent)
     if (isLanding && isScrolled) {
       return {
-        navbar: 'bg-white/80 backdrop-blur-xl border-b border-white/20 shadow-lg',
+        navbar: 'bg-white border-b border-stone-200 shadow-md',
         text: 'text-stone-800 hover:text-stone-950',
         icon: 'text-stone-800 group-hover:text-stone-950',
-        button: 'border-stone-400 bg-white/50 hover:bg-white/70 text-stone-800',
-        authButton: 'px-6 py-2 text-sm font-light tracking-wide border border-stone-500 text-stone-800 hover:bg-stone-500 hover:text-white transition-all duration-300',
-        mobileMenu: 'bg-white/90 backdrop-blur-md border-t border-stone-200',
+        button: 'border-stone-300 bg-stone-50 hover:bg-stone-100 text-stone-800',
+        authButton: 'px-6 py-2 text-sm font-light tracking-wide rounded-lg border border-stone-300 bg-stone-50 text-stone-800 hover:bg-stone-100 hover:border-stone-400 transition-all duration-300',
+        mobileMenu: 'bg-white border-t border-stone-200',
         mobileText: 'text-stone-700 hover:bg-stone-100 font-medium'
       };
     }
@@ -83,7 +81,7 @@ const Header = () => {
       text: 'text-stone-700 hover:text-stone-900',
       icon: 'text-stone-700 group-hover:text-stone-900',
       button: 'border-stone-300 bg-stone-50 hover:bg-stone-100 text-stone-700',
-      authButton: 'px-6 py-2 text-sm font-light tracking-wide border border-stone-400 text-stone-600 hover:bg-stone-400 hover:text-white transition-all duration-300',
+      authButton: 'px-6 py-2 text-sm font-medium tracking-wide rounded-lg bg-warm-olive text-white hover:bg-warm-olive-dark transition-all duration-300 shadow-sm',
       mobileMenu: 'bg-rice-50 border-t border-stone-200',
       mobileText: 'text-stone-700 hover:bg-stone-100 font-medium'
     };
@@ -100,9 +98,9 @@ const Header = () => {
       <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 flex items-center justify-between h-16 sm:h-20">
         <Link to="/" className="flex-shrink-0">
           <Logo 
-            size="lg"
+            size="xl"
             variant={isLanding && !isScrolled ? "light" : "dark"}
-            className="transition-colors duration-500"
+            className="transition-colors duration-500 scale-110"
           />
         </Link>
         <nav className="hidden md:flex space-x-8">

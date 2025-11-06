@@ -117,7 +117,7 @@ const Products = () => {
   const categories = ['all', ...new Set(products.map(p => p.category))];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
+    <div className="min-h-screen bg-gradient-to-b from-stone-50 via-neutral-50 to-stone-50/50">
       <Header />
 
       {/* Main Content */}
@@ -128,19 +128,19 @@ const Products = () => {
             {/* Search Bar */}
             <div className="relative flex-1 max-w-md">
               <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-              <input
+                <input
                 type="text"
                 placeholder="Search products..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-12 pr-4 py-3 border border-gray-200 rounded-2xl focus:ring-2 focus:ring-olive-500 focus:border-olive-500 transition-all duration-200"
+                className="w-full pl-12 pr-4 py-3 bg-white border border-stone-200 rounded-xl focus:ring-2 focus:ring-stone-300 focus:border-stone-300 transition-all duration-200"
               />
             </div>
 
             {/* Filter Toggle */}
             <button
               onClick={() => setShowFilters(!showFilters)}
-              className="flex items-center gap-2 px-6 py-3 border border-gray-200 rounded-2xl hover:bg-gray-50 transition-colors duration-200"
+              className="flex items-center gap-2 px-6 py-3 bg-white border border-stone-200 rounded-xl hover:bg-stone-50 transition-colors duration-200"
             >
               <Filter className="w-4 h-4" />
               <span>Filters</span>
@@ -153,12 +153,12 @@ const Products = () => {
 
           {/* Advanced Filters */}
           {showFilters && (
-            <div className="bg-white rounded-xl shadow-lg border border-gray-200 p-6 mb-8">
+            <div className="bg-white rounded-xl shadow-lg border border-stone-200 p-6 mb-8">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <select
                   value={selectedCategory}
                   onChange={(e) => setSelectedCategory(e.target.value)}
-                  className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-olive-500"
+                  className="px-4 py-2 bg-white border border-stone-300 rounded-xl focus:ring-2 focus:ring-stone-300"
                 >
                   <option value="all">All Categories</option>
                   {categories.filter(cat => cat !== 'all').map(category => (
@@ -168,7 +168,7 @@ const Products = () => {
                 <select
                   value={sortBy}
                   onChange={(e) => setSortBy(e.target.value)}
-                  className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-olive-500"
+                  className="px-4 py-2 bg-white border border-stone-300 rounded-xl focus:ring-2 focus:ring-stone-300"
                 >
                   <option value="featured">Featured First</option>
                   <option value="name">Sort by Name</option>
@@ -210,119 +210,70 @@ const Products = () => {
               </div>
             </div>
           ) : (
-            /* Products Grid with Signature Collection Style */
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            /* Products Grid */
+            <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
               {filteredProducts.map((product, index) => (
-                <Link 
+                <div 
                   key={product.id}
-                  to={`/product/${product.id}`}
-                  className="group block bg-white border border-rice-100 hover:border-olive-200 hover:shadow-xl transition-all duration-500 transform hover:scale-[1.03] overflow-hidden"
+                  className="group bg-white rounded-2xl overflow-hidden hover:shadow-lg transition-all duration-300 border border-stone-100"
                 >
-                  {/* Product Image Area with Gradient Background */}
-                  <div 
-                    className={`aspect-[4/5] bg-gradient-to-br ${
-                      index % 3 === 0 ? 'from-olive-50 to-rice-50' :
-                      index % 3 === 1 ? 'from-rice-50 to-olive-50' :
-                      'from-olive-50 to-rice-50'
-                    } relative overflow-hidden flex items-center justify-center group-hover:scale-105 transition-transform duration-700`}
-                  >
-                    {/* Product Image or Visualization */}
-                    <div className="relative w-full h-full group-hover:scale-110 transition-transform duration-500">
+                  {/* Product Image */}
+                  <Link to={`/product/${product.id}`} className="block">
+                    <div 
+                      className={`aspect-[3/4] bg-gradient-to-br ${
+                        index % 3 === 0 ? 'from-stone-100 to-neutral-100' :
+                        index % 3 === 1 ? 'from-neutral-100 to-stone-100' :
+                        'from-stone-50 to-neutral-100'
+                      } relative overflow-hidden flex items-center justify-center`}
+                    >
                       {product.images && product.images[0] ? (
                         <img 
                           src={product.images[0]} 
                           alt={product.name}
-                          className="w-full h-full object-cover"
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                           onError={(e) => {
-                            // If image fails to load, hide it and show fallback
                             e.currentTarget.style.display = 'none';
                             const fallback = e.currentTarget.nextElementSibling as HTMLElement;
                             if (fallback) fallback.style.display = 'flex';
                           }}
                         />
-                      ) : null}
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center bg-stone-100">
+                          <ShoppingBag className="w-16 h-16 text-stone-400" />
+                        </div>
+                      )}
                       
-                      {/* Fallback bottle visualization - always present but hidden if image loads */}
+                      {/* Fallback when image fails */}
                       <div 
-                        className="absolute inset-0 flex items-center justify-center"
+                        className="absolute inset-0 flex items-center justify-center bg-stone-100"
                         style={{ display: product.images && product.images[0] ? 'none' : 'flex' }}
                       >
-                      </div>
-                            /* Products Grid - Previous Layout */
-                            <div className="grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                              {filteredProducts.map((product) => (
-                                <Link
-                                  key={product.id}
-                                  to={`/product/${product.id}`}
-                                  className="group block bg-white border border-neutral-200 hover:border-olive-200 hover:shadow-lg transition-all duration-300 transform hover:scale-[1.02] overflow-hidden"
-                                >
-                                  <div className="relative aspect-square bg-neutral-50 rounded-lg mb-4 overflow-hidden border border-neutral-200 group-hover:border-olive-200 transition-colors">
-                                    {product.images && product.images[0] ? (
-                                      <img
-                                        src={product.images[0]}
-                                        alt={product.name}
-                                        className="w-full h-full object-cover"
-                                      />
-                                    ) : (
-                                      <div className="w-full h-full flex items-center justify-center bg-rice-100">
-                                        <ShoppingBag className="w-16 h-16 text-gray-400" />
-                                      </div>
-                                    )}
-                                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-all duration-300" />
-                                  </div>
-                                  <div className="space-y-2 px-4 pb-4">
-                                    <p className="text-olive-600 text-xs uppercase tracking-wider font-medium">{product.category}</p>
-                                    <h3 className="text-lg font-medium text-neutral-900 group-hover:text-olive-700 transition-colors line-clamp-2">{product.name}</h3>
-                                    {product.shortDescription && (
-                                      <p className="text-neutral-600 text-sm line-clamp-2">{product.shortDescription}</p>
-                                    )}
-                                    <div className="flex items-center gap-2 pt-2">
-                                      <span className="text-lg font-semibold text-neutral-900">€{product.price}</span>
-                                      {product.compareAtPrice && product.compareAtPrice > product.price && (
-                                        <span className="text-sm text-neutral-500 line-through">€{product.compareAtPrice}</span>
-                                      )}
-                                    </div>
-                                  </div>
-                                </Link>
-                              ))}
-                            </div>
-                      <div className="flex space-x-3">
-                        <button 
-                          onClick={(e) => {
-                            e.preventDefault();
-                            handleWishlistToggle(product);
-                          }}
-                          className={`p-3 border transition-all duration-300 group/btn ${
-                            isInWishlist(product.id) 
-                              ? 'border-rose-300 bg-rose-50 text-rose-600' 
-                              : 'border-olive-200 hover:bg-olive-600 hover:text-white hover:border-olive-600'
-                          }`}
-                          aria-label="Add to wishlist"
-                        >
-                          <Heart 
-                            className={`w-4 h-4 group-hover/btn:scale-110 transition-transform duration-200 ${
-                              isInWishlist(product.id) ? 'fill-rose-600' : ''
-                            }`} 
-                            strokeWidth={1.5} 
-                          />
-                        </button>
-                        <button 
-                          onClick={(e) => {
-                            e.preventDefault();
-                            handleAddToCart(product);
-                          }}
-                          className="px-6 py-3 bg-olive-700 text-white border border-olive-700 hover:bg-olive-800 transition-all duration-300 group/btn"
-                          aria-label="Add to cart"
-                        >
-                          <div className="flex items-center gap-2">
-                            <ShoppingBag className="w-4 h-4 group-hover/btn:scale-110 transition-transform duration-200" strokeWidth={1.5} />
-                            <span className="text-sm font-medium tracking-wide">Add</span>
-                          </div>
-                        </button>
+                        <ShoppingBag className="w-16 h-16 text-stone-400" />
                       </div>
                     </div>
+                  </Link>
+
+                  {/* Product Info */}
+                  <div className="p-4 space-y-2">
+                    <p className="text-stone-500 text-xs uppercase tracking-wider font-light">
+                      {product.category}
+                    </p>
+                    <Link to={`/product/${product.id}`}>
+                      <h3 className="text-sm font-normal text-stone-700 group-hover:text-stone-900 transition-colors line-clamp-2">
+                        {product.name}
+                      </h3>
+                    </Link>
+                    <p className="text-base font-medium text-stone-800">
+                      €{product.price.toFixed(2)}
+                    </p>
+                    <button 
+                      onClick={() => handleAddToCart(product)}
+                      className="w-full px-4 py-2.5 bg-stone-400 text-white rounded-xl hover:bg-stone-500 transition-all duration-300 text-xs font-light tracking-wide"
+                    >
+                      Add to Cart
+                    </button>
                   </div>
-                </Link>
+                </div>
               ))}
             </div>
           )}
@@ -341,7 +292,7 @@ const Products = () => {
                   setSelectedCategory('all');
                   setPriceRange({ min: 0, max: 1000 });
                 }}
-                className="px-6 py-3 bg-olive-600 text-white rounded-lg hover:bg-olive-700 transition-colors duration-200"
+                className="px-6 py-3 bg-stone-400 text-white rounded-xl hover:bg-stone-500 transition-colors duration-200"
               >
                 Clear Filters
               </button>

@@ -167,6 +167,52 @@ export default {
 				beige: {
 					50: '#faf9f7',
 					100: '#f5f4f1',
+				},
+				// NEW: Warm Pastel Palette
+				'warm-cream': {
+					DEFAULT: '#FAF8F3',
+					light: '#FDFCFA',
+					dark: '#F5F2ED',
+				},
+				'warm-ivory': {
+					DEFAULT: '#F5F2ED',
+					light: '#F8F6F2',
+					dark: '#EDE8E0',
+				},
+				'pale-sand': {
+					DEFAULT: '#EDE8E0',
+					light: '#F2EEE8',
+					dark: '#E5DFD5',
+				},
+				'warm-olive': {
+					DEFAULT: '#8B956D',
+					light: '#A3AD87',
+					dark: '#727C57',
+				},
+				'soft-terracotta': {
+					DEFAULT: '#D4A59A',
+					light: '#E0B8AE',
+					dark: '#C89286',
+				},
+				'muted-rose': {
+					DEFAULT: '#E5D1C8',
+					light: '#EDE0D9',
+					dark: '#D9C0B5',
+				},
+				'warm-taupe': {
+					DEFAULT: '#C9B8A8',
+					light: '#D5C7BA',
+					dark: '#B8A695',
+				},
+				'rich-brown': {
+					DEFAULT: '#4A3F35',
+					light: '#5D5145',
+					dark: '#3A3128',
+				},
+				'soft-gray': {
+					DEFAULT: '#8B8073',
+					light: '#9D9386',
+					dark: '#756A5E',
 				}
 			},
 			fontFamily: {

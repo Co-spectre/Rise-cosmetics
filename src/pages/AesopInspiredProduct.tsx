@@ -7,6 +7,8 @@ import { useWishlist } from '@/contexts/WishlistContext';
 import { productService } from '@/services/optimizedProductService';
 import { Product } from '@/types';
 import { ArrowLeft, ArrowRight, Plus, Minus, Heart } from 'lucide-react';
+import Header from '@/components/common/Header';
+import Footer from '@/components/common/Footer';
 
 const AesopInspiredProduct = () => {
   const { id } = useParams<{ id: string }>();
@@ -41,32 +43,23 @@ const AesopInspiredProduct = () => {
   if (isLoading || !product) {
     return (
       <div className="min-h-screen bg-[#FFFEF2]">
+        <Header />
         <div className="h-screen flex items-center justify-center">
           <div className="animate-pulse space-y-8">
             <div className="h-8 bg-stone-200 rounded w-48"></div>
             <div className="h-4 bg-stone-200 rounded w-32"></div>
           </div>
         </div>
+        <Footer />
       </div>
     );
   }
 
   return (
     <div className="min-h-screen bg-[#FFFEF2] text-[#252525]">
-      {/* Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-[#FFFEF2] border-b border-[#252525]/10">
-        <div className="max-w-screen-2xl mx-auto px-8 h-16 flex items-center justify-between">
-          <Link 
-            to="/products"
-            className="inline-flex items-center text-sm hover:text-stone-600 transition-colors"
-          >
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            <span className="font-light tracking-wide">Return to products</span>
-          </Link>
-        </div>
-      </nav>
+      <Header />
 
-      <main className="pt-24 pb-32">
+      <main className="pt-32 pb-32">
           <div className="max-w-screen-2xl mx-auto px-8">
             {/* Product Category & Name */}
             <div className="mb-16 max-w-xl">
@@ -252,6 +245,7 @@ const AesopInspiredProduct = () => {
             </div>
           </div>
       </main>
+      <Footer />
     </div>
   );
 };

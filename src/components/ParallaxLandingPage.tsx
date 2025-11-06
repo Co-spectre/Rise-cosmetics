@@ -1,12 +1,9 @@
-import React, { useEffect, useRef, useState, useCallback } from 'react';
+import { useEffect, useRef, useState, useCallback } from 'react';
 import { ChevronDown, ArrowRight, ShoppingBag, Heart, Play, Pause } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import Logo from './common/Logo';
-import InstagramStories from './InstagramStories';
-import ShopTheStory from './ShopTheStory';
-import SocialProofTestimonials from './SocialProofTestimonials';
 import IngredientSpotlight from './IngredientSpotlight';
-import InteractiveVideoTestimonials from './InteractiveVideoTestimonials';
+import { useCart } from '@/contexts/CartContext';
 import '../styles/optimized-landing.css';
 import '../styles/luxury-animations.css';
 
@@ -16,6 +13,7 @@ const ParallaxLandingPage = () => {
   const [isVideoPlaying, setIsVideoPlaying] = useState(true);
   const heroRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const { addToCart } = useCart();
 
   // Simplified scroll handling for better performance
   const handleScroll = useCallback(() => {
@@ -79,6 +77,34 @@ const ParallaxLandingPage = () => {
   };
 
   // Simplified for better performance - minimal parallax effects
+
+  // Handle add to cart
+  const handleAddToCart = (product: {
+    id: number;
+    name: string;
+    subtitle: string;
+    price: string;
+    description: string;
+    type: string;
+    color: string;
+    special?: boolean;
+    image?: string;
+  }) => {
+    // Convert price from string (€68) to number (68)
+    const priceNumber = parseFloat(product.price.replace('€', ''));
+    
+    addToCart({
+      id: product.id,
+      name: product.name,
+      subtitle: product.subtitle,
+      price: priceNumber,
+      type: product.type,
+      color: product.color,
+      description: product.description,
+      special: product.special,
+      image: product.image,
+    }, 1);
+  };
 
   return (
     <div className="relative">
@@ -219,7 +245,7 @@ const ParallaxLandingPage = () => {
 
       {/* Enhanced Featured Products Section with modern design */}
       <section 
-        className="py-12 lg:py-16 bg-gradient-to-b from-rice-50 to-beige-50 relative overflow-hidden"
+        className="py-12 lg:py-16 bg-gradient-to-b from-warm-cream to-warm-ivory relative overflow-hidden"
         style={{
           transform: `translateY(${scrollY * 0.03}px)`
         }}
@@ -271,43 +297,42 @@ const ParallaxLandingPage = () => {
           >
             {[
               {
-                id: 2,
-                name: 'Radiance Serum',
-                subtitle: 'Illuminating Face Serum',
-                price: '€68',
-                description: 'Luxurious serum that reveals your inner glow with powerful rice peptides and botanicals.',
-                type: 'Serum',
-                color: 'bg-gradient-to-br from-olive-50 to-rice-50',
+                id: 'rise-1',
+                name: 'RISE Radiance Illuminating Serum',
+                subtitle: 'Brightening serum that gives skin an instant glow',
+                price: '€89.00',
+                description: 'An ultra-lightweight, deeply hydrating serum infused with premium rice bran extract and vitamin C.',
+                type: 'Serums',
+                color: 'bg-gradient-to-br from-stone-100 to-neutral-100',
                 special: true,
-                image: 'serum'
+                image: '/images/products/IMG-20250808-WA0006.jpg'
               },
               {
-                id: 4,
-                name: 'Soulrise',
-                subtitle: 'Anti-Aging Face Cream',
-                price: '€78',
-                description: 'Premium face cream that renews and revitalizes with age-defying rice technology.',
-                type: 'Cream',
-                color: 'bg-gradient-to-br from-rice-50 to-olive-50',
+                id: 'rise-2',
+                name: 'RISE Soul Renewal Night Cream',
+                subtitle: 'Luxurious night cream for skin renewal',
+                price: '€125.00',
+                description: 'Advanced night cream that works while you sleep to reveal smoother, firmer skin by morning.',
+                type: 'Moisturizers',
+                color: 'bg-gradient-to-br from-neutral-100 to-stone-100',
                 special: true,
-                image: 'cream'
+                image: '/images/products/IMG-20250808-WA0007.jpg'
               },
               {
-                id: 5,
-                name: 'Eye Luce',
-                subtitle: 'Illuminating Eye Drops',
-                price: '€58',
-                description: 'Gentle eye treatment that brightens and refreshes with botanical extracts.',
-                type: 'Drops',
-                color: 'bg-gradient-to-br from-olive-50 to-rice-50',
-                special: false,
-                image: 'drops'
+                id: 'rise-3',
+                name: 'RISE Eye Luce Brightening Complex',
+                subtitle: 'Brightening eye complex for refreshed eyes',
+                price: '€75.00',
+                description: 'Intensive eye treatment that reduces dark circles and puffiness for a refreshed appearance.',
+                type: 'Eye Care',
+                color: 'bg-gradient-to-br from-stone-50 to-neutral-100',
+                special: true,
+                image: '/images/products/IMG-20250808-WA0008.jpg'
               }
             ].map((product, index) => (
-              <Link 
+              <div 
                 key={product.id}
-                to={`/product/${product.id}`}
-                className="group block bg-white border border-rice-100 hover:border-olive-200 hover:shadow-2xl transition-all duration-500 transform hover:scale-[1.02] overflow-hidden"
+                className="group block bg-warm-cream border border-warm-taupe/30 hover:border-warm-olive/40 hover:shadow-2xl transition-all duration-500 rounded-lg overflow-hidden"
                 style={{
                   transform: `translateY(${scrollY * (0.005 + index * 0.002)}px)`,
                   transitionDelay: `${index * 100}ms`
@@ -317,33 +342,22 @@ const ParallaxLandingPage = () => {
                 <div 
                   className={`aspect-[3/4] ${product.color} relative overflow-hidden flex items-center justify-center group-hover:scale-105 transition-transform duration-700`}
                 >
-                  {/* Product Bottle Visualization - Scaled Down */}
-                  <div 
-                    className="relative group-hover:scale-110 transition-transform duration-500"
-                    style={{
-                      transform: `rotate(${scrollY * 0.005}deg)`
-                    }}
-                  >
-                    {product.image === 'serum' || product.image === 'drops' ? (
-                      <div className="w-8 h-24 bg-gradient-to-b from-olive-600 to-olive-800 relative shadow-2xl">
-                        <div className="absolute top-0 w-full h-4 bg-gradient-to-b from-olive-500 to-olive-600 rounded-t-sm" />
-                        <div className="absolute top-0.5 left-1/2 transform -translate-x-1/2 w-2 h-2 bg-rice-300 rounded-full" />
-                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent" />
-                        <div className="absolute right-0.5 top-2 w-0.5 h-18 bg-white/30 rounded-full" />
-                      </div>
-                    ) : (
-                      <div className="w-16 h-20 bg-gradient-to-b from-rice-600 to-rice-800 relative shadow-2xl rounded-sm">
-                        <div className="absolute top-0 w-full h-6 bg-gradient-to-b from-rice-500 to-rice-600 rounded-t-sm" />
-                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent" />
-                        <div className="absolute right-1 top-1.5 w-0.5 h-14 bg-white/30 rounded-full" />
-                      </div>
-                    )}
-                  </div>
+                  {/* Product Image */}
+                  {product.image && (
+                    <img 
+                      src={product.image} 
+                      alt={product.name}
+                      className="w-full h-full object-cover"
+                      onError={(e) => {
+                        e.currentTarget.style.display = 'none';
+                      }}
+                    />
+                  )}
                   
                   {/* Special Badge */}
                   {product.special && (
-                    <div className="absolute top-3 right-3 bg-olive-700 text-white px-2 py-0.5 text-[10px] tracking-widest uppercase font-medium">
-                      Signature
+                    <div className="absolute top-3 right-3 bg-stone-800 text-white px-2 py-0.5 text-[10px] tracking-widest uppercase font-medium rounded">
+                      Featured
                     </div>
                   )}
 
@@ -354,43 +368,44 @@ const ParallaxLandingPage = () => {
                 {/* Enhanced Product Info - Compact */}
                 <div className="p-5 space-y-3">
                   <div>
-                    <p className="text-stone-500 text-[10px] tracking-[0.2em] uppercase mb-2 font-medium">{product.type}</p>
-                    <h3 className="text-lg font-light text-stone-700 mb-1.5 tracking-wide group-hover:text-stone-600 transition-colors duration-300">
+                    <p className="text-soft-gray text-[10px] tracking-[0.2em] uppercase mb-2 font-medium">{product.type}</p>
+                    <h3 className="text-lg font-light text-rich-brown mb-1.5 tracking-wide group-hover:text-warm-olive transition-colors duration-300">
                       {product.name}
                     </h3>
-                    <p className="text-stone-600/80 text-xs tracking-wide font-light">{product.subtitle}</p>
+                    <p className="text-soft-gray/80 text-xs tracking-wide font-light">{product.subtitle}</p>
                   </div>
                   
-                  <p className="text-stone-600/70 text-xs leading-relaxed font-light line-clamp-2">
+                  <p className="text-soft-gray/70 text-xs leading-relaxed font-light line-clamp-2">
                     {product.description}
                   </p>
                   
-                  <div className="flex items-center justify-between pt-3 border-t border-rice-100">
-                    <span className="text-lg font-light text-stone-700 tracking-wide">
+                  <div className="flex items-center justify-between pt-3 border-t border-warm-taupe/20">
+                    <span className="text-lg font-light text-rich-brown tracking-wide">
                       {product.price}
                     </span>
                     <div className="flex space-x-2">
                       <button 
-                        onClick={(e) => e.preventDefault()}
-                        className="p-2 border border-olive-200 hover:bg-stone-400 hover:text-white hover:border-stone-400 transition-all duration-300 group/btn"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          // Add to wishlist logic
+                        }}
+                        className="p-2.5 rounded-lg border border-warm-olive/30 hover:bg-warm-olive hover:text-white hover:border-warm-olive transition-all duration-300 group/btn"
                         aria-label="Add to wishlist"
                       >
-                        <Heart className="w-3.5 h-3.5 group-hover/btn:scale-110 transition-transform duration-200" strokeWidth={1.5} />
+                        <Heart className="w-4 h-4 group-hover/btn:scale-110 transition-transform duration-200" strokeWidth={1.5} />
                       </button>
-                      <button 
-                        onClick={(e) => e.preventDefault()}
-                        className="px-4 py-2 bg-olive-700 text-white border border-olive-700 hover:bg-olive-800 transition-all duration-300 group/btn"
-                        aria-label="Add to cart"
+                      <Link
+                        to={`/product/${product.id}`}
+                        className="flex-1 px-4 py-2.5 rounded-lg bg-warm-olive text-white hover:bg-warm-olive-dark transition-all duration-300 group/btn flex items-center justify-center gap-2"
+                        onClick={(e) => e.stopPropagation()}
                       >
-                        <div className="flex items-center gap-1.5">
-                          <ShoppingBag className="w-3.5 h-3.5 group-hover/btn:scale-110 transition-transform duration-200" strokeWidth={1.5} />
-                          <span className="text-xs font-medium tracking-wide">Add</span>
-                        </div>
-                      </button>
+                        <ShoppingBag className="w-4 h-4 group-hover/btn:scale-110 transition-transform duration-200" strokeWidth={1.5} />
+                        <span className="text-sm font-medium tracking-wide">View Product</span>
+                      </Link>
                     </div>
                   </div>
                 </div>
-              </Link>
+              </div>
             ))}
           </div>
 
@@ -403,26 +418,25 @@ const ParallaxLandingPage = () => {
           >
             <Link 
               to="/products"
-              className="group inline-flex items-center gap-3 px-8 py-4 border-2 border-stone-400 text-stone-500 hover:bg-stone-400 hover:text-white transition-all duration-500 tracking-wide transform hover:scale-105 relative overflow-hidden"
+              className="group inline-flex items-center gap-3 px-8 py-4 rounded-lg bg-warm-olive text-white hover:bg-warm-olive-dark transition-all duration-300 tracking-wide transform hover:scale-105 shadow-md hover:shadow-lg"
             >
               <span className="relative z-10 font-medium text-base">View Complete Collection</span>
               <ArrowRight className="relative z-10 w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" strokeWidth={1.5} />
-              <div className="absolute inset-0 bg-olive-600 scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
             </Link>
           </div>
         </div>
       </section>
 
       {/* Our Mission Section */}
-        <section className="py-24 bg-rice-50">
+        <section className="py-24 bg-pale-sand">
           <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
-              <span className="text-xs text-stone-400 tracking-[0.2em] uppercase font-light">Our Mission</span>
-              <h2 className="text-3xl md:text-4xl font-light text-stone-700 mt-4 mb-6 tracking-wide leading-tight">
+              <span className="text-xs text-soft-gray tracking-[0.2em] uppercase font-light">Our Mission</span>
+              <h2 className="text-3xl md:text-4xl font-light text-rich-brown mt-4 mb-6 tracking-wide leading-tight">
                 Premium skincare, inspired by nature and crafted with care.
               </h2>
-              <div className="w-16 h-0.5 bg-olive-200 mx-auto mb-8"></div>
-              <p className="text-base text-stone-500 font-light max-w-xl mx-auto">
+              <div className="w-16 h-0.5 bg-warm-olive/40 mx-auto mb-8"></div>
+              <p className="text-base text-soft-gray font-light max-w-xl mx-auto">
                 We create clean, effective skincare using rice-based ingredients and botanicals, with a focus on sustainability and simplicity. Our products are designed to elevate your daily routine and honor your skin’s natural radiance.
               </p>
             </div>
@@ -430,7 +444,7 @@ const ParallaxLandingPage = () => {
         </section>
 
       {/* Philosophy Section */}
-      <section className="py-24 bg-gradient-to-b from-olive-50/50 to-white relative overflow-hidden">
+      <section className="py-24 bg-gradient-to-b from-warm-ivory to-warm-cream relative overflow-hidden">
         {/* Background Elements */}
         <div className="absolute inset-0 pointer-events-none">
           <div 
@@ -454,21 +468,21 @@ const ParallaxLandingPage = () => {
               {/* Header */}
               <div>
                 <div className="mb-6">
-                  <span className="text-sm text-stone-500 tracking-[0.3em] uppercase font-light">Our Beliefs</span>
+                  <span className="text-sm text-soft-gray tracking-[0.3em] uppercase font-light">Our Beliefs</span>
                 </div>
-                <h2 className="text-4xl md:text-5xl lg:text-6xl font-light text-stone-700 mb-8 tracking-wide leading-tight">
+                <h2 className="text-4xl md:text-5xl lg:text-6xl font-light text-rich-brown mb-8 tracking-wide leading-tight">
                   Philosophy
                 </h2>
-                <div className="w-24 h-0.5 bg-gradient-to-r from-transparent via-olive-300 to-transparent mb-8"></div>
+                <div className="w-24 h-0.5 bg-gradient-to-r from-transparent via-warm-olive/50 to-transparent mb-8"></div>
               </div>
 
               {/* Philosophy Text */}
               <div className="space-y-6">
-                <p className="text-lg text-stone-600/90 leading-relaxed font-light">
-                  Embrace your natural essence with <span className="font-semibold text-stone-600">RISE</span>, where holistic beauty meets mindful care. 
+                <p className="text-lg text-soft-gray/90 leading-relaxed font-light">
+                  Embrace your natural essence with <span className="font-semibold text-rich-brown">RISE</span>, where holistic beauty meets mindful care. 
                   Our transformative ingredients connect you to the root of your radiance.
                 </p>
-                <p className="text-lg text-stone-600/90 leading-relaxed font-light">
+                <p className="text-lg text-soft-gray/90 leading-relaxed font-light">
                   Crafted in Italy, we pride ourselves on using botanical and other healing ingredients 
                   to provide you with the glow your skin craves. Beauty is intention, so we treat it with respect.
                 </p>
@@ -480,32 +494,32 @@ const ParallaxLandingPage = () => {
 
               {/* Core Values */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-8">
-                <div className="flex items-start gap-4 p-6 bg-white/70 backdrop-blur-sm border border-olive-100/50 rounded-xl">
-                  <div className="w-3 h-3 bg-olive-600 rounded-full mt-2 flex-shrink-0"></div>
+                <div className="flex items-start gap-4 p-6 bg-warm-cream/70 backdrop-blur-sm border border-warm-taupe/30 rounded-xl">
+                  <div className="w-3 h-3 bg-warm-olive rounded-full mt-2 flex-shrink-0"></div>
                   <div>
-                    <h4 className="text-stone-700 font-medium mb-2 tracking-wide">Mindful Beauty</h4>
-                    <p className="text-stone-600/80 text-sm">Intentional skincare that honors your natural essence</p>
+                    <h4 className="text-rich-brown font-medium mb-2 tracking-wide">Mindful Beauty</h4>
+                    <p className="text-soft-gray/80 text-sm">Intentional skincare that honors your natural essence</p>
                   </div>
                 </div>
-                <div className="flex items-start gap-4 p-6 bg-white/70 backdrop-blur-sm border border-olive-100/50 rounded-xl">
-                  <div className="w-3 h-3 bg-rice-600 rounded-full mt-2 flex-shrink-0"></div>
+                <div className="flex items-start gap-4 p-6 bg-warm-cream/70 backdrop-blur-sm border border-warm-taupe/30 rounded-xl">
+                  <div className="w-3 h-3 bg-soft-terracotta rounded-full mt-2 flex-shrink-0"></div>
                   <div>
-                    <h4 className="text-stone-700 font-medium mb-2 tracking-wide">Ancient Wisdom</h4>
-                    <p className="text-stone-600/80 text-sm">Time-tested ingredients meet modern innovation</p>
+                    <h4 className="text-rich-brown font-medium mb-2 tracking-wide">Ancient Wisdom</h4>
+                    <p className="text-soft-gray/80 text-sm">Time-tested ingredients meet modern innovation</p>
                   </div>
                 </div>
-                <div className="flex items-start gap-4 p-6 bg-white/70 backdrop-blur-sm border border-olive-100/50 rounded-xl">
-                  <div className="w-3 h-3 bg-olive-600 rounded-full mt-2 flex-shrink-0"></div>
+                <div className="flex items-start gap-4 p-6 bg-warm-cream/70 backdrop-blur-sm border border-warm-taupe/30 rounded-xl">
+                  <div className="w-3 h-3 bg-warm-olive rounded-full mt-2 flex-shrink-0"></div>
                   <div>
-                    <h4 className="text-stone-700 font-medium mb-2 tracking-wide">Holistic Care</h4>
-                    <p className="text-stone-600/80 text-sm">Nurturing your skin, mind, and spirit together</p>
+                    <h4 className="text-rich-brown font-medium mb-2 tracking-wide">Holistic Care</h4>
+                    <p className="text-soft-gray/80 text-sm">Nurturing your skin, mind, and spirit together</p>
                   </div>
                 </div>
-                <div className="flex items-start gap-4 p-6 bg-white/70 backdrop-blur-sm border border-olive-100/50 rounded-xl">
-                  <div className="w-3 h-3 bg-rice-600 rounded-full mt-2 flex-shrink-0"></div>
+                <div className="flex items-start gap-4 p-6 bg-warm-cream/70 backdrop-blur-sm border border-warm-taupe/30 rounded-xl">
+                  <div className="w-3 h-3 bg-soft-terracotta rounded-full mt-2 flex-shrink-0"></div>
                   <div>
-                    <h4 className="text-stone-700 font-medium mb-2 tracking-wide">Radiance Philosophy</h4>
-                    <p className="text-stone-600/80 text-sm">Transforming daily care into meaningful moments</p>
+                    <h4 className="text-rich-brown font-medium mb-2 tracking-wide">Radiance Philosophy</h4>
+                    <p className="text-soft-gray/80 text-sm">Transforming daily care into meaningful moments</p>
                   </div>
                 </div>
               </div>
@@ -579,11 +593,7 @@ const ParallaxLandingPage = () => {
       </section>
 
       {/* Other Sections */}
-      <InstagramStories />
-      <ShopTheStory />
-      <InteractiveVideoTestimonials />
       <IngredientSpotlight />
-      <SocialProofTestimonials />
     </div>
   );
 };

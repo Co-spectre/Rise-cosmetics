@@ -36,6 +36,7 @@ import ProductManagement from "./pages/ProductManagement";
 import UserManagement from "./pages/UserManagement";
 import NotFound from "./pages/NotFound";
 import AdminDebug from "./components/AdminDebug";
+import Preloader from "@/components/Preloader";
 
 const queryClient = new QueryClient();
 
@@ -90,7 +91,9 @@ const App = () => (
                               <Toaster />
                               <Sonner />
                               <BrowserRouter basename="/Rise-cosmetics">
-                                <AppRoutes />
+                                <Preloader>
+                                  <AppRoutes />
+                                </Preloader>
                               </BrowserRouter>
                             </NotificationProvider>
                           </WishlistProvider>

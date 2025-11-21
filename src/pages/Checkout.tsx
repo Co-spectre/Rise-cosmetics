@@ -162,24 +162,24 @@ const Checkout = () => {
     return (
       <div className="min-h-screen bg-gradient-to-b from-rice-50/50 to-olive-50/30">
         <Header />
-        <div className="container mx-auto px-4 py-20">
+        <div className="container mx-auto px-4 sm:px-6 py-12 sm:py-16 md:py-20">
           <div className="max-w-2xl mx-auto text-center">
-            <div className="w-32 h-32 bg-gradient-to-br from-green-400 to-green-600 rounded-full flex items-center justify-center mx-auto mb-8">
-              <CheckCircle className="w-16 h-16 text-white" strokeWidth={1.5} />
+            <div className="w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 bg-gradient-to-br from-green-400 to-green-600 rounded-full flex items-center justify-center mx-auto mb-6 sm:mb-8">
+              <CheckCircle className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 text-white" strokeWidth={1.5} />
             </div>
-            <h1 className="text-4xl font-light text-olive-900 mb-4 tracking-wide">Order Confirmed!</h1>
-            <p className="text-xl text-olive-700/80 mb-8 leading-relaxed">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-light text-olive-900 mb-3 sm:mb-4 tracking-wide px-4">Order Confirmed!</h1>
+            <p className="text-base sm:text-lg md:text-xl text-olive-700/80 mb-6 sm:mb-8 leading-relaxed px-4">
               Thank you for choosing RISE Cosmetics. Your order is being prepared with love and care.
             </p>
-            <div className="bg-white/70 backdrop-blur-sm border border-olive-100 rounded-xl p-6 mb-8">
-              <p className="text-olive-800 font-medium mb-2">Order #RISE-{Math.random().toString(36).substr(2, 9).toUpperCase()}</p>
-              <p className="text-olive-700/80">We've sent a confirmation email to {shippingData.email}</p>
+            <div className="bg-white/70 backdrop-blur-sm border border-olive-100 rounded-xl p-4 sm:p-5 md:p-6 mb-6 sm:mb-8 mx-4">
+              <p className="text-sm sm:text-base text-olive-800 font-medium mb-1 sm:mb-2">Order #RISE-{Math.random().toString(36).substr(2, 9).toUpperCase()}</p>
+              <p className="text-xs sm:text-sm md:text-base text-olive-700/80">We've sent a confirmation email to {shippingData.email}</p>
             </div>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button asChild className="bg-olive-600 hover:bg-olive-700 text-white px-8 py-3">
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center px-4">
+              <Button asChild className="bg-olive-600 hover:bg-olive-700 text-white px-6 sm:px-8 py-2.5 sm:py-3 text-sm sm:text-base">
                 <Link to="/products">Continue Shopping</Link>
               </Button>
-              <Button variant="outline" className="border-olive-300 text-olive-700 hover:bg-olive-50 px-8 py-3">
+              <Button variant="outline" className="border-olive-300 text-olive-700 hover:bg-olive-50 px-6 sm:px-8 py-2.5 sm:py-3 text-sm sm:text-base">
                 Track Your Order
               </Button>
             </div>
@@ -195,16 +195,16 @@ const Checkout = () => {
     return (
       <div className="min-h-screen bg-gradient-to-b from-rice-50/50 to-olive-50/30">
         <Header />
-        <div className="container mx-auto px-4 py-20">
+        <div className="container mx-auto px-4 sm:px-6 py-12 sm:py-16 md:py-20">
           <div className="max-w-md mx-auto text-center">
-            <div className="w-24 h-24 bg-olive-100 rounded-full flex items-center justify-center mx-auto mb-6">
-              <ShoppingBag className="w-12 h-12 text-olive-600" strokeWidth={1.5} />
+            <div className="w-20 h-20 sm:w-24 sm:h-24 bg-olive-100 rounded-full flex items-center justify-center mx-auto mb-5 sm:mb-6">
+              <ShoppingBag className="w-10 h-10 sm:w-12 sm:h-12 text-olive-600" strokeWidth={1.5} />
             </div>
-            <h1 className="text-2xl font-light text-olive-900 mb-4 tracking-wide">Your cart is empty</h1>
-            <p className="text-olive-700/80 mb-8 leading-relaxed">
+            <h1 className="text-xl sm:text-2xl font-light text-olive-900 mb-3 sm:mb-4 tracking-wide px-4">Your cart is empty</h1>
+            <p className="text-sm sm:text-base text-olive-700/80 mb-6 sm:mb-8 leading-relaxed px-4">
               Discover our premium skincare collection and add some products to your cart.
             </p>
-            <Button asChild className="bg-olive-600 hover:bg-olive-700 text-white px-8 py-3">
+            <Button asChild className="bg-olive-600 hover:bg-olive-700 text-white px-6 sm:px-8 py-2.5 sm:py-3 text-sm sm:text-base">
               <Link to="/products">Shop Now</Link>
             </Button>
           </div>
@@ -220,31 +220,31 @@ const Checkout = () => {
       
       {/* Progress Bar */}
       <div className="border-b border-olive-100/50 bg-white/70 backdrop-blur-sm sticky top-0 z-40">
-        <div className="container mx-auto px-4 py-6">
-          <div className="flex items-center justify-between max-w-5xl mx-auto">
-            <Link to="/cart" className="flex items-center gap-2 text-olive-700 hover:text-olive-900 transition-colors">
-              <ArrowLeft className="w-4 h-4" />
-              <span className="text-sm">Back to Cart</span>
+        <div className="container mx-auto px-4 sm:px-6 py-4 sm:py-6">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 max-w-5xl mx-auto">
+            <Link to="/cart" className="flex items-center gap-2 text-olive-700 hover:text-olive-900 transition-colors self-start">
+              <ArrowLeft className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+              <span className="text-xs sm:text-sm">Back to Cart</span>
             </Link>
             
-            <div className="flex items-center gap-6">
+            <div className="flex items-center gap-2 sm:gap-4 md:gap-6 overflow-x-auto w-full sm:w-auto">
               {steps.map((step, index) => (
                 <React.Fragment key={step.id}>
-                  <div className={`flex items-center gap-3 ${
+                  <div className={`flex items-center gap-2 sm:gap-3 ${
                     currentStep === step.id ? 'text-olive-900' : 
                     step.completed ? 'text-olive-600' : 'text-olive-400'
                   }`}>
-                    <div className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-medium transition-all duration-300 ${
+                    <div className={`w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center text-xs sm:text-sm font-medium transition-all duration-300 flex-shrink-0 ${
                       currentStep === step.id ? 'bg-olive-600 text-white scale-110' :
                       step.completed ? 'bg-olive-100 text-olive-600' : 'bg-gray-100 text-gray-400'
                     }`}>
-                      {step.completed ? <CheckCircle className="w-5 h-5" /> : 
+                      {step.completed ? <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5" /> : 
                        currentStep === step.id ? step.id : 
-                       <step.icon className="w-5 h-5" />}
+                       <step.icon className="w-4 h-4 sm:w-5 sm:h-5" />}
                     </div>
-                    <div className="hidden sm:block">
-                      <p className="text-sm font-medium">{step.title}</p>
-                      <p className="text-xs text-olive-500">
+                    <div className="hidden md:block">
+                      <p className="text-xs sm:text-sm font-medium">{step.title}</p>
+                      <p className="text-[10px] sm:text-xs text-olive-500">
                         {step.id === 1 ? 'Personal details' :
                          step.id === 2 ? 'Delivery options' :
                          step.id === 3 ? 'Payment method' :
@@ -253,7 +253,7 @@ const Checkout = () => {
                     </div>
                   </div>
                   {index < steps.length - 1 && (
-                    <div className={`w-12 h-0.5 transition-colors duration-300 ${
+                    <div className={`w-6 sm:w-8 md:w-12 h-0.5 transition-colors duration-300 flex-shrink-0 ${
                       step.completed ? 'bg-olive-300' : 'bg-gray-200'
                     }`} />
                   )}
@@ -261,44 +261,44 @@ const Checkout = () => {
               ))}
             </div>
             
-            <div className="text-right">
-              <p className="text-sm text-olive-600">Total</p>
-              <p className="font-medium text-olive-900 text-lg">€{finalTotal.toFixed(2)}</p>
+            <div className="text-right self-end sm:self-auto">
+              <p className="text-xs sm:text-sm text-olive-600">Total</p>
+              <p className="font-medium text-olive-900 text-base sm:text-lg">€{finalTotal.toFixed(2)}</p>
             </div>
           </div>
         </div>
       </div>
 
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-4 sm:px-6 py-6 sm:py-8">
         <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
             
             {/* Main Checkout Form */}
             <div className="lg:col-span-2">
               
               {/* Step 1: Customer Information */}
               {currentStep === 1 && (
-                <div className="space-y-6">
+                <div className="space-y-4 sm:space-y-6">
                   {/* Express Checkout */}
                   <Card className="border-olive-100/50 bg-white/70 backdrop-blur-sm">
                     <CardHeader>
-                      <CardTitle className="text-2xl font-light text-olive-900 tracking-wide">Express Checkout</CardTitle>
-                      <p className="text-olive-600">Choose a quick payment option or continue below</p>
+                      <CardTitle className="text-xl sm:text-2xl font-light text-olive-900 tracking-wide">Express Checkout</CardTitle>
+                      <p className="text-sm sm:text-base text-olive-600">Choose a quick payment option or continue below</p>
                     </CardHeader>
-                    <CardContent className="space-y-4">
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <button className="flex items-center justify-center gap-3 p-4 bg-black text-white rounded-xl hover:bg-gray-800 transition-all duration-300 hover:scale-105">
-                          <Smartphone className="w-5 h-5" />
+                    <CardContent className="space-y-3 sm:space-y-4">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+                        <button className="flex items-center justify-center gap-2 sm:gap-3 p-3 sm:p-4 bg-black text-white rounded-xl hover:bg-gray-800 transition-all duration-300 hover:scale-105 text-sm sm:text-base">
+                          <Smartphone className="w-4 h-4 sm:w-5 sm:h-5" />
                           <span className="font-medium">Apple Pay</span>
                         </button>
-                        <button className="flex items-center justify-center gap-3 p-4 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-all duration-300 hover:scale-105">
-                          <div className="w-5 h-5 bg-white rounded text-blue-600 flex items-center justify-center text-xs font-bold">P</div>
+                        <button className="flex items-center justify-center gap-2 sm:gap-3 p-3 sm:p-4 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-all duration-300 hover:scale-105 text-sm sm:text-base">
+                          <div className="w-4 h-4 sm:w-5 sm:h-5 bg-white rounded text-blue-600 flex items-center justify-center text-[10px] sm:text-xs font-bold">P</div>
                           <span className="font-medium">PayPal</span>
                         </button>
                       </div>
-                      <div className="flex items-center gap-4">
+                      <div className="flex items-center gap-3 sm:gap-4">
                         <div className="flex-1 h-px bg-olive-200"></div>
-                        <span className="text-sm text-olive-600 px-4">OR CONTINUE WITH</span>
+                        <span className="text-xs sm:text-sm text-olive-600 px-2 sm:px-4 whitespace-nowrap">OR CONTINUE WITH</span>
                         <div className="flex-1 h-px bg-olive-200"></div>
                       </div>
                     </CardContent>
@@ -307,48 +307,48 @@ const Checkout = () => {
                   {/* Personal Information */}
                   <Card className="border-olive-100/50 bg-white/70 backdrop-blur-sm">
                     <CardHeader>
-                      <CardTitle className="flex items-center gap-3 text-2xl font-light text-olive-900 tracking-wide">
-                        <div className="w-10 h-10 bg-olive-100 rounded-full flex items-center justify-center">
-                          <User className="w-5 h-5 text-olive-600" />
+                      <CardTitle className="flex items-center gap-2 sm:gap-3 text-xl sm:text-2xl font-light text-olive-900 tracking-wide">
+                        <div className="w-8 h-8 sm:w-10 sm:h-10 bg-olive-100 rounded-full flex items-center justify-center">
+                          <User className="w-4 h-4 sm:w-5 sm:h-5 text-olive-600" />
                         </div>
                         Personal Information
                       </CardTitle>
-                      <p className="text-olive-600 ml-13">We'll use this information to contact you about your order</p>
+                      <p className="text-sm sm:text-base text-olive-600 ml-10 sm:ml-13">We'll use this information to contact you about your order</p>
                     </CardHeader>
-                    <CardContent className="space-y-6">
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <CardContent className="space-y-4 sm:space-y-6">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
                         <div>
-                          <label className="block text-sm font-semibold text-olive-800 mb-3">First Name *</label>
+                          <label className="block text-xs sm:text-sm font-semibold text-olive-800 mb-2 sm:mb-3">First Name *</label>
                           <Input
                             value={shippingData.firstName}
                             onChange={(e) => setShippingData(prev => ({ ...prev, firstName: e.target.value }))}
-                            className="border-2 border-olive-200 focus:border-olive-400 h-12 rounded-xl"
+                            className="border-2 border-olive-200 focus:border-olive-400 h-10 sm:h-12 rounded-xl text-sm sm:text-base"
                             placeholder="Enter your first name"
                             required
                           />
                         </div>
                         <div>
-                          <label className="block text-sm font-semibold text-olive-800 mb-3">Last Name *</label>
+                          <label className="block text-xs sm:text-sm font-semibold text-olive-800 mb-2 sm:mb-3">Last Name *</label>
                           <Input
                             value={shippingData.lastName}
                             onChange={(e) => setShippingData(prev => ({ ...prev, lastName: e.target.value }))}
-                            className="border-2 border-olive-200 focus:border-olive-400 h-12 rounded-xl"
+                            className="border-2 border-olive-200 focus:border-olive-400 h-10 sm:h-12 rounded-xl text-sm sm:text-base"
                             placeholder="Enter your last name"
                             required
                           />
                         </div>
                       </div>
                       <div>
-                        <label className="block text-sm font-semibold text-olive-800 mb-3">Email Address *</label>
+                        <label className="block text-xs sm:text-sm font-semibold text-olive-800 mb-2 sm:mb-3">Email Address *</label>
                         <Input
                           type="email"
                           value={shippingData.email}
                           onChange={(e) => setShippingData(prev => ({ ...prev, email: e.target.value }))}
-                          className="border-2 border-olive-200 focus:border-olive-400 h-12 rounded-xl"
+                          className="border-2 border-olive-200 focus:border-olive-400 h-10 sm:h-12 rounded-xl text-sm sm:text-base"
                           placeholder="your@email.com"
                           required
                         />
-                        <p className="text-sm text-olive-600 mt-2">We'll send your order confirmation here</p>
+                        <p className="text-xs sm:text-sm text-olive-600 mt-1 sm:mt-2">We'll send your order confirmation here</p>
                       </div>
                       <div>
                         <label className="block text-sm font-semibold text-olive-800 mb-3">Phone Number</label>

@@ -1,12 +1,18 @@
 import { useEffect, useRef, useState, useCallback } from 'react';
 import { ChevronDown, ArrowRight, ShoppingBag, Heart, Play, Pause } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { motion, Variants } from 'framer-motion';
 import Logo from './common/Logo';
 import IngredientSpotlight from './IngredientSpotlight';
 import { useCart } from '@/contexts/CartContext';
 import { getAssetPath } from '@/utils/assetPath';
 import '../styles/optimized-landing.css';
 import '../styles/luxury-animations.css';
+
+const fadeInUp: Variants = {
+  hidden: { opacity: 0, y: 60 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } }
+};
 
 const ParallaxLandingPage = () => {
   const [scrollY, setScrollY] = useState(0);
@@ -180,88 +186,97 @@ const ParallaxLandingPage = () => {
           />
         </div>
 
-        {/* Enhanced Hero Content */}
+        {/* Asymmetrical Hero Content - Option 3 (Adjusted: Middle Left) */}
         <div 
-          className="relative z-10 flex items-center justify-center h-full px-4"
+          className="relative z-10 h-full flex flex-col justify-center px-6 sm:px-12 lg:px-20"
           style={{
             opacity: Math.max(0, 1 - scrollY * 0.0008)
           }}
         >
-          <div className="text-center max-w-5xl">
-            {/* Main Brand Title */}
-            <div className="mb-12">
-              <div className="flex justify-center mb-6">
-                <Logo 
-                  size="lg" 
-                  variant="light" 
-                  className="text-white scale-[2] sm:scale-[2.5] lg:scale-[3] transform"
-                />
-              </div>
-              
-              <div 
-                className="text-xs md:text-sm text-rice-200/80 tracking-[0.4em] uppercase font-light"
-                style={{
-                  textShadow: '0 2px 10px rgba(0,0,0,0.7)'
-                }}
-              >
-                Natural Beauty · Italian Craftsmanship
-              </div>
-            </div>
-            
-            {/* Minimalist Tagline */}
-            <p 
-              className="text-lg md:text-xl lg:text-2xl text-white/90 mb-20 font-light leading-relaxed max-w-2xl mx-auto tracking-wide"
-              style={{
-                textShadow: '0 2px 15px rgba(0,0,0,0.7), 0 1px 6px rgba(0,0,0,0.4)'
-              }}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+            {/* Left: Brand Name (Middle Left, Smaller) */}
+            <motion.div 
+              initial={{ opacity: 0, x: -40 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 1, ease: "easeOut", delay: 0.2 }}
+              className="lg:col-span-7"
             >
-              Natural Beauty, Timeless Radiance
-            </p>
+              <h1 className="text-[4rem] sm:text-[6rem] md:text-[7rem] lg:text-[8rem] leading-[0.9] font-light tracking-tighter text-white mix-blend-overlay opacity-90">
+                RISE
+              </h1>
+              <div className="flex items-center gap-4 mt-2 ml-2">
+                <div className="h-px w-12 sm:w-16 bg-white/60"></div>
+                <span className="text-xs sm:text-sm tracking-[0.4em] uppercase text-white/80 font-light">
+                  Cosmetics
+                </span>
+              </div>
+            </motion.div>
 
+            {/* Right: Philosophy & CTA (Aligned with logo or slightly offset) */}
+            <motion.div 
+              initial={{ opacity: 0, x: 40 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 1, ease: "easeOut", delay: 0.4 }}
+              className="lg:col-span-5"
+            >
+              <p className="text-lg sm:text-xl md:text-2xl font-light text-white/90 leading-relaxed mb-6 max-w-md"
+                 style={{ textShadow: '0 2px 10px rgba(0,0,0,0.3)' }}>
+                Natural Beauty, <br/>
+                <span className="italic font-serif">Timeless Radiance.</span>
+              </p>
+              
+              <p className="text-sm text-white/70 leading-relaxed mb-8 max-w-sm font-light hidden sm:block">
+                Crafted in Italy using the finest rice-based ingredients. 
+                A ritual of self-care that honors your skin's natural essence.
+              </p>
+
+              <Link 
+                to="/products"
+                className="group inline-flex items-center gap-3 text-white border-b border-white/30 pb-1 hover:border-white transition-all duration-300"
+              >
+                <span className="text-sm tracking-widest uppercase font-light">Discover Collection</span>
+                <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-2" />
+              </Link>
+            </motion.div>
           </div>
         </div>
 
-        {/* Enhanced Scroll Indicator */}
+        {/* Enhanced Scroll Indicator - Moved to bottom right corner for Option 3 */}
         <div 
-          className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-white"
+          className="absolute bottom-8 right-8 sm:right-12 text-white/50 hidden lg:block"
           style={{
-            transform: `translateX(-50%) translateY(${scrollY * 0.3}px)`,
             opacity: Math.max(0, 1 - scrollY * 0.002)
           }}
         >
-          <div className="flex flex-col items-center space-y-3 animate-bounce">
-            <span className="text-sm font-light tracking-wide opacity-90 text-center">
-              Discover More
+          <div className="flex flex-col items-center space-y-4">
+            <span className="text-[10px] tracking-[0.2em] uppercase writing-vertical-rl rotate-180">
+              Scroll
             </span>
-            <div className="w-0.5 h-8 bg-gradient-to-b from-white to-transparent"></div>
-            <ChevronDown 
-              className="w-6 h-6 animate-pulse" 
-              style={{
-                transform: `translateY(${scrollY * 0.01}px)`
-              }}
-            />
+            <div className="h-12 w-px bg-white/30 overflow-hidden">
+              <div className="h-full w-full bg-white animate-scrolldown"></div>
+            </div>
           </div>
         </div>
       </section>
 
       {/* Enhanced Featured Products Section with modern design */}
       <section 
-        className="py-12 lg:py-16 bg-gradient-to-b from-warm-cream to-warm-ivory relative overflow-hidden"
+        className="py-10 sm:py-12 lg:py-16 bg-gradient-to-b from-warm-cream to-warm-ivory relative overflow-hidden"
         style={{
           transform: `translateY(${scrollY * 0.03}px)`
         }}
       >
         {/* Subtle background elements */}
-        <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
           <div 
-            className="absolute top-20 right-16 w-96 h-96 rounded-full bg-gradient-to-r from-rice-100/30 to-olive-100/20 blur-3xl"
+            className="absolute top-20 right-16 w-64 sm:w-96 h-64 sm:h-96 rounded-full bg-gradient-to-r from-rice-100/30 to-olive-100/20 blur-3xl"
             style={{
               transform: `translate(${-scrollY * 0.02}px, ${scrollY * 0.04}px)`,
               animation: 'float 25s ease-in-out infinite'
             }}
           />
           <div 
-            className="absolute bottom-32 left-20 w-80 h-80 rounded-full bg-gradient-to-r from-olive-100/25 to-rice-100/15 blur-3xl"
+            className="absolute bottom-32 left-20 w-60 sm:w-80 h-60 sm:h-80 rounded-full bg-gradient-to-r from-olive-100/25 to-rice-100/15 blur-3xl"
             style={{
               transform: `translate(${scrollY * 0.03}px, ${-scrollY * 0.02}px)`,
               animation: 'float 30s ease-in-out infinite reverse'
@@ -271,27 +286,38 @@ const ParallaxLandingPage = () => {
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           {/* Enhanced Section Header */}
-          <div 
-            className="text-center mb-10 lg:mb-12"
+          <motion.div 
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            variants={fadeInUp}
+            className="text-center mb-8 sm:mb-10 lg:mb-12"
             style={{
               transform: `translateY(${scrollY * 0.02}px)`
             }}
           >
-            <div className="mb-3">
-              <span className="text-xs text-stone-500 tracking-[0.3em] uppercase font-light">Featured</span>
+            <div className="mb-2 sm:mb-3">
+              <span className="text-[0.65rem] sm:text-xs text-stone-500 tracking-[0.3em] uppercase font-light">Featured</span>
             </div>
-            <h2 className="text-3xl md:text-4xl font-light text-stone-700 mb-4 tracking-wide leading-tight">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-light text-stone-700 mb-3 sm:mb-4 tracking-wide leading-tight px-4">
               Signature Collection
             </h2>
-            <div className="w-20 h-0.5 bg-gradient-to-r from-transparent via-olive-300 to-transparent mx-auto mb-4"></div>
-            <p className="text-sm text-stone-600/80 font-light max-w-xl mx-auto leading-relaxed">
+            <div className="w-16 sm:w-20 h-0.5 bg-gradient-to-r from-transparent via-olive-300 to-transparent mx-auto mb-3 sm:mb-4"></div>
+            <p className="text-xs sm:text-sm text-stone-600/80 font-light max-w-xl mx-auto leading-relaxed px-4">
               Discover our most beloved formulations, crafted with the finest natural ingredients and Italian precision
             </p>
-          </div>
+          </motion.div>
 
           {/* Enhanced Product Grid - Compact Size */}
-          <div 
-            className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8"
+          <motion.div 
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-50px" }}
+            variants={{
+              hidden: { opacity: 0 },
+              visible: { opacity: 1, transition: { staggerChildren: 0.2 } }
+            }}
+            className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 lg:gap-8"
             style={{
               transform: `translateY(${scrollY * 0.01}px)`
             }}
@@ -331,8 +357,9 @@ const ParallaxLandingPage = () => {
                 image: getAssetPath('/images/products/IMG-20250808-WA0008.jpg')
               }
             ].map((product, index) => (
-              <div 
+              <motion.div 
                 key={product.id}
+                variants={fadeInUp}
                 className="group block bg-warm-cream border border-warm-taupe/30 hover:border-warm-olive/40 hover:shadow-2xl transition-all duration-500 rounded-lg overflow-hidden"
                 style={{
                   transform: `translateY(${scrollY * (0.005 + index * 0.002)}px)`,
@@ -367,80 +394,90 @@ const ParallaxLandingPage = () => {
                 </div>
 
                 {/* Enhanced Product Info - Compact */}
-                <div className="p-5 space-y-3">
+                <div className="p-4 sm:p-5 space-y-2 sm:space-y-3">
                   <div>
-                    <p className="text-soft-gray text-[10px] tracking-[0.2em] uppercase mb-2 font-medium">{product.type}</p>
-                    <h3 className="text-lg font-light text-rich-brown mb-1.5 tracking-wide group-hover:text-warm-olive transition-colors duration-300">
+                    <p className="text-soft-gray text-[9px] sm:text-[10px] tracking-[0.2em] uppercase mb-1.5 sm:mb-2 font-medium">{product.type}</p>
+                    <h3 className="text-base sm:text-lg font-light text-rich-brown mb-1 sm:mb-1.5 tracking-wide group-hover:text-warm-olive transition-colors duration-300 line-clamp-2">
                       {product.name}
                     </h3>
-                    <p className="text-soft-gray/80 text-xs tracking-wide font-light">{product.subtitle}</p>
+                    <p className="text-soft-gray/80 text-[11px] sm:text-xs tracking-wide font-light line-clamp-1">{product.subtitle}</p>
                   </div>
                   
-                  <p className="text-soft-gray/70 text-xs leading-relaxed font-light line-clamp-2">
+                  <p className="text-soft-gray/70 text-[11px] sm:text-xs leading-relaxed font-light line-clamp-2">
                     {product.description}
                   </p>
                   
-                  <div className="flex items-center justify-between pt-3 border-t border-warm-taupe/20">
-                    <span className="text-lg font-light text-rich-brown tracking-wide">
+                  <div className="flex items-center justify-between pt-2 sm:pt-3 border-t border-warm-taupe/20">
+                    <span className="text-base sm:text-lg font-light text-rich-brown tracking-wide">
                       {product.price}
                     </span>
-                    <div className="flex space-x-2">
+                    <div className="flex space-x-1.5 sm:space-x-2">
                       <button 
                         onClick={(e) => {
                           e.stopPropagation();
                           // Add to wishlist logic
                         }}
-                        className="p-2.5 rounded-lg border border-warm-olive/30 hover:bg-warm-olive hover:text-white hover:border-warm-olive transition-all duration-300 group/btn"
+                        className="p-2 sm:p-2.5 rounded-lg border border-warm-olive/30 hover:bg-warm-olive hover:text-white hover:border-warm-olive transition-all duration-300 group/btn"
                         aria-label="Add to wishlist"
                       >
-                        <Heart className="w-4 h-4 group-hover/btn:scale-110 transition-transform duration-200" strokeWidth={1.5} />
+                        <Heart className="w-3.5 h-3.5 sm:w-4 sm:h-4 group-hover/btn:scale-110 transition-transform duration-200" strokeWidth={1.5} />
                       </button>
                       <Link
                         to={`/product/${product.id}`}
-                        className="flex-1 px-4 py-2.5 rounded-lg bg-warm-olive text-white hover:bg-warm-olive-dark transition-all duration-300 group/btn flex items-center justify-center gap-2"
+                        className="flex-1 px-3 sm:px-4 py-2 sm:py-2.5 rounded-lg bg-warm-olive text-white hover:bg-warm-olive-dark transition-all duration-300 group/btn flex items-center justify-center gap-1.5 sm:gap-2"
                         onClick={(e) => e.stopPropagation()}
                       >
-                        <ShoppingBag className="w-4 h-4 group-hover/btn:scale-110 transition-transform duration-200" strokeWidth={1.5} />
-                        <span className="text-sm font-medium tracking-wide">View Product</span>
+                        <ShoppingBag className="w-3.5 h-3.5 sm:w-4 sm:h-4 group-hover/btn:scale-110 transition-transform duration-200" strokeWidth={1.5} />
+                        <span className="text-xs sm:text-sm font-medium tracking-wide">View</span>
                       </Link>
                     </div>
                   </div>
                 </div>
-              </div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
 
           {/* Enhanced Call-to-Action */}
-          <div 
-            className="text-center mt-16"
+          <motion.div 
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={fadeInUp}
+            className="text-center mt-12 sm:mt-16"
             style={{
               transform: `translateY(${scrollY * 0.01}px)`
             }}
           >
             <Link 
               to="/products"
-              className="group inline-flex items-center gap-3 px-8 py-4 rounded-lg bg-warm-olive text-white hover:bg-warm-olive-dark transition-all duration-300 tracking-wide transform hover:scale-105 shadow-md hover:shadow-lg"
+              className="group inline-flex items-center gap-2 sm:gap-3 px-6 sm:px-8 py-3 sm:py-4 rounded-lg bg-warm-olive text-white hover:bg-warm-olive-dark transition-all duration-300 tracking-wide transform hover:scale-105 shadow-md hover:shadow-lg text-sm sm:text-base"
             >
-              <span className="relative z-10 font-medium text-base">View Complete Collection</span>
-              <ArrowRight className="relative z-10 w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" strokeWidth={1.5} />
+              <span className="relative z-10 font-medium">View Complete Collection</span>
+              <ArrowRight className="relative z-10 w-4 h-4 sm:w-5 sm:h-5 transition-transform duration-300 group-hover:translate-x-1" strokeWidth={1.5} />
             </Link>
-          </div>
+          </motion.div>
         </div>
       </section>
 
       {/* Our Mission Section */}
-        <section className="py-24 bg-pale-sand">
+        <section className="py-16 sm:py-20 md:py-24 bg-pale-sand">
           <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-12">
-              <span className="text-xs text-soft-gray tracking-[0.2em] uppercase font-light">Our Mission</span>
-              <h2 className="text-3xl md:text-4xl font-light text-rich-brown mt-4 mb-6 tracking-wide leading-tight">
+            <motion.div 
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={fadeInUp}
+              className="text-center mb-10 sm:mb-12"
+            >
+              <span className="text-[0.65rem] sm:text-xs text-soft-gray tracking-[0.2em] uppercase font-light">Our Mission</span>
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-light text-rich-brown mt-3 sm:mt-4 mb-4 sm:mb-6 tracking-wide leading-tight px-4">
                 Premium skincare, inspired by nature and crafted with care.
               </h2>
-              <div className="w-16 h-0.5 bg-warm-olive/40 mx-auto mb-8"></div>
-              <p className="text-base text-soft-gray font-light max-w-xl mx-auto">
+              <div className="w-12 sm:w-16 h-0.5 bg-warm-olive/40 mx-auto mb-6 sm:mb-8"></div>
+              <p className="text-sm sm:text-base text-soft-gray font-light max-w-xl mx-auto px-4">
                 We create clean, effective skincare using rice-based ingredients and botanicals, with a focus on sustainability and simplicity. Our products are designed to elevate your daily routine and honor your skin’s natural radiance.
               </p>
-            </div>
+            </motion.div>
           </div>
         </section>
 
@@ -465,7 +502,13 @@ const ParallaxLandingPage = () => {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="grid lg:grid-cols-2 gap-20 items-center">
             {/* Philosophy Content */}
-            <div className="space-y-8">
+            <motion.div 
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={fadeInUp}
+              className="space-y-8"
+            >
               {/* Header */}
               <div>
                 <div className="mb-6">
@@ -524,10 +567,16 @@ const ParallaxLandingPage = () => {
                   </div>
                 </div>
               </div>
-            </div>
+            </motion.div>
 
             {/* Philosophy Visual with Products */}
-            <div className="relative">
+            <motion.div 
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={fadeInUp}
+              className="relative"
+            >
               <div className="aspect-square bg-gradient-to-br from-olive-50 to-rice-50 rounded-3xl overflow-hidden relative border border-olive-100/50">
                 {/* Product Images Around Video */}
                 <div className="absolute inset-0 flex flex-col">
@@ -588,7 +637,7 @@ const ParallaxLandingPage = () => {
                   </div>
                 </div>
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>

@@ -1,22 +1,25 @@
 import React, { useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useCart } from '@/contexts/CartContext';
 import { useWishlist } from '@/contexts/WishlistContext';
 import { productService } from '@/services/optimizedProductService';
-import { Product } from '@/types';
-import { ArrowLeft, ArrowRight, Plus, Minus, Heart } from 'lucide-react';
+import { ArrowRight, Plus, Minus } from 'lucide-react';
 import Header from '@/components/common/Header';
 import Footer from '@/components/common/Footer';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 
 const AesopInspiredProduct = () => {
   const { id } = useParams<{ id: string }>();
   const [selectedImage, setSelectedImage] = useState(0);
   const [quantity, setQuantity] = useState(1);
-  const [activeSection, setActiveSection] = useState('about');
   const { addToCart } = useCart();
-  const { addToWishlist, removeFromWishlist, isInWishlist } = useWishlist();
 
   const { data: product, isLoading } = useQuery({
     queryKey: ['product', id],
@@ -59,191 +62,164 @@ const AesopInspiredProduct = () => {
     <div className="min-h-screen bg-[#FFFEF2] text-[#252525]">
       <Header />
 
-      <main className="pt-32 pb-32">
-          <div className="max-w-screen-2xl mx-auto px-8">
-            {/* Product Category & Name */}
-            <div className="mb-16 max-w-xl">
+      <main className="pt-24 sm:pt-28 md:pt-32 pb-16 sm:pb-24 md:pb-32">
+        <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 md:px-8">
+          <div className="grid lg:grid-cols-12 gap-8 sm:gap-10 md:gap-12 lg:gap-20">
+            
+            {/* Left Column - Product Image (Sticky) */}
+            <div className="lg:col-span-7">
+              <div className="lg:sticky lg:top-32 space-y-4">
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={selectedImage}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.5 }}
+                    className="aspect-[4/5] bg-[#F6F5E8] overflow-hidden rounded-sm"
+                  >
+                    <img
+                      src={product.images[selectedImage]}
+                      alt={product.name}
+                      className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
+                    />
+                  </motion.div>
+                </AnimatePresence>
+
+                {product.images.length > 1 && (
+                  <div className="flex gap-4 overflow-x-auto pb-2">
+                    {product.images.map((img, index) => (
+                      <button
+                        key={index}
+                        onClick={() => setSelectedImage(index)}
+                        className={`relative w-20 h-20 flex-shrink-0 overflow-hidden rounded-sm transition-all duration-300 ${
+                          selectedImage === index 
+                            ? 'ring-1 ring-[#252525] opacity-100' 
+                            : 'opacity-60 hover:opacity-100'
+                        }`}
+                      >
+                        <img src={img} alt={`View ${index + 1}`} className="w-full h-full object-cover" />
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Right Column - Product Info & Accordions */}
+            <div className="lg:col-span-5 space-y-8 sm:space-y-10">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="space-y-4"
+                className="space-y-6"
               >
-                <h2 className="text-xs uppercase tracking-[0.2em] text-[#252525]/60">
-                  {product.category}
-                </h2>
-                <h1 className="text-2xl sm:text-3xl font-light tracking-wide">
-                  {product.name}
-                </h1>
-              </motion.div>
-            </div>
-
-            <div className="grid lg:grid-cols-12 gap-12 lg:gap-24">
-              {/* Left Column - Product Information */}
-              <div className="lg:col-span-4 space-y-12">
-                {/* Product Description */}
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.2 }}
-                  className="space-y-8"
-                >
-                  <div className="space-y-6">
-                    <p className="text-lg font-light leading-relaxed">
-                      {product.shortDescription}
-                    </p>
-                    <p className="font-light leading-relaxed text-[#252525]/80">
-                      {product.description}
-                    </p>
-                  </div>
-
-                  <div className="space-y-8 pt-8 border-t border-[#252525]/10">
-                    <div>
-                      <h3 className="text-sm uppercase tracking-wide mb-4">Suited to</h3>
-                      <p className="font-light text-[#252525]/80">
-                        Most skin types, including dry and sensitive
-                      </p>
-                    </div>
-
-                    <div>
-                      <h3 className="text-sm uppercase tracking-wide mb-4">Key ingredients</h3>
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        {product.ingredients?.map((ingredient, index) => (
-                          <motion.div
-                            key={index}
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: index * 0.1 }}
-                            className="bg-[#F6F5E8] rounded-xl shadow-md shadow-[#252525]/10 border border-[#252525]/10 p-4 flex items-center gap-3"
-                          >
-                            <span className="text-[#252525]/40 text-lg">•</span>
-                            <span className="font-light text-[#252525]/80">{ingredient}</span>
-                          </motion.div>
-                        ))}
-                      </div>
-                    </div>
-
-                    <div>
-                      <h3 className="text-sm uppercase tracking-wide mb-4">Size</h3>
-                      <p className="font-light text-[#252525]/80">
-                        100 mL / 3.3 fl oz
-                      </p>
-                    </div>
-                  </div>
-                </motion.div>
-              </div>
-
-              {/* Middle Column - Product Image */}
-              <div className="lg:col-span-4">
-                <div className="sticky top-32">
-                  <AnimatePresence mode="wait">
-                    <motion.div
-                      key={selectedImage}
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                      transition={{ duration: 0.5 }}
-                      className="aspect-[3/4] bg-[#F6F5E8]"
-                    >
-                      <img
-                        src={product.images[selectedImage]}
-                        alt={product.name}
-                        className="w-full h-full object-cover rounded-2xl shadow-xl shadow-[#252525]/10 border border-[#252525]/10"
-                      />
-                    </motion.div>
-                  </AnimatePresence>
-
-                  {product.images.length > 1 && (
-                    <div className="mt-6 flex justify-center gap-4">
-                      {product.images.map((_, index) => (
-                        <button
-                          key={index}
-                          onClick={() => setSelectedImage(index)}
-                          className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                            selectedImage === index 
-                              ? 'bg-[#252525] scale-150' 
-                              : 'bg-[#252525]/30 hover:bg-[#252525]/50'
-                          }`}
-                          aria-label={`View image ${index + 1}`}
-                        />
-                      ))}
-                    </div>
-                  )}
+                {/* Header Info */}
+                <div className="space-y-2">
+                  <h2 className="text-xs uppercase tracking-[0.2em] text-[#252525]/60">
+                    {product.category}
+                  </h2>
+                  <h1 className="text-3xl sm:text-4xl font-light tracking-wide text-[#252525]">
+                    {product.name}
+                  </h1>
+                  <p className="text-lg font-light text-[#252525]/80 pt-1">
+                    {product.shortDescription}
+                  </p>
                 </div>
-              </div>
 
-              {/* Right Column - Purchase Information */}
-              <div className="lg:col-span-4">
-                <div className="sticky top-32 space-y-8">
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.4 }}
-                    className="space-y-8"
-                  >
-                    {/* Price */}
-                    <div className="text-xl font-light">
-                      €{product.price.toFixed(2)}
-                    </div>
+                {/* Price & Cart */}
+                <div className="pt-6 border-t border-[#252525]/10 space-y-6">
+                  <div className="text-2xl font-light">
+                    €{product.price.toFixed(2)}
+                  </div>
 
-                    {/* Add to Cart Section */}
-                    <div className="space-y-6">
-                      <div className="flex items-center gap-4">
+                  <div className="space-y-4">
+                    <div className="flex items-center gap-4">
+                      <div className="flex items-center border border-[#252525]/20 rounded-full px-4 py-2 gap-4">
                         <button
                           onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                          className="w-10 h-10 flex items-center justify-center border border-[#252525]/20 rounded-full hover:bg-[#252525]/5 transition-colors"
+                          className="hover:text-[#252525]/60 transition-colors"
                           disabled={quantity <= 1}
                         >
                           <Minus className="w-4 h-4" />
                         </button>
-                        <span className="w-12 text-center font-light">{quantity}</span>
+                        <span className="w-4 text-center text-sm font-light">{quantity}</span>
                         <button
                           onClick={() => setQuantity(quantity + 1)}
-                          className="w-10 h-10 flex items-center justify-center border border-[#252525]/20 rounded-full hover:bg-[#252525]/5 transition-colors"
+                          className="hover:text-[#252525]/60 transition-colors"
                         >
                           <Plus className="w-4 h-4" />
                         </button>
                       </div>
-
+                      
                       <button
                         onClick={handleAddToCart}
-                        className="w-full h-12 bg-[#252525] text-white text-sm tracking-wide hover:bg-[#333333] transition-colors flex items-center justify-between px-6"
+                        className="flex-1 h-12 bg-[#252525] text-white text-sm tracking-widest uppercase hover:bg-[#333333] transition-colors flex items-center justify-center gap-2 px-8 rounded-full"
                       >
-                        <span>Add to cart</span>
+                        <span>Add to Cart</span>
                         <ArrowRight className="w-4 h-4" />
                       </button>
                     </div>
-
-                    {/* Benefits */}
-                    <div className="space-y-6 pt-8 border-t border-[#252525]/10">
-                      <h3 className="text-sm uppercase tracking-wide">Benefits</h3>
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        {product.benefits?.map((benefit, index) => (
-                          <motion.div
-                            key={index}
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: index * 0.1 }}
-                            className="bg-[#F6F5E8] rounded-xl shadow-md shadow-[#252525]/10 border border-[#252525]/10 p-4 flex items-center gap-3"
-                          >
-                            <span className="text-[#252525]/40 text-lg">•</span>
-                            <span className="font-light text-[#252525]/80">{benefit}</span>
-                          </motion.div>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* How to Use */}
-                    <div className="space-y-6 pt-8 border-t border-[#252525]/10">
-                      <h3 className="text-sm uppercase tracking-wide">How to use</h3>
-                      <p className="font-light leading-relaxed text-[#252525]/80">
-                        {product.howToUse}
-                      </p>
-                    </div>
-                  </motion.div>
+                  </div>
                 </div>
-              </div>
+
+                {/* Accordions */}
+                <div className="pt-8">
+                  <Accordion type="single" collapsible className="w-full" defaultValue="description">
+                    
+                    <AccordionItem value="description" className="border-t border-[#252525]/10">
+                      <AccordionTrigger className="text-sm uppercase tracking-widest font-light hover:no-underline py-4">
+                        Description
+                      </AccordionTrigger>
+                      <AccordionContent className="text-base font-light leading-relaxed text-[#252525]/80 pb-6">
+                        {product.description}
+                        {product.benefits && (
+                          <div className="mt-4">
+                            <strong className="font-medium text-[#252525] block mb-2">Key Benefits:</strong>
+                            <ul className="list-disc pl-5 space-y-1">
+                              {product.benefits.map((benefit, i) => (
+                                <li key={i}>{benefit}</li>
+                              ))}
+                            </ul>
+                          </div>
+                        )}
+                      </AccordionContent>
+                    </AccordionItem>
+
+                    <AccordionItem value="ingredients" className="border-t border-[#252525]/10">
+                      <AccordionTrigger className="text-sm uppercase tracking-widest font-light hover:no-underline py-4">
+                        Ingredients
+                      </AccordionTrigger>
+                      <AccordionContent className="text-base font-light leading-relaxed text-[#252525]/80 pb-6">
+                        <div className="flex flex-wrap gap-2">
+                          {product.ingredients?.map((ingredient, index) => (
+                            <span key={index} className="bg-[#F6F5E8] px-3 py-1 rounded-full text-sm border border-[#252525]/5">
+                              {ingredient}
+                            </span>
+                          ))}
+                        </div>
+                        <p className="mt-4 text-xs text-[#252525]/60 italic">
+                          *Ingredients are subject to change at the manufacturer's discretion. For the most complete and up-to-date list of ingredients, refer to the product packaging.
+                        </p>
+                      </AccordionContent>
+                    </AccordionItem>
+
+                    <AccordionItem value="howto" className="border-t border-[#252525]/10 border-b">
+                      <AccordionTrigger className="text-sm uppercase tracking-widest font-light hover:no-underline py-4">
+                        How to Use
+                      </AccordionTrigger>
+                      <AccordionContent className="text-base font-light leading-relaxed text-[#252525]/80 pb-6">
+                        {product.howToUse}
+                      </AccordionContent>
+                    </AccordionItem>
+
+                  </Accordion>
+                </div>
+
+              </motion.div>
             </div>
+
           </div>
+        </div>
       </main>
       <Footer />
     </div>

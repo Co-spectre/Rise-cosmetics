@@ -75,25 +75,25 @@ const Header = () => {
     // Transparent pages scrolled - glossy transparent navbar
     if (isTransparentPage && isScrolled) {
       return {
-        navbar: 'bg-white/70 backdrop-blur-xl border-b border-white/20 shadow-lg',
-        text: 'text-stone-800 hover:text-stone-950',
-        icon: 'text-stone-800 group-hover:text-stone-950',
-        button: 'border-stone-300 bg-white/50 hover:bg-white/70 text-stone-800 backdrop-blur-sm',
-        authButton: 'px-6 py-2 text-sm font-light tracking-wide rounded-lg border border-stone-300 bg-white/50 text-stone-800 hover:bg-white/70 hover:border-stone-400 transition-all duration-300 backdrop-blur-sm',
-        mobileMenu: 'bg-white/90 backdrop-blur-xl border-t border-stone-200',
-        mobileText: 'text-stone-700 hover:bg-stone-100 font-medium'
+        navbar: 'bg-holistic-50/90 backdrop-blur-xl border-b border-holistic-200/50 shadow-lg',
+        text: 'text-holistic-800 hover:text-holistic-900',
+        icon: 'text-holistic-800 group-hover:text-holistic-900',
+        button: 'border-holistic-200 bg-holistic-50/50 hover:bg-holistic-100 text-holistic-800 backdrop-blur-sm',
+        authButton: 'px-6 py-2 text-sm font-light tracking-wide rounded-lg border border-holistic-300 bg-holistic-50/50 text-holistic-800 hover:bg-holistic-100 hover:border-holistic-400 transition-all duration-300 backdrop-blur-sm',
+        mobileMenu: 'bg-holistic-50/95 backdrop-blur-xl border-t border-holistic-200',
+        mobileText: 'text-holistic-800 hover:bg-holistic-100 font-medium'
       };
     }
     
     // Other pages - soft beige navbar
     return {
-      navbar: 'bg-rice-50 shadow-md border-b border-stone-200',
-      text: 'text-stone-700 hover:text-stone-900',
-      icon: 'text-stone-700 group-hover:text-stone-900',
-      button: 'border-stone-300 bg-stone-50 hover:bg-stone-100 text-stone-700',
-      authButton: 'px-6 py-2 text-sm font-medium tracking-wide rounded-lg bg-warm-olive text-white hover:bg-warm-olive-dark transition-all duration-300 shadow-sm',
-      mobileMenu: 'bg-rice-50 border-t border-stone-200',
-      mobileText: 'text-stone-700 hover:bg-stone-100 font-medium'
+      navbar: 'bg-holistic-50 shadow-md border-b border-holistic-200',
+      text: 'text-holistic-800 hover:text-holistic-900',
+      icon: 'text-holistic-800 group-hover:text-holistic-900',
+      button: 'border-holistic-200 bg-holistic-100 hover:bg-holistic-200 text-holistic-800',
+      authButton: 'px-6 py-2 text-sm font-medium tracking-wide rounded-lg bg-holistic-600 text-white hover:bg-holistic-700 transition-all duration-300 shadow-sm',
+      mobileMenu: 'bg-holistic-50 border-t border-holistic-200',
+      mobileText: 'text-holistic-800 hover:bg-holistic-100 font-medium'
     };
   }, [isTransparentPage, isScrolled]);
 
@@ -107,11 +107,11 @@ const Header = () => {
         right: 0, 
         zIndex: 9999,
         transition: 'all 0.5s ease-in-out',
-        backgroundColor: isTransparentPage && isScrolled ? 'rgba(250, 246, 240, 0.75)' : (isTransparentPage ? 'transparent' : 'rgba(250, 249, 247, 1)'),
+        backgroundColor: isTransparentPage && isScrolled ? 'rgba(249, 247, 242, 0.9)' : (isTransparentPage ? 'transparent' : 'rgba(249, 247, 242, 1)'),
         backdropFilter: isTransparentPage && isScrolled ? 'blur(20px)' : 'none',
         WebkitBackdropFilter: isTransparentPage && isScrolled ? 'blur(20px)' : 'none',
-        boxShadow: isTransparentPage && isScrolled ? '0 4px 6px -1px rgba(0, 0, 0, 0.08)' : 'none',
-        borderBottom: isTransparentPage && isScrolled ? '1px solid rgba(212, 192, 165, 0.2)' : 'none'
+        boxShadow: isTransparentPage && isScrolled ? '0 4px 6px -1px rgba(0, 0, 0, 0.05)' : 'none',
+        borderBottom: isTransparentPage && isScrolled ? '1px solid rgba(226, 219, 201, 0.5)' : 'none'
       }}
       data-scrolled={isScrolled ? 'true' : 'false'}
       data-landing={isTransparentPage ? 'true' : 'false'}

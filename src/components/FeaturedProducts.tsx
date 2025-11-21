@@ -42,14 +42,14 @@ const FeaturedProducts: React.FC = () => {
   ];
 
   return (
-    <section className="py-20 bg-gradient-to-b from-white to-rice-50">
+    <section className="py-20 bg-gradient-to-b from-holistic-50 to-holistic-100">
       <div className="container mx-auto px-4">
         {/* Header */}
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-light text-olive-900 mb-6">
+          <h2 className="text-4xl md:text-5xl font-light text-holistic-900 mb-6">
             Featured Products
           </h2>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+          <p className="text-xl text-holistic-600 max-w-2xl mx-auto">
             Discover our signature collection of luxury skincare essentials
           </p>
         </div>
@@ -90,16 +90,16 @@ const FeaturedProducts: React.FC = () => {
                 
                 {/* Hover Overlay */}
                 <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                  <button className="flex items-center gap-2 px-6 py-3 bg-white rounded-full shadow-lg hover:bg-olive-50 transition-colors">
-                    <ShoppingBag className="w-5 h-5 text-olive-600" />
-                    <span className="text-olive-600 font-medium">Quick Add</span>
+                  <button className="flex items-center gap-2 px-6 py-3 bg-white rounded-full shadow-lg hover:bg-holistic-50 transition-colors">
+                    <ShoppingBag className="w-5 h-5 text-holistic-600" />
+                    <span className="text-holistic-600 font-medium">Quick Add</span>
                   </button>
                 </div>
               </div>
 
               {/* Product Info */}
               <div className="p-6">
-                <h3 className="text-lg font-bold text-gray-900 mb-2 group-hover:text-olive-600 transition-colors">
+                <h3 className="text-lg font-bold text-holistic-900 mb-2 group-hover:text-holistic-600 transition-colors">
                   {product.name}
                 </h3>
 
@@ -122,14 +122,14 @@ const FeaturedProducts: React.FC = () => {
 
                 {/* Price */}
                 <div className="flex items-center gap-2 mb-4">
-                  <span className="text-2xl font-bold text-gray-900">${product.price}</span>
+                  <span className="text-2xl font-bold text-holistic-900">${product.price}</span>
                   {product.originalPrice && (
                     <span className="text-lg text-gray-500 line-through">${product.originalPrice}</span>
                   )}
                 </div>
 
                 {/* Add to Cart Button */}
-                <button className="w-full bg-gradient-to-r from-olive-600 to-rice-600 text-white py-3 rounded-xl font-medium hover:from-olive-700 hover:to-rice-700 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
+                <button className="w-full bg-holistic-600 text-white py-3 rounded-xl font-medium hover:bg-holistic-700 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
                   Add to Cart
                 </button>
               </div>
@@ -139,9 +139,9 @@ const FeaturedProducts: React.FC = () => {
 
         {/* View All Button */}
         <div className="text-center mt-12">
-          <button className="inline-flex items-center gap-3 px-8 py-4 border-2 border-olive-600 text-olive-600 hover:bg-olive-600 hover:text-white transition-all duration-500 tracking-wide transform hover:scale-105 relative overflow-hidden rounded-xl">
+          <button className="inline-flex items-center gap-3 px-8 py-4 border-2 border-holistic-600 text-holistic-600 hover:bg-holistic-600 hover:text-white transition-all duration-500 tracking-wide transform hover:scale-105 relative overflow-hidden rounded-xl">
             <span className="relative z-10 font-medium text-base">View All Products</span>
-            <div className="absolute inset-0 bg-olive-600 scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
+            <div className="absolute inset-0 bg-holistic-600 scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
           </button>
         </div>
       </div>

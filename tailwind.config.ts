@@ -168,6 +168,29 @@ export default {
 					50: '#faf9f7',
 					100: '#f5f4f1',
 				},
+				// NEW: Holistic Zen Palette
+				holistic: {
+					50: '#F9F7F2', // Rice Paper (Base)
+					100: '#F0EBE3', // Light Beige
+					200: '#E2DBC9', // Sand
+					300: '#D4CBB0', // Dried Grass
+					400: '#B7B7A4', // Sage Beige
+					500: '#A5A58D', // Khaki Green
+					600: '#6B705C', // Deep Olive (Primary)
+					700: '#4A4E40', // Dark Olive
+					800: '#3F4238', // Charcoal Olive (Text)
+					900: '#2A2C24', // Deepest
+				},
+				// NEW: Cosmetic Skin Tones
+				cosmetic: {
+					100: '#FFF1E6', // Pale
+					200: '#FDE2D0', // Fair
+					300: '#E6CCB2', // Light
+					400: '#DDBEA9', // Medium (Secondary)
+					500: '#CB997E', // Tan (Accent)
+					600: '#A57C65', // Deep Tan
+					700: '#7F5539', // Rich
+				},
 				// NEW: Warm Pastel Palette
 				'warm-cream': {
 					DEFAULT: '#FAF8F3',

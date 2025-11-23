@@ -58,6 +58,16 @@ const ProductDetail = () => {
       setLoading(true);
       try {
         const productData = await productService.getProductById(id);
+        
+        // Ensure multiple images for gallery view (User request)
+        if (productData && productData.images.length === 1) {
+           productData.images = [
+             productData.images[0],
+             productData.images[0],
+             productData.images[0]
+           ];
+        }
+
         setProduct(productData);
         
         const allProducts = await productService.getProducts();
@@ -180,7 +190,7 @@ const ProductDetail = () => {
                         <img
                           src={image}
                           alt={`${product.name} view ${index + 1}`}
-                          className="w-full h-full object-contain p-1"
+                          className="w-full h-full object-cover"
                         />
                       </button>
                     ))}
@@ -192,7 +202,7 @@ const ProductDetail = () => {
                   <img
                     src={product.images[selectedImage] || '/placeholder.svg'}
                     alt={product.name}
-                    className="w-full h-full object-contain p-8 transition-transform duration-700 group-hover:scale-105"
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                   />
                   {product.featured && (
                     <span className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm text-stone-900 text-[10px] uppercase tracking-widest px-3 py-1">
@@ -244,13 +254,7 @@ const ProductDetail = () => {
               <div className="mb-8">
                 <div className="flex items-baseline gap-4 mb-2">
                   <span className="text-2xl text-stone-900">€{product.price.toFixed(2)}</span>
-                  {product.compareAtPrice && product.compareAtPrice > product.price && (
-                    <span className="text-lg text-stone-400 line-through font-light">€{product.compareAtPrice.toFixed(2)}</span>
-                  )}
                 </div>
-                <p className="text-[10px] text-stone-400 uppercase tracking-wider">
-                  Incl. VAT / Excl. Shipping
-                </p>
               </div>
 
               {/* Add to Cart Section */}
@@ -276,7 +280,7 @@ const ProductDetail = () => {
                   <Button
                     onClick={handleAddToCart}
                     disabled={!product.inStock}
-                    className="flex-1 h-12 bg-stone-900 text-white hover:bg-stone-800 rounded-none text-xs uppercase tracking-[0.2em] transition-all duration-300"
+                    className="flex-1 h-12 bg-holistic-200 text-holistic-900 hover:bg-holistic-300 rounded-none text-xs uppercase tracking-[0.2em] transition-all duration-300"
                   >
                     {product.inStock ? 'Add to Cart' : 'Out of Stock'}
                   </Button>
@@ -361,6 +365,15 @@ const ProductDetail = () => {
                   onClick={() => toggleAccordion('usage')}
                 >
                   <p>{product.howToUse}</p>
+                </AccordionItem>
+
+                <AccordionItem
+                  title="Shipping & Returns"
+                  isOpen={openAccordion === 'shipping'}
+                  onClick={() => toggleAccordion('shipping')}
+                >
+                  <p className="mb-2">We offer free standard shipping on all orders over €50. Orders are typically processed within 1-2 business days.</p>
+                  <p>If you are not completely satisfied with your purchase, you may return it within 30 days for a full refund.</p>
                 </AccordionItem>
               </div>
             </div>

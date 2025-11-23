@@ -57,11 +57,11 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, isLoading = false })
     >
       {/* Product Image Area */}
       <div className="relative aspect-[4/5] bg-[#F9F9F9] mb-6 overflow-hidden">
-        <div className="w-full h-full flex items-center justify-center p-8">
+        <div className="w-full h-full flex items-center justify-center">
           <LazyImage
             src={productImage}
             alt={product.name}
-            className="w-full h-full object-contain mix-blend-multiply transition-transform duration-700 group-hover:scale-105"
+            className="w-full h-full object-cover mix-blend-multiply transition-transform duration-700 group-hover:scale-105"
           />
         </div>
         
@@ -96,30 +96,16 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, isLoading = false })
         {/* Price Section */}
         <div className="mt-auto space-y-1 mb-6">
           <div className="flex items-center justify-center gap-3">
-            {product.compareAtPrice && product.compareAtPrice > product.price ? (
-              <>
-                <span className="text-lg font-normal text-stone-900">
-                  €{product.price.toFixed(2)}
-                </span>
-                <span className="text-sm text-stone-400 line-through font-light">
-                  €{product.compareAtPrice.toFixed(2)}
-                </span>
-              </>
-            ) : (
-              <span className="text-lg font-normal text-stone-900">
-                €{product.price.toFixed(2)}
-              </span>
-            )}
+            <span className="text-lg font-normal text-stone-900">
+              €{product.price.toFixed(2)}
+            </span>
           </div>
-          <p className="text-[10px] text-stone-400 uppercase tracking-wider font-light">
-            Incl. VAT
-          </p>
         </div>
 
         {/* Add to Cart Button */}
         <button
           onClick={handleAddToCart}
-          className="w-full border border-stone-300 bg-white text-stone-900 uppercase text-xs tracking-[0.15em] py-3.5 hover:bg-stone-900 hover:text-white hover:border-stone-900 transition-all duration-300"
+          className="w-full bg-holistic-200 text-holistic-900 uppercase text-xs tracking-[0.15em] py-3.5 hover:bg-holistic-300 transition-all duration-300"
         >
           Add to Cart
         </button>

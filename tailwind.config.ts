@@ -129,18 +129,18 @@ export default {
 					800: '#92400e',
 					900: '#78350f',
 				},
-				// Soft dark olive green palette
+				// Soft dark olive green palette - Updated to "Perfect Green"
 				olive: {
-					50: '#f8f9f7',
-					100: '#f1f3ef',
-					200: '#e1e6dc',
-					300: '#c9d2c0',
-					400: '#a8b59c',
-					500: '#8a9a7e',
-					600: '#6d7d63',
-					700: '#586752',
-					800: '#495444',
-					900: '#3d453a',
+					50: '#f4f7f4',
+					100: '#e3ebe4',
+					200: '#c5d8c7',
+					300: '#9bbba0',
+					400: '#749a7b',
+					500: '#537c5b',
+					600: '#4f6f52', // Perfect Green Base
+					700: '#3f5942',
+					800: '#324635',
+					900: '#293a2c',
 				},
 				// Rice beige palette
 				rice: {

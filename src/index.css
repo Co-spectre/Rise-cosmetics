@@ -193,7 +193,7 @@ html {
 
 /* Modern gradient backgrounds with olive and rice colors */
 .bg-gradient-moss {
-  background: linear-gradient(135deg, #f8f9f7 0%, #f1f3ef 50%, #e1e6dc 100%);
+  background: linear-gradient(135deg, #f4f7f4 0%, #e3ebe4 50%, #c5d8c7 100%);
 }
 
 .bg-gradient-sand {
@@ -206,7 +206,7 @@ html {
 
 /* Enhanced text gradient effects */
 .text-gradient-gold {
-  background: linear-gradient(135deg, #8a9a7e 0%, #6d7d63 50%, #586752 100%);
+  background: linear-gradient(135deg, #537c5b 0%, #4f6f52 50%, #3f5942 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -228,17 +228,20 @@ html {
   padding-right: 2rem;
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
-  background-color: #6d7d63; /* Replace with your olive-600 color */
+  background-color: #4f6f52; /* Updated to Perfect Green olive-600 */
   color: #fff;
   font-weight: 300;
   font-size: 0.875rem;
   letter-spacing: 0.05em;
   text-transform: uppercase;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 6px -1px rgba(79, 111, 82, 0.1), 0 2px 4px -1px rgba(79, 111, 82, 0.06);
 }
 
 .btn-modern:hover {
-  background-color: #586752; /* Replace with your olive-700 color */
+  background-color: #3f5942; /* Updated to Perfect Green olive-700 */
+  box-shadow: 0 10px 15px -3px rgba(79, 111, 82, 0.25), 0 4px 6px -2px rgba(79, 111, 82, 0.15);
+  transform: translateY(-2px);
 }
 
 /* Minimal underline effect */
@@ -311,7 +314,7 @@ html {
 
 /* Enhanced visual effects with new color palette */
 .bg-olive-gradient {
-  background: linear-gradient(135deg, #8a9a7e 0%, #6d7d63 100%);
+  background: linear-gradient(135deg, #537c5b 0%, #4f6f52 100%);
 }
 
 .bg-rice-gradient {

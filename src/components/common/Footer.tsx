@@ -1,5 +1,6 @@
 
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Instagram, Facebook, Twitter, Mail, Phone, MapPin } from 'lucide-react';
 
 const Footer = () => {
@@ -10,10 +11,10 @@ const Footer = () => {
   ];
 
   const quickLinks = [
-    { name: 'Shop All', href: '#products' },
-    { name: 'Collections', href: '#collections' },
-    { name: 'About Us', href: '#about' },
-    { name: 'Contact', href: '#contact' },
+    { name: 'Shop All', href: '/products' },
+    { name: 'Collections', href: '/collections' },
+    { name: 'About Us', href: '/about' },
+    { name: 'Contact', href: '/contact' },
   ];
 
   const supportLinks = [
@@ -57,12 +58,12 @@ const Footer = () => {
             <ul className="space-y-4">
               {quickLinks.map((link) => (
                 <li key={link.name}>
-                  <a
-                    href={link.href}
+                  <Link
+                    to={link.href}
                     className="text-holistic-600 hover:text-holistic-900 transition-colors duration-200 font-light text-sm underline-effect"
                   >
                     {link.name}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>

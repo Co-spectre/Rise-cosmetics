@@ -105,7 +105,7 @@ export const SearchProvider: React.FC<{ children: React.ReactNode }> = ({ childr
         id: product.id,
         title: product.name,
         type: 'product' as const,
-        url: `/products/${product.id}`,
+        url: `/product/${product.id}`,
         description: `${product.category} - $${product.price} - Rating: ${product.rating}/5`,
         image: `/images/products/${product.id}.jpg`,
         score: product.rating * 20 // Convert to percentage

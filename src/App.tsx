@@ -22,7 +22,7 @@ import Index from "./pages/Index";
 import About from "./pages/About";
 import Products from "./pages/Products";
 import Collections from "./pages/Collections";
-import AesopInspiredProduct from "./pages/AesopInspiredProduct";
+import ProductDetail from "./pages/ProductDetail";
 import Contact from "./pages/Contact";
 import Profile from "./pages/Profile";
 import Favorites from "./pages/Favorites";
@@ -48,7 +48,7 @@ const AppRoutes = () => (
       <Route path="/products" element={<PageTransition><Products /></PageTransition>} />
       <Route path="/shop" element={<PageTransition><Products /></PageTransition>} />
       <Route path="/collections" element={<PageTransition><Collections /></PageTransition>} />
-      <Route path="/product/:id" element={<PageTransition><AesopInspiredProduct /></PageTransition>} />
+      <Route path="/product/:id" element={<PageTransition><ProductDetail /></PageTransition>} />
       <Route path="/about" element={<PageTransition><About /></PageTransition>} />
       <Route path="/contact" element={<PageTransition><Contact /></PageTransition>} />
       <Route path="/profile" element={<PageTransition><Profile /></PageTransition>} />

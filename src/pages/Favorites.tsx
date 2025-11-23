@@ -106,7 +106,7 @@ const Favorites = () => {
                   Start building your collection of favorite products. Discover what makes your skin glow.
                 </p>
                 <Link to="/products">
-                  <Button className="bg-gradient-to-r from-olive-600 to-rice-600 hover:from-olive-700 hover:to-rice-700 text-white px-8 py-3 rounded-lg shadow-lg transform hover:scale-105 transition-all duration-300">
+                  <Button className="btn-modern text-white px-8 py-3 rounded-lg shadow-lg transform hover:scale-105 transition-all duration-300">
                     <ShoppingBag className="w-5 h-5 mr-2" />
                     Explore Products
                   </Button>
@@ -187,8 +187,8 @@ const Favorites = () => {
 
                         {/* Action Buttons */}
                         <div className="flex gap-2">
-                          <Link to={`/products/${item.productId}`} className="flex-1">
-                            <Button className="w-full bg-gradient-to-r from-olive-600 to-rice-600 hover:from-olive-700 hover:to-rice-700 text-white text-sm py-2 rounded-lg transition-all duration-300">
+                          <Link to={`/product/${item.productId}`} className="flex-1">
+                            <Button className="w-full bg-warm-olive hover:bg-warm-olive-dark text-white text-sm py-2 rounded-lg transition-all duration-300 shadow-sm hover:shadow-md">
                               View Product
                             </Button>
                           </Link>
@@ -217,7 +217,7 @@ const Favorites = () => {
                   </Button>
                 </Link>
                 <Link to="/checkout">
-                  <Button className="bg-gradient-to-r from-olive-600 to-rice-600 hover:from-olive-700 hover:to-rice-700 text-white px-8">
+                  <Button className="btn-modern text-white px-8">
                     <ShoppingBag className="w-4 h-4 mr-2" />
                     Shop Favorites
                   </Button>

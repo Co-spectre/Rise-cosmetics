@@ -68,7 +68,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, isLoading = false })
         {/* Wishlist Button (Subtle, top right) */}
         <button
           onClick={handleWishlistToggle}
-          className="absolute top-4 right-4 p-2 text-stone-400 hover:text-rose-500 transition-colors z-10"
+          className="absolute top-4 right-4 p-2 text-stone-400 hover:text-red-500 transition-colors z-10"
         >
           <Heart className="w-5 h-5" fill={isWishlisted ? 'currentColor' : 'none'} />
         </button>
@@ -105,7 +105,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, isLoading = false })
         {/* Add to Cart Button */}
         <button
           onClick={handleAddToCart}
-          className="w-full bg-holistic-200 text-holistic-900 uppercase text-xs tracking-[0.15em] py-3.5 hover:bg-holistic-300 transition-all duration-300"
+          className="w-full bg-[#D4C4B0] text-stone-800 uppercase text-xs tracking-[0.15em] py-3.5 hover:bg-[#C5B5A0] transition-all duration-300 border border-[#C5B5A0]"
         >
           Add to Cart
         </button>

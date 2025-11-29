@@ -247,7 +247,7 @@ const OptimizedProductDetail = () => {
                     <div className="flex gap-4">
                       <motion.button
                         onClick={handleAddToCart}
-                        className="flex-1 h-12 bg-stone-900 hover:bg-stone-800 text-white rounded-full text-sm tracking-wide flex items-center justify-center"
+                        className="flex-1 h-12 bg-[#D4C4B0] hover:bg-[#C5B5A0] text-stone-800 rounded-full text-sm tracking-wide flex items-center justify-center"
                         whileHover={{ scale: 1.02 }}
                         whileTap={{ scale: 0.98 }}
                       >

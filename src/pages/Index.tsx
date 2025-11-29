@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import Header from '@/components/common/Header';
 import Footer from '@/components/common/Footer';
 import ParallaxLandingPage from '@/components/ParallaxLandingPage';
-import VideoSection from '@/components/VideoSection';
 import About from '@/components/About';
 import { useAnalytics } from '@/contexts/AnalyticsContext';
 import { useSEOMarketing } from '@/contexts/SEOMarketingContext';
@@ -26,7 +25,6 @@ const Index = () => {
       <Header />
       <main>
         <ParallaxLandingPage />
-        <VideoSection />
         <About />
       </main>
       <Footer />

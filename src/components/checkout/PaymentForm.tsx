@@ -311,9 +311,9 @@ const PaymentForm: React.FC<PaymentFormProps> = ({
           <button
             onClick={onNext}
             disabled={!isValid}
-            className={`flex-1 py-3 px-6 text-white font-light text-sm tracking-wider uppercase transition-colors smooth-button ${
+            className={`flex-1 py-3 px-6 text-stone-800 font-light text-sm tracking-wider uppercase transition-colors smooth-button ${
               isValid
-                ? 'bg-stone-800 hover:bg-stone-700'
+                ? 'bg-[#D4C4B0] hover:bg-[#C5B5A0]'
                 : 'bg-stone-400 cursor-not-allowed'
             }`}
           >

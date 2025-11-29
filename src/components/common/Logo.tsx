@@ -24,9 +24,12 @@ const Logo: React.FC<LogoProps> = ({
 
   return (
     <div className={`${sizeClasses[size]} ${className} flex items-center justify-center`}>
-      <div className={`${colorClasses[variant]} text-center`}>
+      <div className={`${colorClasses[variant]} text-center flex flex-col items-center leading-tight`}>
         <span className="font-playfair font-light tracking-wide text-base sm:text-lg lg:text-2xl">
           RISE
+        </span>
+        <span className="font-light tracking-[0.25em] uppercase text-[8px] sm:text-[9px] lg:text-[10px] opacity-80 -mt-0.5">
+          Cosmetics
         </span>
       </div>
     </div>

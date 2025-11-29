@@ -168,20 +168,72 @@ export default {
 					50: '#faf9f7',
 					100: '#f5f4f1',
 				},
-				// NEW: Holistic Zen Palette
+				// NEW: Soft Luxury Pastel Palette
 				holistic: {
-					50: '#F9F7F2', // Rice Paper (Base)
-					100: '#F0EBE3', // Light Beige
-					200: '#E2DBC9', // Sand
-					300: '#D4CBB0', // Dried Grass
-					400: '#B7B7A4', // Sage Beige
-					500: '#A5A58D', // Khaki Green
-					600: '#6B705C', // Deep Olive (Primary)
-					700: '#4A4E40', // Dark Olive
-					800: '#3F4238', // Charcoal Olive (Text)
-					900: '#2A2C24', // Deepest
+					50: '#FAF8F5',  // Warm White (Background)
+					100: '#F5F0EA', // Ivory
+					200: '#EDE5DB', // Light Cream
+					300: '#E6CCBA', // Warm Taupe
+					400: '#D4C4B0', // Sand
+					500: '#C5CEBC', // Soft Sage
+					600: '#D4A5A5', // Dusty Rose (Primary)
+					700: '#B8908F', // Muted Rose
+					800: '#433D37', // Warm Charcoal (Text)
+					900: '#2D2A26', // Deep Charcoal
 				},
-				// NEW: Cosmetic Skin Tones
+				// Dusty Rose Palette
+				rose: {
+					50: '#FDF8F8',
+					100: '#FAEEED',
+					200: '#F5D9D8',
+					300: '#EAB8B6',
+					400: '#D4A5A5', // Main Dusty Rose
+					500: '#C08F8E',
+					600: '#A87574',
+					700: '#8B5E5D',
+					800: '#6E4A49',
+					900: '#573B3A',
+				},
+				// Sage Green Palette
+				sage: {
+					50: '#F7F9F6',
+					100: '#EEF2EC',
+					200: '#DCE5D8',
+					300: '#C5CEBC', // Main Soft Sage
+					400: '#A8B59E',
+					500: '#8B9A80',
+					600: '#6E7D64',
+					700: '#576350',
+					800: '#434C3D',
+					900: '#333A2F',
+				},
+				// Cream/Ivory Palette
+				cream: {
+					50: '#FEFDFB',
+					100: '#FDF9F4',
+					200: '#FAF3EA',
+					300: '#F5EBE0',
+					400: '#EDE5DB',
+					500: '#E2D8CC',
+					600: '#D1C4B4',
+					700: '#B8A899',
+					800: '#9A8B7A',
+					900: '#7A6E5E',
+				},
+				// Taupe Palette
+				taupe: {
+					50: '#FAF8F6',
+					100: '#F5F0EB',
+					200: '#EBE1D6',
+					300: '#E6CCBA', // Main Warm Taupe
+					400: '#D4B99A',
+					500: '#BFA07B',
+					600: '#A68963',
+					700: '#8A7052',
+					800: '#6D5842',
+					900: '#574635',
+				},
+				// NEW: Cosmetic Skin Tones (updated)
 				cosmetic: {
 					100: '#FFF1E6', // Pale
 					200: '#FDE2D0', // Fair

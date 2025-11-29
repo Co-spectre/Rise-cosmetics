@@ -11,6 +11,7 @@ import '../../styles/smooth-transitions.css';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isNavHovered, setIsNavHovered] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
   const { totalItems, toggleCart } = useCart();
@@ -107,36 +108,69 @@ const Header = () => {
         right: 0, 
         zIndex: 9999,
         transition: 'all 0.5s ease-in-out',
-        backgroundColor: isTransparentPage && isScrolled ? 'rgba(249, 247, 242, 0.9)' : (isTransparentPage ? 'transparent' : 'rgba(249, 247, 242, 1)'),
+        backgroundColor: isTransparentPage && isScrolled ? 'rgba(250, 248, 245, 0.92)' : (isTransparentPage ? 'transparent' : 'rgba(250, 248, 245, 1)'),
         backdropFilter: isTransparentPage && isScrolled ? 'blur(20px)' : 'none',
         WebkitBackdropFilter: isTransparentPage && isScrolled ? 'blur(20px)' : 'none',
-        boxShadow: isTransparentPage && isScrolled ? '0 4px 6px -1px rgba(0, 0, 0, 0.05)' : 'none',
-        borderBottom: isTransparentPage && isScrolled ? '1px solid rgba(226, 219, 201, 0.5)' : 'none'
+        boxShadow: isTransparentPage && isScrolled ? '0 4px 6px -1px rgba(0, 0, 0, 0.04)' : 'none',
+        borderBottom: isTransparentPage && isScrolled ? '1px solid rgba(212, 165, 165, 0.2)' : 'none'
       }}
       data-scrolled={isScrolled ? 'true' : 'false'}
       data-landing={isTransparentPage ? 'true' : 'false'}
     >
       <CartDrawer />
       <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 flex items-center justify-between h-16 sm:h-20">
-        <Link to="/" className="flex-shrink-0">
+        {/* Left: Menu with sliding navigation */}
+        <div 
+          className="hidden md:flex items-center flex-1 relative overflow-hidden"
+          onMouseEnter={() => setIsNavHovered(true)}
+          onMouseLeave={() => setIsNavHovered(false)}
+        >
+          {/* Menu placeholder - slides out on hover */}
+          <div 
+            className={`flex items-center gap-2 transition-all duration-500 ease-out absolute ${
+              isNavHovered ? '-translate-x-full opacity-0' : 'translate-x-0 opacity-100'
+            }`}
+          >
+            <span className={`font-light tracking-widest uppercase text-sm ${styleClasses.text}`}>
+              Menu
+            </span>
+            <div className={`h-px w-8 transition-all duration-300 ${
+              isTransparentPage && !isScrolled ? 'bg-white/60' : 'bg-holistic-400'
+            }`}></div>
+          </div>
+          
+          {/* Navigation links - slide in on hover */}
+          <nav 
+            className={`flex space-x-6 transition-all duration-500 ease-out ${
+              isNavHovered ? 'translate-x-0 opacity-100' : '-translate-x-8 opacity-0 pointer-events-none'
+            }`}
+          >
+            {navItems.map((item, index) => (
+              <Link
+                key={item.name}
+                to={item.href}
+                className={`font-light smooth-link transition-all duration-300 ${styleClasses.text}`}
+                style={{
+                  transitionDelay: isNavHovered ? `${index * 50}ms` : '0ms'
+                }}
+              >
+                {item.name}
+              </Link>
+            ))}
+          </nav>
+        </div>
+        
+        {/* Center: Logo */}
+        <Link to="/" className="flex-shrink-0 absolute left-1/2 transform -translate-x-1/2">
           <Logo 
             size="lg"
             variant={isTransparentPage && !isScrolled ? "light" : "dark"}
-            className="transition-colors duration-500 scale-110"
+            className="transition-colors duration-500 scale-125"
           />
         </Link>
-        <nav className="hidden md:flex space-x-8">
-          {navItems.map(item => (
-            <Link
-              key={item.name}
-              to={item.href}
-              className={`font-light smooth-link ${styleClasses.text}`}
-            >
-              {item.name}
-            </Link>
-          ))}
-        </nav>
-        <div className="flex items-center space-x-2 sm:space-x-4">
+        
+        {/* Right: User Controls */}
+        <div className="flex items-center space-x-2 sm:space-x-4 flex-1 justify-end">
           {/* User Profile/Auth Section */}
           {user ? (
             <div className="relative group hidden sm:flex items-center space-x-3">
@@ -180,7 +214,7 @@ const Header = () => {
             <ShoppingBag className={`w-5 h-5 sm:w-6 sm:h-6 ${styleClasses.icon}`} strokeWidth={1.5} />
             {/* Real cart count */}
             {totalItems > 0 && (
-              <span className="absolute -top-1 -right-1 text-[10px] sm:text-xs rounded-full px-1 sm:px-1.5 py-0.5 font-bold cart-badge bg-rose-500 text-white min-w-[18px] sm:min-w-[20px] flex items-center justify-center">
+              <span className="absolute -top-1 -right-1 text-[10px] sm:text-xs rounded-full px-1 sm:px-1.5 py-0.5 font-bold cart-badge bg-stone-800 text-white min-w-[18px] sm:min-w-[20px] flex items-center justify-center">
                 {totalItems}
               </span>
             )}

@@ -1,9 +1,8 @@
-import { useEffect, useRef, useState, useCallback } from 'react';
-import { ChevronDown, ArrowRight, ShoppingBag, Heart, Play, Pause } from 'lucide-react';
+﻿import { useEffect, useRef, useState, useCallback } from 'react';
+import { ChevronDown, ArrowRight, ShoppingBag, Heart, Play, Pause, Leaf, Sparkles, Recycle, MapPin, Shield, FlaskConical, X } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { motion, Variants } from 'framer-motion';
+import { motion, Variants, AnimatePresence } from 'framer-motion';
 import Logo from './common/Logo';
-import IngredientSpotlight from './IngredientSpotlight';
 import { useCart } from '@/contexts/CartContext';
 import { getAssetPath } from '@/utils/assetPath';
 import '../styles/optimized-landing.css';
@@ -14,17 +13,465 @@ const fadeInUp: Variants = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } }
 };
 
+const staggerContainer: Variants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.15,
+      delayChildren: 0.2
+    }
+  }
+};
+
+const scaleIn: Variants = {
+  hidden: { opacity: 0, scale: 0.9 },
+  visible: { opacity: 1, scale: 1, transition: { duration: 0.6, ease: "easeOut" } }
+};
+
+const slideInFromLeft: Variants = {
+  hidden: { opacity: 0, x: -100 },
+  visible: { opacity: 1, x: 0, transition: { duration: 0.8, ease: "easeOut" } }
+};
+
+const slideInFromRight: Variants = {
+  hidden: { opacity: 0, x: 100 },
+  visible: { opacity: 1, x: 0, transition: { duration: 0.8, ease: "easeOut" } }
+};
+
+// Belief details data
+const beliefDetails = {
+  vegan: {
+    title: "100% Vegan",
+    icon: Leaf,
+    description: "We believe in the power of plants. Every RISE product is crafted without any animal-derived ingredients, proving that effective skincare can be both ethical and luxurious.",
+    features: [
+      "No animal-derived ingredients",
+      "Plant-based formulations",
+      "Certified vegan products",
+      "Ethical ingredient sourcing"
+    ]
+  },
+  crueltyFree: {
+    title: "Cruelty Free",
+    icon: Heart,
+    description: "Beauty shouldn't come at the cost of animal welfare. We never test on animals at any stage of product development, and we work exclusively with suppliers who share our values.",
+    features: [
+      "No animal testing",
+      "Cruelty-free certified",
+      "Ethical supply chain",
+      "Compassionate beauty"
+    ]
+  },
+  natural: {
+    title: "Natural Ingredients",
+    icon: Sparkles,
+    description: "Nature provides the finest ingredients. We harness botanical extracts, essential oils, and natural compounds that have been trusted for centuries, enhanced by modern science.",
+    features: [
+      "Botanical extracts",
+      "Essential oils",
+      "No harsh chemicals",
+      "Pure formulations"
+    ]
+  },
+  sustainable: {
+    title: "Sustainable Packaging",
+    icon: Recycle,
+    description: "Our commitment extends beyond the product. We use recyclable materials, minimize waste, and continuously innovate to reduce our environmental footprint.",
+    features: [
+      "Recyclable materials",
+      "Minimal packaging",
+      "Eco-friendly design",
+      "Carbon-conscious shipping"
+    ]
+  },
+  italy: {
+    title: "Made in Italy",
+    icon: MapPin,
+    description: "Crafted with Italian excellence. Our products are formulated and produced in Italy, combining traditional craftsmanship with cutting-edge skincare innovation.",
+    features: [
+      "Italian craftsmanship",
+      "Premium quality",
+      "Traditional expertise",
+      "Modern innovation"
+    ]
+  },
+  tested: {
+    title: "Dermatologically Tested",
+    icon: Shield,
+    description: "Your skin's safety is paramount. Every product undergoes rigorous dermatological testing to ensure it's gentle, effective, and suitable for all skin types.",
+    features: [
+      "Clinical testing",
+      "Safe for all skin types",
+      "Hypoallergenic formulas",
+      "Expert verified"
+    ]
+  }
+};
+
+// Product images for the carousel (products only)
+const carouselImages = [
+  { src: '/images/products/slider/Product1.jpg', alt: 'RISE Product 1' },
+  { src: '/images/products/slider/Product2.jpg', alt: 'RISE Product 2' },
+  { src: '/images/products/slider/product3.jpg', alt: 'RISE Product 3' },
+  { src: '/images/products/slider/product4.jpg', alt: 'RISE Product 4' },
+  { src: '/images/products/slider/Product5.jpg', alt: 'RISE Product 5' },
+  { src: '/images/products/slider/Product6.jpg', alt: 'RISE Product 6' },
+  { src: '/images/products/slider/Product7.jpg', alt: 'RISE Product 7' },
+  { src: '/images/products/slider/product8.jpg', alt: 'RISE Product 8' },
+  { src: '/images/products/slider/product9.jpg', alt: 'RISE Product 9' },
+];
+
+// Optimized Infinite Scrollable Product Carousel Component with Momentum
+const InfiniteProductCarousel = () => {
+  const carouselRef = useRef<HTMLDivElement>(null);
+  const isDragging = useRef(false);
+  const startX = useRef(0);
+  const scrollStart = useRef(0);
+  const animationFrameId = useRef<number>();
+  const velocityRef = useRef(0);
+  const lastXRef = useRef(0);
+  const lastTimeRef = useRef(0);
+  const momentumFrameId = useRef<number>();
+
+  // Triple the images for seamless infinite scroll
+  const extendedImages = [...carouselImages, ...carouselImages, ...carouselImages];
+
+  // Initialize scroll position to the middle set
+  useEffect(() => {
+    if (carouselRef.current) {
+      const singleSetWidth = carouselRef.current.scrollWidth / 3;
+      carouselRef.current.scrollLeft = singleSetWidth;
+    }
+  }, []);
+
+  // Check and reset infinite loop position
+  const checkLoop = useCallback(() => {
+    if (!carouselRef.current) return;
+    const { scrollLeft, scrollWidth } = carouselRef.current;
+    const setWidth = scrollWidth / 3;
+    
+    if (scrollLeft >= setWidth * 2 - 10) {
+      carouselRef.current.scrollLeft = scrollLeft - setWidth;
+    } else if (scrollLeft <= 10) {
+      carouselRef.current.scrollLeft = scrollLeft + setWidth;
+    }
+  }, []);
+
+  // Mouse handlers with window-level listeners for smooth dragging
+  const handleMouseDown = useCallback((e: React.MouseEvent) => {
+    if (!carouselRef.current) return;
+    e.preventDefault();
+    
+    // Stop any ongoing momentum
+    if (momentumFrameId.current) {
+      cancelAnimationFrame(momentumFrameId.current);
+    }
+    
+    isDragging.current = true;
+    startX.current = e.pageX;
+    lastXRef.current = e.pageX;
+    lastTimeRef.current = Date.now();
+    velocityRef.current = 0;
+    scrollStart.current = carouselRef.current.scrollLeft;
+    
+    if (carouselRef.current) {
+      carouselRef.current.style.cursor = 'grabbing';
+      carouselRef.current.style.scrollBehavior = 'auto';
+    }
+  }, []);
+
+  // Apply momentum/inertia effect
+  const applyMomentum = useCallback(() => {
+    if (!carouselRef.current) return;
+    
+    const friction = 0.95; // Higher = slides longer
+    const minVelocity = 0.5; // Minimum velocity to keep animating
+    
+    const animate = () => {
+      if (!carouselRef.current || Math.abs(velocityRef.current) < minVelocity) {
+        velocityRef.current = 0;
+        return;
+      }
+      
+      carouselRef.current.scrollLeft += velocityRef.current;
+      velocityRef.current *= friction;
+      checkLoop();
+      
+      momentumFrameId.current = requestAnimationFrame(animate);
+    };
+    
+    momentumFrameId.current = requestAnimationFrame(animate);
+  }, []);
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      if (!isDragging.current || !carouselRef.current) return;
+      
+      // Use requestAnimationFrame for smooth updates
+      if (animationFrameId.current) {
+        cancelAnimationFrame(animationFrameId.current);
+      }
+      
+      animationFrameId.current = requestAnimationFrame(() => {
+        if (!carouselRef.current) return;
+        
+        const currentTime = Date.now();
+        const currentX = e.pageX;
+        const timeDelta = currentTime - lastTimeRef.current;
+        
+        // Calculate velocity for momentum
+        if (timeDelta > 0) {
+          const distance = lastXRef.current - currentX;
+          velocityRef.current = distance / timeDelta * 16; // Normalize to ~60fps
+        }
+        
+        lastXRef.current = currentX;
+        lastTimeRef.current = currentTime;
+        
+        const dx = e.pageX - startX.current;
+        carouselRef.current.scrollLeft = scrollStart.current - dx;
+        checkLoop();
+      });
+    };
+
+    const handleMouseUp = () => {
+      if (!isDragging.current) return;
+      
+      isDragging.current = false;
+      if (carouselRef.current) {
+        carouselRef.current.style.cursor = 'grab';
+      }
+      if (animationFrameId.current) {
+        cancelAnimationFrame(animationFrameId.current);
+      }
+      
+      // Apply momentum when releasing
+      applyMomentum();
+    };
+
+    window.addEventListener('mousemove', handleMouseMove, { passive: true });
+    window.addEventListener('mouseup', handleMouseUp);
+
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('mouseup', handleMouseUp);
+      if (animationFrameId.current) {
+        cancelAnimationFrame(animationFrameId.current);
+      }
+      if (momentumFrameId.current) {
+        cancelAnimationFrame(momentumFrameId.current);
+      }
+    };
+  }, [checkLoop, applyMomentum]);
+
+  // Touch handlers
+  const handleTouchStart = useCallback((e: React.TouchEvent) => {
+    if (!carouselRef.current) return;
+    
+    // Stop any ongoing momentum
+    if (momentumFrameId.current) {
+      cancelAnimationFrame(momentumFrameId.current);
+    }
+    
+    isDragging.current = true;
+    startX.current = e.touches[0].pageX;
+    lastXRef.current = e.touches[0].pageX;
+    lastTimeRef.current = Date.now();
+    velocityRef.current = 0;
+    scrollStart.current = carouselRef.current.scrollLeft;
+  }, []);
+
+  const handleTouchMove = useCallback((e: React.TouchEvent) => {
+    if (!isDragging.current || !carouselRef.current) return;
+    
+    if (animationFrameId.current) {
+      cancelAnimationFrame(animationFrameId.current);
+    }
+    
+    animationFrameId.current = requestAnimationFrame(() => {
+      if (!carouselRef.current) return;
+      
+      const currentTime = Date.now();
+      const currentX = e.touches[0].pageX;
+      const timeDelta = currentTime - lastTimeRef.current;
+      
+      // Calculate velocity for momentum
+      if (timeDelta > 0) {
+        const distance = lastXRef.current - currentX;
+        velocityRef.current = distance / timeDelta * 16;
+      }
+      
+      lastXRef.current = currentX;
+      lastTimeRef.current = currentTime;
+      
+      const dx = e.touches[0].pageX - startX.current;
+      carouselRef.current.scrollLeft = scrollStart.current - dx;
+      checkLoop();
+    });
+  }, [checkLoop]);
+
+  const handleTouchEnd = useCallback(() => {
+    if (!isDragging.current) return;
+    
+    isDragging.current = false;
+    if (animationFrameId.current) {
+      cancelAnimationFrame(animationFrameId.current);
+    }
+    
+    // Apply momentum when releasing
+    applyMomentum();
+  }, [applyMomentum]);
+
+  // Handle scroll wheel
+  const handleWheel = useCallback((e: React.WheelEvent) => {
+    if (!carouselRef.current) return;
+    e.preventDefault();
+    carouselRef.current.scrollLeft += e.deltaY * 0.5;
+    checkLoop();
+  }, [checkLoop]);
+
+  return (
+    <div className="relative w-full py-4">
+      {/* Gradient fade edges */}
+      <div className="absolute left-0 top-0 bottom-0 w-16 sm:w-24 bg-gradient-to-r from-[#FAF8F5] to-transparent z-10 pointer-events-none" />
+      <div className="absolute right-0 top-0 bottom-0 w-16 sm:w-24 bg-gradient-to-l from-[#F5F0EA] to-transparent z-10 pointer-events-none" />
+      
+      {/* Carousel Container */}
+      <div
+        ref={carouselRef}
+        className="flex gap-4 sm:gap-6 overflow-x-auto scrollbar-hide px-8 sm:px-16 select-none"
+        style={{
+          cursor: 'grab',
+          scrollbarWidth: 'none',
+          msOverflowStyle: 'none',
+          WebkitOverflowScrolling: 'touch',
+        }}
+        onMouseDown={handleMouseDown}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+        onWheel={handleWheel}
+      >
+        {extendedImages.map((image, index) => (
+          <div
+            key={`${image.src}-${index}`}
+            className="flex-shrink-0"
+            style={{ userSelect: 'none' }}
+          >
+            <div className="w-48 sm:w-56 md:w-64 lg:w-72 aspect-[3/4] rounded-2xl overflow-hidden bg-stone-100 shadow-lg hover:shadow-2xl transition-shadow duration-300 relative group">
+              <img
+                src={getAssetPath(image.src)}
+                alt={image.alt}
+                className="w-full h-full object-cover"
+                draggable="false"
+                loading="lazy"
+              />
+              {/* Hover overlay */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              {/* Quick view button on hover */}
+              <div className="absolute bottom-4 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <Link
+                  to="/products"
+                  className="px-4 py-2 bg-white/95 backdrop-blur-sm rounded-full text-xs sm:text-sm font-medium text-stone-800 hover:bg-white transition-colors duration-200 shadow-lg"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  View Collection
+                </Link>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+      
+      {/* Scroll hint */}
+      <div className="text-center mt-6 text-stone-400 text-xs tracking-wider">
+        <span className="inline-flex items-center gap-2">
+          <span className="w-8 h-px bg-stone-300"></span>
+          Drag to explore
+          <span className="w-8 h-px bg-stone-300"></span>
+        </span>
+      </div>
+    </div>
+  );
+};
+
+// Image Carousel Slide Component
+const ImageCarouselSlide = ({ src, index }: { src: string; index: number }) => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const totalImages = 3;
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % totalImages);
+    }, 3500); // Change every 3.5 seconds
+
+    return () => clearInterval(interval);
+  }, []);
+
+  const isActive = currentIndex === index;
+
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ 
+        opacity: isActive ? 1 : 0,
+        scale: isActive ? 1 : 1.05
+      }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.8, ease: "easeInOut" }}
+      className="absolute inset-0 z-10"
+      style={{ pointerEvents: isActive ? 'auto' : 'none' }}
+    >
+      <motion.div
+        whileHover={{ scale: 1.01 }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+        className="relative w-full h-full"
+      >
+        <img 
+          src={getAssetPath(src)}
+          alt={`Natural Beauty ${index + 1}`}
+          className="w-full h-full object-cover rounded-3xl shadow-xl"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-transparent rounded-3xl" />
+      </motion.div>
+    </motion.div>
+  );
+};
+
 const ParallaxLandingPage = () => {
   const [scrollY, setScrollY] = useState(0);
+  const [videoScrollProgress, setVideoScrollProgress] = useState(0);
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
   const [isVideoPlaying, setIsVideoPlaying] = useState(true);
+  const [selectedBelief, setSelectedBelief] = useState<string | null>(null);
   const heroRef = useRef<HTMLDivElement>(null);
+  const videoSectionRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const { addToCart } = useCart();
 
   // Simplified scroll handling for better performance
   const handleScroll = useCallback(() => {
     setScrollY(window.scrollY);
+    
+    // Calculate video section scroll progress for immersive effect
+    if (videoSectionRef.current) {
+      const rect = videoSectionRef.current.getBoundingClientRect();
+      const sectionHeight = videoSectionRef.current.offsetHeight;
+      const viewportHeight = window.innerHeight;
+      
+      const effectRange = sectionHeight - viewportHeight;
+      const scrolled = -rect.top;
+      
+      let progress = 0;
+      if (scrolled >= 0 && scrolled <= effectRange) {
+        progress = scrolled / effectRange;
+      } else if (scrolled > effectRange) {
+        progress = 1;
+      }
+      
+      setVideoScrollProgress(progress);
+    }
   }, []);
 
   useEffect(() => {
@@ -115,170 +562,177 @@ const ParallaxLandingPage = () => {
 
   return (
     <div className="relative">
-      {/* Enhanced Hero Section with Video Background */}
-      <section ref={heroRef} className="relative h-screen overflow-hidden optimized-hero">
-        
-        {/* Background Video */}
-        <div className="absolute inset-0 w-full h-full">
+      {/* Immersive Video Hero with Scroll Animation */}
+      <div 
+        ref={videoSectionRef}
+        className="relative"
+        style={{ minHeight: '130vh' }}
+      >
+        {/* Sticky Video Container */}
+        <div 
+          className="sticky top-0 h-screen overflow-hidden"
+          style={{ zIndex: 1 }}
+        >
           {/* Fallback Background */}
           <div className="absolute inset-0 bg-gradient-to-br from-olive-900 via-olive-800 to-olive-700" />
           
-          <video
-            ref={videoRef}
-            className="absolute inset-0 w-full h-full object-cover video-hero-bg optimized-video"
+          {/* Video Background with zoom effect */}
+          <div 
+            className="absolute inset-0 transition-transform duration-100 ease-out"
             style={{
-              filter: 'brightness(0.4) contrast(1.1)',
-              opacity: isVideoLoaded ? 1 : 0,
+              transform: `scale(${1 + videoScrollProgress * 0.15})`,
             }}
-            autoPlay
-            muted
-            loop
-            playsInline
-            onLoadedData={handleVideoLoad}
-            poster="" // Remove poster to prevent flash
           >
-            <source src={getAssetPath('/videos/6811826-uhd_4096_2160_24fps.mp4')} type="video/mp4" />
-            Your browser does not support the video tag.
-          </video>
-          
-          {/* Video Overlay for Better Text Readability */}
-          <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-black/60" />
-          <div className="absolute inset-0 bg-gradient-to-r from-olive-900/30 via-transparent to-olive-900/30" />
-        </div>
-
-        {/* Floating Parallax Elements */}
-        <div className="absolute inset-0 pointer-events-none">
-          {/* Organic floating shapes */}
-          <div 
-            className="absolute top-20 left-1/4 w-96 h-96 rounded-full bg-gradient-to-r from-rice-300/10 to-olive-300/15 blur-3xl"
-            style={{
-              animation: 'float 20s ease-in-out infinite'
-            }}
-          />
-          
-          <div 
-            className="absolute top-1/3 right-1/6 w-80 h-80 rounded-full bg-gradient-to-r from-olive-400/10 to-rice-400/15 blur-3xl"
-            style={{
-              animation: 'float 25s ease-in-out infinite reverse'
-            }}
-          />
-          
-          <div 
-            className="absolute bottom-1/4 left-1/5 w-72 h-72 rounded-full bg-gradient-to-r from-rice-500/8 to-olive-500/12 blur-3xl"
-            style={{
-              animation: 'float 30s ease-in-out infinite'
-            }}
-          />
-
-          {/* Subtle geometric accents */}
-          <div 
-            className="absolute top-1/4 left-1/6 w-2 h-32 bg-rice-300/20 rounded-full blur-sm"
-            style={{
-              animation: 'fadeInOut 8s ease-in-out infinite'
-            }}
-          />
-          
-          <div 
-            className="absolute bottom-1/3 right-1/5 w-2 h-24 bg-olive-300/20 rounded-full blur-sm"
-            style={{
-              animation: 'fadeInOut 12s ease-in-out infinite 2s'
-            }}
-          />
-        </div>
-
-        {/* Asymmetrical Hero Content - Option 3 (Adjusted: Middle Left) */}
-        <div 
-          className="relative z-10 h-full flex flex-col justify-center px-6 sm:px-12 lg:px-20"
-          style={{
-            opacity: Math.max(0, 1 - scrollY * 0.0008)
-          }}
-        >
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-            {/* Left: Brand Name (Middle Left, Smaller) */}
-            <motion.div 
-              initial={{ opacity: 0, x: -40 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 1, ease: "easeOut", delay: 0.2 }}
-              className="lg:col-span-7"
+            <video
+              ref={videoRef}
+              className="absolute inset-0 w-full h-full object-cover video-hero-bg optimized-video"
+              style={{
+                filter: `brightness(${0.4 - videoScrollProgress * 0.15}) contrast(1.1)`,
+                opacity: isVideoLoaded ? 1 : 0,
+              }}
+              autoPlay
+              muted
+              loop
+              playsInline
+              onLoadedData={handleVideoLoad}
+              poster=""
             >
-              <h1 className="text-[4rem] sm:text-[6rem] md:text-[7rem] lg:text-[8rem] leading-[0.9] font-light tracking-tighter text-white mix-blend-overlay opacity-90">
-                RISE
-              </h1>
-              <div className="flex items-center gap-4 mt-2 ml-2">
-                <div className="h-px w-12 sm:w-16 bg-white/60"></div>
-                <span className="text-xs sm:text-sm tracking-[0.4em] uppercase text-white/80 font-light">
-                  Cosmetics
-                </span>
-              </div>
-            </motion.div>
-
-            {/* Right: Philosophy & CTA (Aligned with logo or slightly offset) */}
-            <motion.div 
-              initial={{ opacity: 0, x: 40 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 1, ease: "easeOut", delay: 0.4 }}
-              className="lg:col-span-5"
-            >
-              <p className="text-lg sm:text-xl md:text-2xl font-light text-white/90 leading-relaxed mb-6 max-w-md"
-                 style={{ textShadow: '0 2px 10px rgba(0,0,0,0.3)' }}>
-                Natural Beauty, <br/>
-                <span className="italic font-serif">Timeless Radiance.</span>
-              </p>
-              
-              <p className="text-sm text-white/70 leading-relaxed mb-8 max-w-sm font-light hidden sm:block">
-                Crafted in Italy using the finest rice-based ingredients. 
-                A ritual of self-care that honors your skin's natural essence.
-              </p>
-
-              <Link 
-                to="/products"
-                className="group inline-flex items-center gap-3 text-white border-b border-white/30 pb-1 hover:border-white transition-all duration-300"
-              >
-                <span className="text-sm tracking-widest uppercase font-light">Discover Collection</span>
-                <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-2" />
-              </Link>
-            </motion.div>
+              <source src={getAssetPath('/videos/6811826-uhd_4096_2160_24fps.mp4')} type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
           </div>
-        </div>
+          
+          {/* Video Overlay that intensifies on scroll */}
+          <div 
+            className="absolute inset-0 transition-opacity duration-100"
+            style={{
+              background: `linear-gradient(to bottom, 
+                rgba(0,0,0,${0.3 + videoScrollProgress * 0.2}) 0%, 
+                rgba(0,0,0,${0.2 + videoScrollProgress * 0.2}) 50%, 
+                rgba(250,248,245,${videoScrollProgress * 0.95}) 100%)`
+            }}
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-olive-900/30 via-transparent to-olive-900/30" />
 
-        {/* Enhanced Scroll Indicator - Moved to bottom right corner for Option 3 */}
-        <div 
-          className="absolute bottom-8 right-8 sm:right-12 text-white/50 hidden lg:block"
-          style={{
-            opacity: Math.max(0, 1 - scrollY * 0.002)
-          }}
-        >
-          <div className="flex flex-col items-center space-y-4">
-            <span className="text-[10px] tracking-[0.2em] uppercase writing-vertical-rl rotate-180">
-              Scroll
-            </span>
-            <div className="h-12 w-px bg-white/30 overflow-hidden">
-              <div className="h-full w-full bg-white animate-scrolldown"></div>
+          {/* Floating Parallax Elements - Fade out on scroll */}
+          <div 
+            className="absolute inset-0 pointer-events-none transition-opacity duration-300"
+            style={{ opacity: Math.max(0, 1 - videoScrollProgress * 2) }}
+          >
+            <div 
+              className="absolute top-20 left-1/4 w-96 h-96 rounded-full bg-gradient-to-r from-rice-300/10 to-olive-300/15 blur-3xl"
+              style={{ animation: 'float 20s ease-in-out infinite' }}
+            />
+            <div 
+              className="absolute top-1/3 right-1/6 w-80 h-80 rounded-full bg-gradient-to-r from-olive-400/10 to-rice-400/15 blur-3xl"
+              style={{ animation: 'float 25s ease-in-out infinite reverse' }}
+            />
+            <div 
+              className="absolute bottom-1/4 left-1/5 w-72 h-72 rounded-full bg-gradient-to-r from-rice-500/8 to-olive-500/12 blur-3xl"
+              style={{ animation: 'float 30s ease-in-out infinite' }}
+            />
+          </div>
+
+          {/* Hero Content - Fades up and away */}
+          <div 
+            className="absolute inset-0 flex flex-col justify-center items-start px-8 sm:px-16 lg:px-24 transition-all duration-100"
+            style={{
+              opacity: Math.max(0, 1 - videoScrollProgress * 2.5),
+              transform: `translateY(${-videoScrollProgress * 120}px)`,
+            }}
+          >
+            <div className="flex flex-col items-start text-left">
+              {/* Large Logo */}
+              <motion.div 
+                initial={{ opacity: 0, y: -40 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 1, ease: "easeOut", delay: 0.2 }}
+                className="mb-12 sm:mb-16"
+              >
+                <h1 className="text-[6rem] sm:text-[8rem] md:text-[10rem] lg:text-[12rem] leading-[0.85] font-light tracking-tighter text-white mix-blend-overlay opacity-95">
+                  RISE
+                </h1>
+                <div className="flex items-center gap-4 mt-3">
+                  <span className="text-sm sm:text-base tracking-[0.4em] uppercase text-white/80 font-light">
+                    Cosmetics
+                  </span>
+                  <div className="h-px w-12 sm:w-20 bg-white/60"></div>
+                </div>
+              </motion.div>
+
+              {/* Philosophy & CTA - Below Logo */}
+              <motion.div 
+                initial={{ opacity: 0, y: 40 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 1, ease: "easeOut", delay: 0.4 }}
+                className="flex flex-col items-start"
+              >
+                <p className="text-xl sm:text-2xl md:text-3xl font-light text-white/90 leading-relaxed mb-8 max-w-lg"
+                   style={{ textShadow: '0 2px 10px rgba(0,0,0,0.3)' }}>
+                  Natural Beauty, <br/>
+                  <span className="italic font-serif">Timeless Radiance.</span>
+                </p>
+                
+                <p className="text-sm text-white/70 leading-relaxed mb-10 max-w-md font-light hidden sm:block text-left">
+                  Crafted in Italy using the finest rice-based ingredients. 
+                  A ritual of self-care that honors your skin's natural essence.
+                </p>
+
+                <Link 
+                  to="/products"
+                  className="group inline-flex items-center gap-3 text-white border-b border-white/30 pb-1 hover:border-white transition-all duration-300"
+                >
+                  <span className="text-sm tracking-widest uppercase font-light">Discover Collection</span>
+                  <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-2" />
+                </Link>
+              </motion.div>
             </div>
           </div>
+
+          {/* Scroll Indicator - Fades out on scroll */}
+          <div 
+            className="absolute bottom-8 right-8 sm:right-12 text-white/50 hidden lg:block transition-opacity duration-300"
+            style={{
+              opacity: Math.max(0, 1 - videoScrollProgress * 3)
+            }}
+          >
+            <div className="flex flex-col items-center space-y-4">
+              <span className="text-[10px] tracking-[0.2em] uppercase writing-vertical-rl rotate-180">
+                Scroll
+              </span>
+              <div className="h-12 w-px bg-white/30 overflow-hidden">
+                <div className="h-full w-full bg-white animate-scrolldown"></div>
+              </div>
+            </div>
+          </div>
+
+          {/* Vignette Effect */}
+          <div className="absolute inset-0 pointer-events-none" style={{
+            boxShadow: 'inset 0 0 150px rgba(0,0,0,0.3)'
+          }} />
         </div>
-      </section>
+      </div>
+
+      {/* Smooth Gradient Fade Transition from Video to Collections */}
+      <div className="relative h-40 sm:h-48 -mt-1">
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#FAF8F5]/50 to-[#FAF8F5]"></div>
+      </div>
 
       {/* Enhanced Featured Products Section with modern design */}
       <section 
-        className="py-10 sm:py-12 lg:py-16 bg-gradient-to-b from-warm-cream to-warm-ivory relative overflow-hidden"
-        style={{
-          transform: `translateY(${scrollY * 0.03}px)`
-        }}
+        className="py-10 sm:py-12 lg:py-16 bg-gradient-to-b from-[#FAF8F5] via-[#F8F5F0] to-[#F5F0EA] relative overflow-hidden"
       >
         {/* Subtle background elements */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
           <div 
-            className="absolute top-20 right-16 w-64 sm:w-96 h-64 sm:h-96 rounded-full bg-gradient-to-r from-rice-100/30 to-olive-100/20 blur-3xl"
+            className="absolute top-20 right-16 w-64 sm:w-96 h-64 sm:h-96 rounded-full bg-gradient-to-r from-stone-100/20 to-sage-200/15 blur-3xl"
             style={{
-              transform: `translate(${-scrollY * 0.02}px, ${scrollY * 0.04}px)`,
               animation: 'float 25s ease-in-out infinite'
             }}
           />
           <div 
-            className="absolute bottom-32 left-20 w-60 sm:w-80 h-60 sm:h-80 rounded-full bg-gradient-to-r from-olive-100/25 to-rice-100/15 blur-3xl"
+            className="absolute bottom-32 left-20 w-60 sm:w-80 h-60 sm:h-80 rounded-full bg-gradient-to-r from-sage-200/20 to-taupe-200/15 blur-3xl"
             style={{
-              transform: `translate(${scrollY * 0.03}px, ${-scrollY * 0.02}px)`,
               animation: 'float 30s ease-in-out infinite reverse'
             }}
           />
@@ -292,151 +746,24 @@ const ParallaxLandingPage = () => {
             viewport={{ once: true, margin: "-100px" }}
             variants={fadeInUp}
             className="text-center mb-8 sm:mb-10 lg:mb-12"
-            style={{
-              transform: `translateY(${scrollY * 0.02}px)`
-            }}
           >
             <div className="mb-2 sm:mb-3">
               <span className="text-[0.65rem] sm:text-xs text-stone-500 tracking-[0.3em] uppercase font-light">Featured</span>
             </div>
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-light text-stone-700 mb-3 sm:mb-4 tracking-wide leading-tight px-4">
-              Signature Collection
+              Our Collection
             </h2>
             <div className="w-16 sm:w-20 h-0.5 bg-gradient-to-r from-transparent via-olive-300 to-transparent mx-auto mb-3 sm:mb-4"></div>
             <p className="text-xs sm:text-sm text-stone-600/80 font-light max-w-xl mx-auto leading-relaxed px-4">
-              Discover our most beloved formulations, crafted with the finest natural ingredients and Italian precision
+              Drag to explore our curated selection of botanical skincare
             </p>
           </motion.div>
+        </div>
 
-          {/* Enhanced Product Grid - Compact Size */}
-          <motion.div 
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-50px" }}
-            variants={{
-              hidden: { opacity: 0 },
-              visible: { opacity: 1, transition: { staggerChildren: 0.2 } }
-            }}
-            className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 lg:gap-8"
-            style={{
-              transform: `translateY(${scrollY * 0.01}px)`
-            }}
-          >
-            {[
-              {
-                id: 'rise-1',
-                name: 'RISE Radiance Illuminating Serum',
-                subtitle: 'Brightening serum that gives skin an instant glow',
-                price: '€89.00',
-                description: 'An ultra-lightweight, deeply hydrating serum infused with premium rice bran extract and vitamin C.',
-                type: 'Serums',
-                color: 'bg-gradient-to-br from-stone-100 to-neutral-100',
-                special: true,
-                image: getAssetPath('/images/products/IMG-20250808-WA0006.jpg')
-              },
-              {
-                id: 'rise-2',
-                name: 'RISE Soul Renewal Night Cream',
-                subtitle: 'Luxurious night cream for skin renewal',
-                price: '€125.00',
-                description: 'Advanced night cream that works while you sleep to reveal smoother, firmer skin by morning.',
-                type: 'Moisturizers',
-                color: 'bg-gradient-to-br from-neutral-100 to-stone-100',
-                special: true,
-                image: getAssetPath('/images/products/IMG-20250808-WA0007.jpg')
-              },
-              {
-                id: 'rise-3',
-                name: 'RISE Eye Luce Brightening Complex',
-                subtitle: 'Brightening eye complex for refreshed eyes',
-                price: '€75.00',
-                description: 'Intensive eye treatment that reduces dark circles and puffiness for a refreshed appearance.',
-                type: 'Eye Care',
-                color: 'bg-gradient-to-br from-stone-50 to-neutral-100',
-                special: true,
-                image: getAssetPath('/images/products/IMG-20250808-WA0008.jpg')
-              }
-            ].map((product, index) => (
-              <motion.div 
-                key={product.id}
-                variants={fadeInUp}
-                className="group block bg-warm-cream border border-warm-taupe/30 hover:border-warm-olive/40 hover:shadow-2xl transition-all duration-500 rounded-lg overflow-hidden"
-                style={{
-                  transform: `translateY(${scrollY * (0.005 + index * 0.002)}px)`,
-                  transitionDelay: `${index * 100}ms`
-                }}
-              >
-                {/* Enhanced Product Image Area - Smaller */}
-                <div 
-                  className={`aspect-[3/4] ${product.color} relative overflow-hidden flex items-center justify-center group-hover:scale-105 transition-transform duration-700`}
-                >
-                  {/* Product Image */}
-                  {product.image && (
-                    <img 
-                      src={product.image} 
-                      alt={product.name}
-                      className="w-full h-full object-cover"
-                      onError={(e) => {
-                        e.currentTarget.style.display = 'none';
-                      }}
-                    />
-                  )}
-                  
-                  {/* Special Badge */}
-                  {product.special && (
-                    <div className="absolute top-3 right-3 bg-stone-800 text-white px-2 py-0.5 text-[10px] tracking-widest uppercase font-medium rounded">
-                      Featured
-                    </div>
-                  )}
+        {/* Infinite Scrollable Product Carousel */}
+        <InfiniteProductCarousel />
 
-                  {/* Hover Overlay */}
-                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors duration-500" />
-                </div>
-
-                {/* Enhanced Product Info - Compact */}
-                <div className="p-4 sm:p-5 space-y-2 sm:space-y-3">
-                  <div>
-                    <p className="text-soft-gray text-[9px] sm:text-[10px] tracking-[0.2em] uppercase mb-1.5 sm:mb-2 font-medium">{product.type}</p>
-                    <h3 className="text-base sm:text-lg font-light text-rich-brown mb-1 sm:mb-1.5 tracking-wide group-hover:text-warm-olive transition-colors duration-300 line-clamp-2">
-                      {product.name}
-                    </h3>
-                    <p className="text-soft-gray/80 text-[11px] sm:text-xs tracking-wide font-light line-clamp-1">{product.subtitle}</p>
-                  </div>
-                  
-                  <p className="text-soft-gray/70 text-[11px] sm:text-xs leading-relaxed font-light line-clamp-2">
-                    {product.description}
-                  </p>
-                  
-                  <div className="flex items-center justify-between pt-2 sm:pt-3 border-t border-warm-taupe/20">
-                    <span className="text-base sm:text-lg font-light text-rich-brown tracking-wide">
-                      {product.price}
-                    </span>
-                    <div className="flex space-x-1.5 sm:space-x-2">
-                      <button 
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          // Add to wishlist logic
-                        }}
-                        className="p-2 sm:p-2.5 rounded-lg border border-warm-olive/30 hover:bg-warm-olive hover:text-white hover:border-warm-olive transition-all duration-300 group/btn"
-                        aria-label="Add to wishlist"
-                      >
-                        <Heart className="w-3.5 h-3.5 sm:w-4 sm:h-4 group-hover/btn:scale-110 transition-transform duration-200" strokeWidth={1.5} />
-                      </button>
-                      <Link
-                        to={`/product/${product.id}`}
-                        className="flex-1 px-3 sm:px-4 py-2 sm:py-2.5 rounded-lg bg-warm-olive text-white hover:bg-warm-olive-dark transition-all duration-300 group/btn flex items-center justify-center gap-1.5 sm:gap-2"
-                        onClick={(e) => e.stopPropagation()}
-                      >
-                        <ShoppingBag className="w-3.5 h-3.5 sm:w-4 sm:h-4 group-hover/btn:scale-110 transition-transform duration-200" strokeWidth={1.5} />
-                        <span className="text-xs sm:text-sm font-medium tracking-wide">View</span>
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </motion.div>
-
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           {/* Enhanced Call-to-Action */}
           <motion.div 
             initial="hidden"
@@ -444,13 +771,10 @@ const ParallaxLandingPage = () => {
             viewport={{ once: true }}
             variants={fadeInUp}
             className="text-center mt-12 sm:mt-16"
-            style={{
-              transform: `translateY(${scrollY * 0.01}px)`
-            }}
           >
             <Link 
               to="/products"
-              className="group inline-flex items-center gap-2 sm:gap-3 px-6 sm:px-8 py-3 sm:py-4 rounded-lg bg-warm-olive text-white hover:bg-warm-olive-dark transition-all duration-300 tracking-wide transform hover:scale-105 shadow-md hover:shadow-lg text-sm sm:text-base"
+              className="group inline-flex items-center gap-2 sm:gap-3 px-6 sm:px-8 py-3 sm:py-4 rounded-lg bg-[#d4c8b8] text-stone-800 border border-[#c9baa6] hover:bg-[#c9baa6] transition-all duration-300 tracking-wide transform hover:scale-105 shadow-sm hover:shadow-md text-sm sm:text-base"
             >
               <span className="relative z-10 font-medium">View Complete Collection</span>
               <ArrowRight className="relative z-10 w-4 h-4 sm:w-5 sm:h-5 transition-transform duration-300 group-hover:translate-x-1" strokeWidth={1.5} />
@@ -459,191 +783,610 @@ const ParallaxLandingPage = () => {
         </div>
       </section>
 
-      {/* Our Mission Section */}
-        <section className="py-16 sm:py-20 md:py-24 bg-pale-sand">
-          <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-            <motion.div 
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              variants={fadeInUp}
-              className="text-center mb-10 sm:mb-12"
-            >
-              <span className="text-[0.65rem] sm:text-xs text-soft-gray tracking-[0.2em] uppercase font-light">Our Mission</span>
-              <h2 className="text-2xl sm:text-3xl md:text-4xl font-light text-rich-brown mt-3 sm:mt-4 mb-4 sm:mb-6 tracking-wide leading-tight px-4">
-                Premium skincare, inspired by nature and crafted with care.
-              </h2>
-              <div className="w-12 sm:w-16 h-0.5 bg-warm-olive/40 mx-auto mb-6 sm:mb-8"></div>
-              <p className="text-sm sm:text-base text-soft-gray font-light max-w-xl mx-auto px-4">
-                We create clean, effective skincare using rice-based ingredients and botanicals, with a focus on sustainability and simplicity. Our products are designed to elevate your daily routine and honor your skin’s natural radiance.
-              </p>
-            </motion.div>
-          </div>
-        </section>
+      {/* Soft Fade Transition */}
+      <div className="relative h-32 sm:h-40">
+        <div className="absolute inset-0 bg-gradient-to-b from-[#F5F0EA] via-[#F3EDE5] to-[#F0E8DD]"></div>
+      </div>
 
-      {/* Philosophy Section */}
-      <section className="py-24 bg-gradient-to-b from-warm-ivory to-warm-cream relative overflow-hidden">
-        {/* Background Elements */}
+      {/* Philosophy Section - Enhanced with Parallax */}
+      <section className="py-20 md:py-32 bg-gradient-to-b from-[#F0E8DD] via-warm-cream to-warm-cream relative overflow-hidden">
+        {/* Enhanced Background Elements with Parallax */}
         <div className="absolute inset-0 pointer-events-none">
-          <div 
-            className="absolute top-16 left-20 w-80 h-80 rounded-full bg-gradient-to-r from-rice-100/40 to-olive-100/20 blur-3xl"
-            style={{
-              animation: 'float 20s ease-in-out infinite'
-            }}
+          <motion.div 
+            className="absolute top-20 right-1/4 w-96 h-96 rounded-full bg-gradient-to-r from-rice-100/30 to-olive-100/20 blur-3xl"
+            style={{ animation: 'float 25s ease-in-out infinite' }}
+            initial={{ opacity: 0, scale: 0.8 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1.5 }}
           />
-          <div 
-            className="absolute bottom-20 right-16 w-72 h-72 rounded-full bg-gradient-to-l from-olive-100/30 to-rice-100/15 blur-3xl"
-            style={{
-              animation: 'float 25s ease-in-out infinite reverse'
-            }}
+          <motion.div 
+            className="absolute bottom-20 left-1/4 w-80 h-80 rounded-full bg-gradient-to-r from-olive-100/20 to-rice-100/25 blur-3xl"
+            style={{ animation: 'float 30s ease-in-out infinite reverse' }}
+            initial={{ opacity: 0, scale: 0.8 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1.5, delay: 0.3 }}
           />
         </div>
 
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="grid lg:grid-cols-2 gap-20 items-center">
-            {/* Philosophy Content */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          {/* Main Content Grid */}
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+            
+            {/* Left: Auto-changing Image Carousel */}
             <motion.div 
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true }}
               variants={fadeInUp}
-              className="space-y-8"
+              className="relative order-2 lg:order-1"
             >
-              {/* Header */}
-              <div>
-                <div className="mb-6">
-                  <span className="text-sm text-soft-gray tracking-[0.3em] uppercase font-light">Our Beliefs</span>
-                </div>
-                <h2 className="text-4xl md:text-5xl lg:text-6xl font-light text-rich-brown mb-8 tracking-wide leading-tight">
-                  Philosophy
-                </h2>
-                <div className="w-24 h-0.5 bg-gradient-to-r from-transparent via-warm-olive/50 to-transparent mb-8"></div>
-              </div>
-
-              {/* Philosophy Text */}
-              <div className="space-y-6">
-                <p className="text-lg text-soft-gray/90 leading-relaxed font-light">
-                  Embrace your natural essence with <span className="font-semibold text-rich-brown">RISE</span>, where holistic beauty meets mindful care. 
-                  Our transformative ingredients connect you to the root of your radiance.
-                </p>
-                <p className="text-lg text-soft-gray/90 leading-relaxed font-light">
-                  Crafted in Italy, we pride ourselves on using botanical and other healing ingredients 
-                  to provide you with the glow your skin craves. Beauty is intention, so we treat it with respect.
-                </p>
-                <p className="text-lg text-stone-600/90 leading-relaxed font-light">
-                  Every product is a bridge between ancient wisdom and modern science, designed to nurture 
-                  not just your skin, but your daily self-care and mindfulness.
-                </p>
-              </div>
-
-              {/* Core Values */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-8">
-                <div className="flex items-start gap-4 p-6 bg-warm-cream/70 backdrop-blur-sm border border-warm-taupe/30 rounded-xl">
-                  <div className="w-3 h-3 bg-warm-olive rounded-full mt-2 flex-shrink-0"></div>
-                  <div>
-                    <h4 className="text-rich-brown font-medium mb-2 tracking-wide">Mindful Beauty</h4>
-                    <p className="text-soft-gray/80 text-sm">Intentional skincare that honors your natural essence</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-4 p-6 bg-warm-cream/70 backdrop-blur-sm border border-warm-taupe/30 rounded-xl">
-                  <div className="w-3 h-3 bg-soft-terracotta rounded-full mt-2 flex-shrink-0"></div>
-                  <div>
-                    <h4 className="text-rich-brown font-medium mb-2 tracking-wide">Ancient Wisdom</h4>
-                    <p className="text-soft-gray/80 text-sm">Time-tested ingredients meet modern innovation</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-4 p-6 bg-warm-cream/70 backdrop-blur-sm border border-warm-taupe/30 rounded-xl">
-                  <div className="w-3 h-3 bg-warm-olive rounded-full mt-2 flex-shrink-0"></div>
-                  <div>
-                    <h4 className="text-rich-brown font-medium mb-2 tracking-wide">Holistic Care</h4>
-                    <p className="text-soft-gray/80 text-sm">Nurturing your skin, mind, and spirit together</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-4 p-6 bg-warm-cream/70 backdrop-blur-sm border border-warm-taupe/30 rounded-xl">
-                  <div className="w-3 h-3 bg-soft-terracotta rounded-full mt-2 flex-shrink-0"></div>
-                  <div>
-                    <h4 className="text-rich-brown font-medium mb-2 tracking-wide">Radiance Philosophy</h4>
-                    <p className="text-soft-gray/80 text-sm">Transforming daily care into meaningful moments</p>
-                  </div>
-                </div>
+              <div className="relative h-[700px] md:h-[800px]">
+                {/* Image Carousel */}
+                <AnimatePresence mode="wait">
+                  {[
+                    { src: '/images/products/slider/Girl1.jpg', key: 'girl1' },
+                    { src: '/images/products/slider/Girl2.jpg', key: 'girl2' },
+                    { src: '/images/products/slider/Girl3.jpg', key: 'girl3' }
+                  ].map((image, index) => (
+                    <ImageCarouselSlide 
+                      key={image.key}
+                      src={image.src}
+                      index={index}
+                    />
+                  ))}
+                </AnimatePresence>
+                
+                {/* Decorative Element */}
+                <motion.div 
+                  className="absolute top-1/2 -left-12 w-32 h-32 rounded-full bg-warm-olive/10 blur-3xl"
+                  animate={{ scale: [1, 1.15, 1], opacity: [0.2, 0.4, 0.2] }}
+                  transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+                />
               </div>
             </motion.div>
 
-            {/* Philosophy Visual with Products */}
+            {/* Right: Philosophy Content */}
             <motion.div 
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true }}
               variants={fadeInUp}
-              className="relative"
+              className="space-y-8 order-1 lg:order-2"
             >
-              <div className="aspect-square bg-gradient-to-br from-olive-50 to-rice-50 rounded-3xl overflow-hidden relative border border-olive-100/50">
-                {/* Product Images Around Video */}
-                <div className="absolute inset-0 flex flex-col">
-                  {/* Top Section with Products */}
-                  <div className="h-1/4 p-4 flex justify-between items-start">
-                    <div className="bg-white/80 backdrop-blur-sm rounded-xl p-3 border border-olive-100/50 hover:shadow-md transition-all duration-300">
-                      <img 
-                        src="https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=80&h=80&fit=crop&crop=center" 
-                        alt="Serum"
-                        className="w-12 h-12 object-cover rounded-lg shadow-sm"
-                      />
-                      <p className="text-stone-700 text-xs font-medium mt-1 text-center">Serum</p>
-                    </div>
-                    <div className="bg-white/80 backdrop-blur-sm rounded-xl p-3 border border-olive-100/50 hover:shadow-md transition-all duration-300">
-                      <img 
-                        src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=80&h=80&fit=crop&crop=center" 
-                        alt="Cream"
-                        className="w-12 h-12 object-cover rounded-lg shadow-sm"
-                      />
-                      <p className="text-stone-700 text-xs font-medium mt-1 text-center">Cream</p>
-                    </div>
-                  </div>
-                  
-                  {/* Video Area */}
-                  <div className="flex-1 bg-gradient-to-br from-olive-100/50 to-rice-100/30 relative">
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <div className="w-24 h-24 bg-white/80 backdrop-blur-sm rounded-full flex items-center justify-center border border-olive-200/50 hover:bg-white hover:scale-105 transition-all duration-300 cursor-pointer group">
-                        <Play className="w-8 h-8 text-stone-500 ml-1 group-hover:text-stone-600 transition-colors" />
-                      </div>
-                    </div>
-                  </div>
-                  
-                  {/* Bottom Section with More Products */}
-                  <div className="h-1/4 p-4 flex justify-between items-end">
-                    <div className="bg-white/80 backdrop-blur-sm rounded-xl p-3 border border-olive-100/50 hover:shadow-md transition-all duration-300">
-                      <img 
-                        src="https://images.unsplash.com/photo-1570194065650-d99fb4bedf0a?w=80&h=80&fit=crop&crop=center" 
-                        alt="Moisturizer"
-                        className="w-12 h-12 object-cover rounded-lg shadow-sm"
-                      />
-                      <p className="text-stone-700 text-xs font-medium mt-1 text-center">Moisturizer</p>
-                    </div>
-                    <div className="bg-white/80 backdrop-blur-sm rounded-xl p-3 border border-olive-100/50 hover:shadow-md transition-all duration-300">
-                      <img 
-                        src="https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?w=80&h=80&fit=crop&crop=center" 
-                        alt="Cleanser"
-                        className="w-12 h-12 object-cover rounded-lg shadow-sm"
-                      />
-                      <p className="text-stone-700 text-xs font-medium mt-1 text-center">Cleanser</p>
-                    </div>
-                  </div>
-                  
-                  {/* Text Footer */}
-                  <div className="p-8 bg-white/70 backdrop-blur-sm border-t border-olive-100/50">
-                    <p className="text-stone-600 text-sm font-light text-center leading-relaxed">
-                      Discover the philosophy behind our mindful beauty
-                    </p>
-                  </div>
-                </div>
+              {/* Header */}
+              <div>
+                <span className="text-xs text-warm-olive tracking-[0.3em] uppercase font-medium">Our Beliefs</span>
+                <h2 className="text-4xl md:text-5xl lg:text-6xl font-playfair font-light text-rich-brown mt-4 mb-6 leading-tight">
+                  Philosophy
+                </h2>
+                <div className="w-16 h-0.5 bg-warm-olive/50"></div>
               </div>
+
+              {/* Philosophy Text - Dynamic based on selected belief */}
+              <motion.div 
+                className="space-y-5 min-h-[180px]"
+                key={selectedBelief || 'default'}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+              >
+                {selectedBelief ? (
+                  <>
+                    <div className="flex items-center gap-3 mb-4">
+                      {(() => {
+                        const belief = beliefDetails[selectedBelief as keyof typeof beliefDetails];
+                        const Icon = belief.icon;
+                        return (
+                          <>
+                            <div className="w-12 h-12 rounded-full bg-gradient-to-br from-warm-olive/20 to-amber-100/30 flex items-center justify-center">
+                              <Icon className="w-6 h-6 text-warm-olive" strokeWidth={2} />
+                            </div>
+                            <h3 className="text-2xl font-playfair font-light text-rich-brown">{belief.title}</h3>
+                          </>
+                        );
+                      })()}
+                    </div>
+                    <p className="text-lg text-stone-700 leading-relaxed font-normal">
+                      {beliefDetails[selectedBelief as keyof typeof beliefDetails].description}
+                    </p>
+                    <ul className="space-y-2 mt-4">
+                      {beliefDetails[selectedBelief as keyof typeof beliefDetails].features.map((feature, index) => (
+                        <motion.li
+                          key={index}
+                          initial={{ opacity: 0, x: -20 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ delay: index * 0.1 }}
+                          className="flex items-center gap-3 text-stone-600"
+                        >
+                          <div className="w-2 h-2 rounded-full bg-gradient-to-br from-warm-olive to-amber-600" />
+                          <span className="font-medium">{feature}</span>
+                        </motion.li>
+                      ))}
+                    </ul>
+                  </>
+                ) : (
+                  <>
+                    <p className="text-lg text-stone-700 leading-relaxed font-normal">
+                      Embrace your natural essence with <span className="font-semibold text-rich-brown">RISE</span>, where holistic beauty meets mindful care.
+                    </p>
+                    <p className="text-base text-stone-600 leading-relaxed">
+                      Crafted in Italy using botanical ingredients to provide you with the glow your skin craves. Every product bridges ancient wisdom and modern science.
+                    </p>
+                    <p className="text-sm text-warm-olive/80 italic mt-4">
+                      Click on any commitment below to learn more about our values
+                    </p>
+                  </>
+                )}
+              </motion.div>
+
+              {/* Our Commitments - Clickable Cards with Details */}
+              <div className="pt-6 border-t border-warm-taupe/20">
+                <h3 className="text-sm text-warm-olive tracking-[0.2em] uppercase font-medium mb-6">Our Commitments</h3>
+                <motion.div 
+                  className="grid grid-cols-2 sm:grid-cols-3 gap-3"
+                  variants={staggerContainer}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true }}
+                >
+                  {/* 100% Vegan */}
+                  <motion.button
+                    variants={scaleIn}
+                    onClick={() => setSelectedBelief(selectedBelief === 'vegan' ? null : 'vegan')}
+                    className={`group p-4 rounded-xl border transition-all duration-300 cursor-pointer ${
+                      selectedBelief === 'vegan' 
+                        ? 'bg-gradient-to-br from-emerald-50/50 to-green-50/40 border-emerald-400/60 shadow-md shadow-emerald-500/10 -translate-y-1' 
+                        : 'bg-white/50 border-warm-taupe/10 hover:bg-white hover:shadow-md hover:shadow-emerald-500/5 hover:-translate-y-1'
+                    }`}
+                  >
+                    <div className="flex flex-col items-center gap-2 text-center">
+                      <div className={`w-10 h-10 rounded-full flex items-center justify-center group-hover:scale-110 transition-all duration-300 ${
+                        selectedBelief === 'vegan' ? 'bg-emerald-400 text-white' : 'bg-emerald-500/10 text-emerald-600 group-hover:bg-emerald-500/15'
+                      }`}>
+                        <Leaf className="w-5 h-5" strokeWidth={2} />
+                      </div>
+                      <span className={`text-xs sm:text-sm font-medium ${
+                        selectedBelief === 'vegan' ? 'text-rich-brown font-semibold' : 'text-stone-600'
+                      }`}>100% Vegan</span>
+                    </div>
+                  </motion.button>
+                  
+                  {/* Cruelty Free */}
+                  <motion.button
+                    variants={scaleIn}
+                    onClick={() => setSelectedBelief(selectedBelief === 'crueltyFree' ? null : 'crueltyFree')}
+                    className={`group p-4 rounded-xl border transition-all duration-300 cursor-pointer ${
+                      selectedBelief === 'crueltyFree' 
+                        ? 'bg-gradient-to-br from-pink-50/50 to-rose-50/40 border-pink-400/60 shadow-md shadow-pink-500/10 -translate-y-1' 
+                        : 'bg-white/50 border-warm-taupe/10 hover:bg-white hover:shadow-md hover:shadow-pink-500/5 hover:-translate-y-1'
+                    }`}
+                  >
+                    <div className="flex flex-col items-center gap-2 text-center">
+                      <div className={`w-10 h-10 rounded-full flex items-center justify-center group-hover:scale-110 transition-all duration-300 ${
+                        selectedBelief === 'crueltyFree' ? 'bg-pink-400 text-white' : 'bg-pink-500/10 text-pink-600 group-hover:bg-pink-500/15'
+                      }`}>
+                        <Heart className="w-5 h-5" strokeWidth={2} />
+                      </div>
+                      <span className={`text-xs sm:text-sm font-medium ${
+                        selectedBelief === 'crueltyFree' ? 'text-rich-brown font-semibold' : 'text-stone-600'
+                      }`}>Cruelty Free</span>
+                    </div>
+                  </motion.button>
+                  
+                  {/* Natural Ingredients */}
+                  <motion.button
+                    variants={scaleIn}
+                    onClick={() => setSelectedBelief(selectedBelief === 'natural' ? null : 'natural')}
+                    className={`group p-4 rounded-xl border transition-all duration-300 cursor-pointer ${
+                      selectedBelief === 'natural' 
+                        ? 'bg-gradient-to-br from-amber-50/50 to-yellow-50/40 border-amber-400/60 shadow-md shadow-amber-500/10 -translate-y-1' 
+                        : 'bg-white/50 border-warm-taupe/10 hover:bg-white hover:shadow-md hover:shadow-amber-500/5 hover:-translate-y-1'
+                    }`}
+                  >
+                    <div className="flex flex-col items-center gap-2 text-center">
+                      <div className={`w-10 h-10 rounded-full flex items-center justify-center group-hover:scale-110 transition-all duration-300 ${
+                        selectedBelief === 'natural' ? 'bg-amber-400 text-white' : 'bg-amber-500/10 text-amber-600 group-hover:bg-amber-500/15'
+                      }`}>
+                        <Sparkles className="w-5 h-5" strokeWidth={2} />
+                      </div>
+                      <span className={`text-xs sm:text-sm font-medium ${
+                        selectedBelief === 'natural' ? 'text-rich-brown font-semibold' : 'text-stone-600'
+                      }`}>Natural Ingredients</span>
+                    </div>
+                  </motion.button>
+                  
+                  {/* Sustainable Packaging */}
+                  <motion.button
+                    variants={scaleIn}
+                    onClick={() => setSelectedBelief(selectedBelief === 'sustainable' ? null : 'sustainable')}
+                    className={`group p-4 rounded-xl border transition-all duration-300 cursor-pointer ${
+                      selectedBelief === 'sustainable' 
+                        ? 'bg-gradient-to-br from-teal-50/50 to-cyan-50/40 border-teal-400/60 shadow-md shadow-teal-500/10 -translate-y-1' 
+                        : 'bg-white/50 border-warm-taupe/10 hover:bg-white hover:shadow-md hover:shadow-teal-500/5 hover:-translate-y-1'
+                    }`}
+                  >
+                    <div className="flex flex-col items-center gap-2 text-center">
+                      <div className={`w-10 h-10 rounded-full flex items-center justify-center group-hover:scale-110 transition-all duration-300 ${
+                        selectedBelief === 'sustainable' ? 'bg-teal-400 text-white' : 'bg-teal-500/10 text-teal-600 group-hover:bg-teal-500/15'
+                      }`}>
+                        <Recycle className="w-5 h-5" strokeWidth={2} />
+                      </div>
+                      <span className={`text-xs sm:text-sm font-medium ${
+                        selectedBelief === 'sustainable' ? 'text-rich-brown font-semibold' : 'text-stone-600'
+                      }`}>Sustainable Packaging</span>
+                    </div>
+                  </motion.button>
+                  
+                  {/* Made in Italy */}
+                  <motion.button
+                    variants={scaleIn}
+                    onClick={() => setSelectedBelief(selectedBelief === 'italy' ? null : 'italy')}
+                    className={`group p-4 rounded-xl border transition-all duration-300 cursor-pointer ${
+                      selectedBelief === 'italy' 
+                        ? 'bg-gradient-to-br from-blue-50/50 to-indigo-50/40 border-blue-400/60 shadow-md shadow-blue-500/10 -translate-y-1' 
+                        : 'bg-white/50 border-warm-taupe/10 hover:bg-white hover:shadow-md hover:shadow-blue-500/5 hover:-translate-y-1'
+                    }`}
+                  >
+                    <div className="flex flex-col items-center gap-2 text-center">
+                      <div className={`w-10 h-10 rounded-full flex items-center justify-center group-hover:scale-110 transition-all duration-300 ${
+                        selectedBelief === 'italy' ? 'bg-blue-400 text-white' : 'bg-blue-500/10 text-blue-600 group-hover:bg-blue-500/15'
+                      }`}>
+                        <MapPin className="w-5 h-5" strokeWidth={2} />
+                      </div>
+                      <span className={`text-xs sm:text-sm font-medium ${
+                        selectedBelief === 'italy' ? 'text-rich-brown font-semibold' : 'text-stone-600'
+                      }`}>Made in Italy</span>
+                    </div>
+                  </motion.button>
+                  
+                  {/* Dermatologically Tested */}
+                  <motion.button
+                    variants={scaleIn}
+                    onClick={() => setSelectedBelief(selectedBelief === 'tested' ? null : 'tested')}
+                    className={`group p-4 rounded-xl border transition-all duration-300 cursor-pointer ${
+                      selectedBelief === 'tested' 
+                        ? 'bg-gradient-to-br from-purple-50/50 to-violet-50/40 border-purple-400/60 shadow-md shadow-purple-500/10 -translate-y-1' 
+                        : 'bg-white/50 border-warm-taupe/10 hover:bg-white hover:shadow-md hover:shadow-purple-500/5 hover:-translate-y-1'
+                    }`}
+                  >
+                    <div className="flex flex-col items-center gap-2 text-center">
+                      <div className={`w-10 h-10 rounded-full flex items-center justify-center group-hover:scale-110 transition-all duration-300 ${
+                        selectedBelief === 'tested' ? 'bg-purple-400 text-white' : 'bg-purple-500/10 text-purple-600 group-hover:bg-purple-500/15'
+                      }`}>
+                        <Shield className="w-5 h-5" strokeWidth={2} />
+                      </div>
+                      <span className={`text-xs sm:text-sm font-medium ${
+                        selectedBelief === 'tested' ? 'text-rich-brown font-semibold' : 'text-stone-600'
+                      }`}>Dermatologically Tested</span>
+                    </div>
+                  </motion.button>
+                </motion.div>
+              </div>
+
+              {/* CTA */}
+              <Link 
+                to="/about"
+                className="inline-flex items-center gap-2 text-warm-olive hover:text-rich-brown transition-colors duration-300 group pt-4"
+              >
+                <span className="text-sm tracking-wide font-medium">Learn More About Us</span>
+                <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
+              </Link>
             </motion.div>
           </div>
         </div>
       </section>
 
-      {/* Other Sections */}
-      <IngredientSpotlight />
+      {/* Soft Fade Transition */}
+      <div className="relative h-32 sm:h-40">
+        <div className="absolute inset-0 bg-gradient-to-b from-warm-cream via-[#FAF8F5] to-[#FEFDFB]"></div>
+      </div>
+
+      {/* Our Signature Products Section */}
+      <section className="relative bg-gradient-to-b from-[#FEFDFB] via-white to-white py-20 sm:py-28 overflow-hidden">
+        {/* Subtle Background */}
+        <div className="absolute inset-0 bg-gradient-to-b from-warm-cream/15 via-transparent to-warm-cream/15"></div>
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          {/* Section Header */}
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={fadeInUp}
+            className="text-center mb-12"
+          >
+            <span className="text-xs text-warm-olive tracking-[0.3em] uppercase font-medium">Our Collection</span>
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-playfair font-light text-rich-brown mt-3 mb-4 leading-tight">
+              Signature Products
+            </h2>
+            <div className="w-16 h-0.5 bg-warm-olive/50 mx-auto"></div>
+          </motion.div>
+
+          {/* Products Grid - Alternating Layout */}
+          <div className="space-y-16">
+            
+            {/* Product 1: Body Harmony - Image Left */}
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={fadeInUp}
+              className="grid lg:grid-cols-2 gap-6 lg:gap-10 items-center"
+            >
+              {/* Image */}
+              <motion.div 
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                variants={slideInFromLeft}
+                className="relative group order-2 lg:order-1"
+              >
+                <div className="aspect-[3/4] rounded-2xl overflow-hidden shadow-lg">
+                  <img 
+                    src={getAssetPath('/images/products/slider/Product1.jpg')}
+                    alt="Body Harmony Cream"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                  />
+                </div>
+              </motion.div>
+
+              {/* Content */}
+              <div className="space-y-4 order-1 lg:order-2">
+                <div>
+                  <p className="text-xs text-warm-olive tracking-[0.25em] uppercase mb-3">Body Care</p>
+                  <h3 className="text-3xl md:text-4xl font-playfair font-light text-rich-brown mb-4">
+                    Body Harmony
+                  </h3>
+                  <p className="text-stone-600 text-lg leading-relaxed mb-6">
+                    Rich, creamy body cream in recycled matte beige packaging with golden accents. 
+                    Perfect for daily massage rituals.
+                  </p>
+                </div>
+                
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <h4 className="text-xs text-warm-olive tracking-wider uppercase font-medium">Texture</h4>
+                    <p className="text-sm text-stone-600">Silky & Creamy</p>
+                  </div>
+                  <div className="space-y-2">
+                    <h4 className="text-xs text-warm-olive tracking-wider uppercase font-medium">Scent</h4>
+                    <p className="text-sm text-stone-600">Natural & Spiritual</p>
+                  </div>
+                  <div className="space-y-2">
+                    <h4 className="text-xs text-warm-olive tracking-wider uppercase font-medium">Finish</h4>
+                    <p className="text-sm text-stone-600">Nourished & Soft</p>
+                  </div>
+                  <div className="space-y-2">
+                    <h4 className="text-xs text-warm-olive tracking-wider uppercase font-medium">Use</h4>
+                    <p className="text-sm text-stone-600">Daily Massage</p>
+                  </div>
+                </div>
+
+                <div className="pt-4">
+                  <Link 
+                    to="/products/body-harmony"
+                    className="inline-flex items-center gap-2 text-warm-olive hover:text-rich-brown transition-colors duration-300 group"
+                  >
+                    <span className="text-sm tracking-wide font-medium">Discover More</span>
+                    <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
+                  </Link>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Product 2: Radiance Serum - Image Right */}
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={fadeInUp}
+              className="grid lg:grid-cols-2 gap-6 lg:gap-10 items-center"
+            >
+              {/* Content */}
+              <div className="space-y-4 order-1">
+                <div>
+                  <p className="text-xs text-warm-olive tracking-[0.25em] uppercase mb-2">Face Care</p>
+                  <h3 className="text-2xl md:text-3xl font-playfair font-light text-rich-brown mb-3">
+                    Radiance Serum
+                  </h3>
+                  <p className="text-stone-600 text-base leading-relaxed">
+                    Luminous face serum in an amber bottle with gold dropper. 
+                    Precision-crafted for visible radiance and tone.
+                  </p>
+                </div>
+                
+                <div className="grid grid-cols-2 gap-3 pt-2">
+                  <div className="space-y-1">
+                    <h4 className="text-xs text-warm-olive tracking-wider uppercase font-medium">Texture</h4>
+                    <p className="text-sm text-stone-600">Silky Liquid</p>
+                  </div>
+                  <div className="space-y-1">
+                    <h4 className="text-xs text-warm-olive tracking-wider uppercase font-medium">Absorption</h4>
+                    <p className="text-sm text-stone-600">Rapid</p>
+                  </div>
+                  <div className="space-y-1">
+                    <h4 className="text-xs text-warm-olive tracking-wider uppercase font-medium">Finish</h4>
+                    <p className="text-sm text-stone-600">Luminous & Toned</p>
+                  </div>
+                  <div className="space-y-1">
+                    <h4 className="text-xs text-warm-olive tracking-wider uppercase font-medium">Layering</h4>
+                    <p className="text-sm text-stone-600">Ideal Base</p>
+                  </div>
+                </div>
+
+                <div className="pt-3">
+                  <Link 
+                    to="/products/radiance-serum"
+                    className="inline-flex items-center gap-2 text-warm-olive hover:text-rich-brown transition-colors duration-300 group"
+                  >
+                    <span className="text-sm tracking-wide font-medium">Discover More</span>
+                    <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
+                  </Link>
+                </div>
+              </div>
+
+              {/* Image */}
+              <motion.div 
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                variants={slideInFromRight}
+                className="relative group order-2"
+              >
+                <div className="aspect-[3/4] rounded-2xl overflow-hidden shadow-lg">
+                  <img 
+                    src={getAssetPath('/images/products/slider/Product5.jpg')}
+                    alt="Radiance Serum"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                  />
+                </div>
+              </motion.div>
+            </motion.div>
+
+            {/* Product 3: Eye Luce - Image Left */}
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={fadeInUp}
+              className="grid lg:grid-cols-2 gap-6 lg:gap-10 items-center"
+            >
+              {/* Image */}
+              <motion.div 
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                variants={slideInFromLeft}
+                className="relative group order-2 lg:order-1"
+              >
+                <div className="aspect-[3/4] rounded-2xl overflow-hidden shadow-lg">
+                  <img 
+                    src={getAssetPath('/images/products/slider/Product6.jpg')}
+                    alt="Eye Luce Drops"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                  />
+                </div>
+              </motion.div>
+
+              {/* Content */}
+              <div className="space-y-4 order-1 lg:order-2">
+                <div>
+                  <p className="text-xs text-warm-olive tracking-[0.25em] uppercase mb-2">Eye Care</p>
+                  <h3 className="text-2xl md:text-3xl font-playfair font-light text-rich-brown mb-3">
+                    Eye Luce
+                  </h3>
+                  <p className="text-stone-600 text-base leading-relaxed">
+                    Refreshing eye drops in frosted glass with rose gold accents. 
+                    Awakens and hydrates the delicate eye area.
+                  </p>
+                </div>
+                
+                <div className="grid grid-cols-2 gap-3 pt-2">
+                  <div className="space-y-1">
+                    <h4 className="text-xs text-warm-olive tracking-wider uppercase font-medium">Texture</h4>
+                    <p className="text-sm text-stone-600">Ultra-Light Gel</p>
+                  </div>
+                  <div className="space-y-1">
+                    <h4 className="text-xs text-warm-olive tracking-wider uppercase font-medium">Effect</h4>
+                    <p className="text-sm text-stone-600">Cooling</p>
+                  </div>
+                  <div className="space-y-1">
+                    <h4 className="text-xs text-warm-olive tracking-wider uppercase font-medium">Benefit</h4>
+                    <p className="text-sm text-stone-600">Instant Hydration</p>
+                  </div>
+                  <div className="space-y-1">
+                    <h4 className="text-xs text-warm-olive tracking-wider uppercase font-medium">Application</h4>
+                    <p className="text-sm text-stone-600">Precision Dropper</p>
+                  </div>
+                </div>
+
+                <div className="pt-3">
+                  <Link 
+                    to="/products/eye-luce"
+                    className="inline-flex items-center gap-2 text-warm-olive hover:text-rich-brown transition-colors duration-300 group"
+                  >
+                    <span className="text-sm tracking-wide font-medium">Discover More</span>
+                    <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
+                  </Link>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Product 4: Soulrise - Image Right */}
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={fadeInUp}
+              className="grid lg:grid-cols-2 gap-6 lg:gap-10 items-center"
+            >
+              {/* Content */}
+              <div className="space-y-4 order-1">
+                <div>
+                  <p className="text-xs text-warm-olive tracking-[0.25em] uppercase mb-2">Face Care</p>
+                  <h3 className="text-2xl md:text-3xl font-playfair font-light text-rich-brown mb-3">
+                    Soulrise
+                  </h3>
+                  <p className="text-stone-600 text-base leading-relaxed">
+                    Luxurious face cream in satin beige airless bottle. 
+                    Melts into skin for a natural glow and second-skin comfort.
+                  </p>
+                </div>
+                
+                <div className="grid grid-cols-2 gap-3 pt-2">
+                  <div className="space-y-1">
+                    <h4 className="text-xs text-warm-olive tracking-wider uppercase font-medium">Texture</h4>
+                    <p className="text-sm text-stone-600">Rich & Light</p>
+                  </div>
+                  <div className="space-y-1">
+                    <h4 className="text-xs text-warm-olive tracking-wider uppercase font-medium">Sensation</h4>
+                    <p className="text-sm text-stone-600">Second Skin</p>
+                  </div>
+                  <div className="space-y-1">
+                    <h4 className="text-xs text-warm-olive tracking-wider uppercase font-medium">Finish</h4>
+                    <p className="text-sm text-stone-600">Natural Glow</p>
+                  </div>
+                  <div className="space-y-1">
+                    <h4 className="text-xs text-warm-olive tracking-wider uppercase font-medium">Packaging</h4>
+                    <p className="text-sm text-stone-600">Airless System</p>
+                  </div>
+                </div>
+
+                <div className="pt-3">
+                  <Link 
+                    to="/products/soulrise"
+                    className="inline-flex items-center gap-2 text-warm-olive hover:text-rich-brown transition-colors duration-300 group"
+                  >
+                    <span className="text-sm tracking-wide font-medium">Discover More</span>
+                    <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
+                  </Link>
+                </div>
+              </div>
+
+              {/* Image */}
+              <motion.div 
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                variants={slideInFromRight}
+                className="relative group order-2"
+              >
+                <div className="aspect-[3/4] rounded-2xl overflow-hidden shadow-lg">
+                  <img 
+                    src={getAssetPath('/images/products/slider/Product7.jpg')}
+                    alt="Soulrise Face Cream"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                  />
+                </div>
+              </motion.div>
+            </motion.div>
+
+          </div>
+        </div>
+      </section>
+
+      {/* Smooth Wave Transition */}
+      <div className="relative h-1 bg-gradient-to-b from-white to-warm-cream"></div>
     </div>
   );
 };

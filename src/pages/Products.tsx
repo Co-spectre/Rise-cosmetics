@@ -93,24 +93,6 @@ const Products = () => {
     <div className="min-h-screen bg-white">
       <Header />
 
-      {/* Hero Section */}
-      <div className="relative h-[40vh] min-h-[300px] bg-stone-100 overflow-hidden">
-        <div className="absolute inset-0">
-          <img 
-            src="https://images.unsplash.com/photo-1616683693504-3ea7e9ad6fec?q=80&w=2574&auto=format&fit=crop" 
-            alt="Collection Hero" 
-            className="w-full h-full object-cover opacity-80"
-          />
-          <div className="absolute inset-0 bg-black/10" />
-        </div>
-        <div className="relative h-full max-w-7xl mx-auto px-4 sm:px-6 flex flex-col justify-center items-center text-center">
-          <h1 className="text-4xl md:text-6xl font-playfair text-white mb-4 drop-shadow-md">The Collection</h1>
-          <p className="text-lg md:text-xl text-white/90 font-light max-w-xl drop-shadow-sm">
-            Discover our curated range of premium skincare essentials, crafted for your daily ritual.
-          </p>
-        </div>
-      </div>
-
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 py-12">
         {/* Search and Filter Bar */}
@@ -265,7 +247,7 @@ const Products = () => {
                   setSelectedCategory('all');
                   setPriceRange({ min: 0, max: 1000 });
                 }}
-                className="px-6 py-2.5 bg-stone-900 text-white rounded-full hover:bg-stone-800 transition-colors duration-200 text-sm tracking-wide"
+                className="px-6 py-2.5 bg-[#D4C4B0] text-stone-800 rounded-full hover:bg-[#C5B5A0] transition-colors duration-200 text-sm tracking-wide"
               >
                 Clear All Filters
               </button>

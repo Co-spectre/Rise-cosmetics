@@ -62,72 +62,82 @@
     -webkit-line-clamp: 3;
     line-clamp: 3;
   }
+  
+  /* Hide scrollbar utility */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 /* Definition of the design system for RISE Cosmetics */
+/* Soft Luxury Pastel Palette - Elegant, Feminine, Natural */
 
 @layer base {
   :root {
-    /* Holistic Zen Palette */
-    --background: 43 33% 96%; /* #F9F7F2 */
-    --foreground: 78 8% 24%; /* #3F4238 */
+    /* Soft Luxury Pastel Palette */
+    --background: 30 30% 97%; /* #FAF8F5 - Warm White */
+    --foreground: 25 15% 25%; /* #433D37 - Warm Charcoal */
 
-    --card: 43 33% 96%;
-    --card-foreground: 78 8% 24%;
+    --card: 30 30% 97%;
+    --card-foreground: 25 15% 25%;
 
-    --popover: 43 33% 96%;
-    --popover-foreground: 78 8% 24%;
+    --popover: 30 30% 97%;
+    --popover-foreground: 25 15% 25%;
 
-    --primary: 75 10% 40%; /* #6B705C */
-    --primary-foreground: 43 33% 98%;
+    --primary: 350 25% 70%; /* #D4A5A5 - Dusty Rose */
+    --primary-foreground: 30 30% 98%;
 
-    --secondary: 24 41% 76%; /* #DDBEA9 */
-    --secondary-foreground: 78 8% 24%;
+    --secondary: 85 20% 75%; /* #C5CEBC - Soft Sage */
+    --secondary-foreground: 25 15% 25%;
 
-    --muted: 43 20% 90%;
-    --muted-foreground: 75 5% 50%;
+    --muted: 30 20% 93%; /* #F2EDE8 - Light Cream */
+    --muted-foreground: 25 10% 50%;
 
-    --accent: 21 46% 65%; /* #CB997E */
-    --accent-foreground: 43 33% 98%;
+    --accent: 25 35% 78%; /* #E6CCBA - Warm Taupe */
+    --accent-foreground: 25 15% 25%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 65% 55%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 75 10% 85%;
-    --input: 75 10% 85%;
-    --ring: 75 10% 40%;
+    --border: 30 15% 88%; /* Soft border */
+    --input: 30 15% 88%;
+    --ring: 350 25% 65%;
 
-    --radius: 0rem;
+    --radius: 0.5rem;
 
-    --sidebar-background: 43 33% 96%;
-    --sidebar-foreground: 78 8% 24%;
-    --sidebar-primary: 75 10% 40%;
-    --sidebar-primary-foreground: 43 33% 98%;
-    --sidebar-accent: 24 41% 76%;
-    --sidebar-accent-foreground: 78 8% 24%;
-    --sidebar-border: 75 10% 85%;
-    --sidebar-ring: 75 10% 40%;
+    --sidebar-background: 30 30% 97%;
+    --sidebar-foreground: 25 15% 25%;
+    --sidebar-primary: 350 25% 70%;
+    --sidebar-primary-foreground: 30 30% 98%;
+    --sidebar-accent: 85 20% 75%;
+    --sidebar-accent-foreground: 25 15% 25%;
+    --sidebar-border: 30 15% 88%;
+    --sidebar-ring: 350 25% 65%;
   }
 
   .dark {
-    --background: 78 8% 15%;
-    --foreground: 43 33% 96%;
-    --card: 78 8% 15%;
-    --card-foreground: 43 33% 96%;
-    --popover: 78 8% 15%;
-    --popover-foreground: 43 33% 96%;
-    --primary: 43 33% 96%;
-    --primary-foreground: 75 10% 40%;
-    --secondary: 75 10% 40%;
-    --secondary-foreground: 43 33% 96%;
-    --muted: 78 8% 20%;
-    --muted-foreground: 43 20% 80%;
-    --accent: 75 10% 40%;
-    --accent-foreground: 43 33% 96%;
+    --background: 25 15% 12%;
+    --foreground: 30 30% 95%;
+    --card: 25 15% 12%;
+    --card-foreground: 30 30% 95%;
+    --popover: 25 15% 12%;
+    --popover-foreground: 30 30% 95%;
+    --primary: 350 30% 75%;
+    --primary-foreground: 25 15% 15%;
+    --secondary: 85 15% 40%;
+    --secondary-foreground: 30 30% 95%;
+    --muted: 25 10% 20%;
+    --muted-foreground: 30 20% 70%;
+    --accent: 25 30% 45%;
+    --accent-foreground: 30 30% 95%;
     --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 78 8% 25%;
-    --input: 78 8% 25%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 25 10% 25%;
+    --input: 25 10% 25%;
     --ring: 43 33% 96%;
     --sidebar-background: 78 8% 15%;
     --sidebar-foreground: 43 33% 96%;
@@ -159,7 +169,7 @@
     font-family: 'Inter', sans-serif;
     font-weight: 300;
     letter-spacing: 0.025em;
-    background: linear-gradient(135deg, #F9F7F2 0%, #F0EBE3 100%);
+    background: linear-gradient(135deg, #FAF8F5 0%, #F5F0EA 100%);
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -175,7 +185,7 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: #F0EBE3;
+  background: #F5F0EA;
 }
 
 ::-webkit-scrollbar-thumb {

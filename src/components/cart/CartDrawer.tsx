@@ -245,7 +245,7 @@ const CartDrawer: React.FC = () => {
                   >
                     <button 
                       type="button"
-                      className="w-full py-3 bg-stone-800 text-white font-light text-sm hover:bg-stone-900 transition-colors duration-200 rounded-xl"
+                      className="w-full py-3 bg-[#D4C4B0] text-stone-800 font-light text-sm hover:bg-[#C5B5A0] transition-colors duration-200 rounded-xl"
                     >
                       Checkout
                     </button>

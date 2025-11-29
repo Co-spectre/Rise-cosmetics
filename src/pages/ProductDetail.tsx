@@ -280,7 +280,7 @@ const ProductDetail = () => {
                   <Button
                     onClick={handleAddToCart}
                     disabled={!product.inStock}
-                    className="flex-1 h-12 bg-holistic-200 text-holistic-900 hover:bg-holistic-300 rounded-none text-xs uppercase tracking-[0.2em] transition-all duration-300"
+                    className="flex-1 h-12 bg-[#D4C4B0] text-stone-800 hover:bg-[#C5B5A0] border border-[#C5B5A0] rounded-none text-xs uppercase tracking-[0.2em] transition-all duration-300"
                   >
                     {product.inStock ? 'Add to Cart' : 'Out of Stock'}
                   </Button>

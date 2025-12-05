@@ -1050,13 +1050,13 @@ const ParallaxLandingPage = () => {
                     onClick={() => setSelectedBelief(selectedBelief === 'vegan' ? null : 'vegan')}
                     className={`group p-4 rounded-xl border transition-all duration-300 cursor-pointer ${
                       selectedBelief === 'vegan' 
-                        ? 'bg-gradient-to-br from-emerald-50/50 to-green-50/40 border-emerald-400/60 shadow-md shadow-emerald-500/10 -translate-y-1' 
-                        : 'bg-white/50 border-warm-taupe/10 hover:bg-white hover:shadow-md hover:shadow-emerald-500/5 hover:-translate-y-1'
+                        ? 'bg-gradient-to-br from-stone-100/50 to-stone-50/40 border-stone-300/40 shadow-md shadow-stone-400/10 -translate-y-1' 
+                        : 'bg-white/50 border-warm-taupe/10 hover:bg-white hover:shadow-md hover:shadow-stone-400/5 hover:-translate-y-1'
                     }`}
                   >
                     <div className="flex flex-col items-center gap-2 text-center">
                       <div className={`w-10 h-10 rounded-full flex items-center justify-center group-hover:scale-110 transition-all duration-300 ${
-                        selectedBelief === 'vegan' ? 'bg-emerald-400 text-white' : 'bg-emerald-500/10 text-emerald-600 group-hover:bg-emerald-500/15'
+                        selectedBelief === 'vegan' ? 'bg-stone-300 text-white' : 'bg-stone-200/30 text-stone-600 group-hover:bg-stone-200/40'
                       }`}>
                         <Leaf className="w-5 h-5" strokeWidth={2} />
                       </div>
@@ -1072,13 +1072,13 @@ const ParallaxLandingPage = () => {
                     onClick={() => setSelectedBelief(selectedBelief === 'crueltyFree' ? null : 'crueltyFree')}
                     className={`group p-4 rounded-xl border transition-all duration-300 cursor-pointer ${
                       selectedBelief === 'crueltyFree' 
-                        ? 'bg-gradient-to-br from-pink-50/50 to-rose-50/40 border-pink-400/60 shadow-md shadow-pink-500/10 -translate-y-1' 
-                        : 'bg-white/50 border-warm-taupe/10 hover:bg-white hover:shadow-md hover:shadow-pink-500/5 hover:-translate-y-1'
+                        ? 'bg-gradient-to-br from-amber-50/50 to-orange-50/40 border-amber-300/40 shadow-md shadow-amber-400/10 -translate-y-1' 
+                        : 'bg-white/50 border-warm-taupe/10 hover:bg-white hover:shadow-md hover:shadow-amber-400/5 hover:-translate-y-1'
                     }`}
                   >
                     <div className="flex flex-col items-center gap-2 text-center">
                       <div className={`w-10 h-10 rounded-full flex items-center justify-center group-hover:scale-110 transition-all duration-300 ${
-                        selectedBelief === 'crueltyFree' ? 'bg-pink-400 text-white' : 'bg-pink-500/10 text-pink-600 group-hover:bg-pink-500/15'
+                        selectedBelief === 'crueltyFree' ? 'bg-amber-300 text-white' : 'bg-amber-200/30 text-amber-700 group-hover:bg-amber-200/40'
                       }`}>
                         <Heart className="w-5 h-5" strokeWidth={2} />
                       </div>
@@ -1094,13 +1094,13 @@ const ParallaxLandingPage = () => {
                     onClick={() => setSelectedBelief(selectedBelief === 'natural' ? null : 'natural')}
                     className={`group p-4 rounded-xl border transition-all duration-300 cursor-pointer ${
                       selectedBelief === 'natural' 
-                        ? 'bg-gradient-to-br from-amber-50/50 to-yellow-50/40 border-amber-400/60 shadow-md shadow-amber-500/10 -translate-y-1' 
-                        : 'bg-white/50 border-warm-taupe/10 hover:bg-white hover:shadow-md hover:shadow-amber-500/5 hover:-translate-y-1'
+                        ? 'bg-gradient-to-br from-yellow-50/50 to-amber-50/40 border-yellow-300/40 shadow-md shadow-yellow-400/10 -translate-y-1' 
+                        : 'bg-white/50 border-warm-taupe/10 hover:bg-white hover:shadow-md hover:shadow-yellow-400/5 hover:-translate-y-1'
                     }`}
                   >
                     <div className="flex flex-col items-center gap-2 text-center">
                       <div className={`w-10 h-10 rounded-full flex items-center justify-center group-hover:scale-110 transition-all duration-300 ${
-                        selectedBelief === 'natural' ? 'bg-amber-400 text-white' : 'bg-amber-500/10 text-amber-600 group-hover:bg-amber-500/15'
+                        selectedBelief === 'natural' ? 'bg-yellow-300 text-white' : 'bg-yellow-200/30 text-yellow-700 group-hover:bg-yellow-200/40'
                       }`}>
                         <Sparkles className="w-5 h-5" strokeWidth={2} />
                       </div>
@@ -1116,13 +1116,13 @@ const ParallaxLandingPage = () => {
                     onClick={() => setSelectedBelief(selectedBelief === 'sustainable' ? null : 'sustainable')}
                     className={`group p-4 rounded-xl border transition-all duration-300 cursor-pointer ${
                       selectedBelief === 'sustainable' 
-                        ? 'bg-gradient-to-br from-teal-50/50 to-cyan-50/40 border-teal-400/60 shadow-md shadow-teal-500/10 -translate-y-1' 
-                        : 'bg-white/50 border-warm-taupe/10 hover:bg-white hover:shadow-md hover:shadow-teal-500/5 hover:-translate-y-1'
+                        ? 'bg-gradient-to-br from-emerald-50/50 to-green-50/40 border-emerald-300/40 shadow-md shadow-emerald-400/10 -translate-y-1' 
+                        : 'bg-white/50 border-warm-taupe/10 hover:bg-white hover:shadow-md hover:shadow-emerald-400/5 hover:-translate-y-1'
                     }`}
                   >
                     <div className="flex flex-col items-center gap-2 text-center">
                       <div className={`w-10 h-10 rounded-full flex items-center justify-center group-hover:scale-110 transition-all duration-300 ${
-                        selectedBelief === 'sustainable' ? 'bg-teal-400 text-white' : 'bg-teal-500/10 text-teal-600 group-hover:bg-teal-500/15'
+                        selectedBelief === 'sustainable' ? 'bg-emerald-300 text-white' : 'bg-emerald-200/30 text-emerald-700 group-hover:bg-emerald-200/40'
                       }`}>
                         <Recycle className="w-5 h-5" strokeWidth={2} />
                       </div>
@@ -1138,13 +1138,13 @@ const ParallaxLandingPage = () => {
                     onClick={() => setSelectedBelief(selectedBelief === 'italy' ? null : 'italy')}
                     className={`group p-4 rounded-xl border transition-all duration-300 cursor-pointer ${
                       selectedBelief === 'italy' 
-                        ? 'bg-gradient-to-br from-blue-50/50 to-indigo-50/40 border-blue-400/60 shadow-md shadow-blue-500/10 -translate-y-1' 
-                        : 'bg-white/50 border-warm-taupe/10 hover:bg-white hover:shadow-md hover:shadow-blue-500/5 hover:-translate-y-1'
+                        ? 'bg-gradient-to-br from-rose-50/50 to-pink-50/40 border-rose-300/40 shadow-md shadow-rose-400/10 -translate-y-1' 
+                        : 'bg-white/50 border-warm-taupe/10 hover:bg-white hover:shadow-md hover:shadow-rose-400/5 hover:-translate-y-1'
                     }`}
                   >
                     <div className="flex flex-col items-center gap-2 text-center">
                       <div className={`w-10 h-10 rounded-full flex items-center justify-center group-hover:scale-110 transition-all duration-300 ${
-                        selectedBelief === 'italy' ? 'bg-blue-400 text-white' : 'bg-blue-500/10 text-blue-600 group-hover:bg-blue-500/15'
+                        selectedBelief === 'italy' ? 'bg-rose-300 text-white' : 'bg-rose-200/30 text-rose-700 group-hover:bg-rose-200/40'
                       }`}>
                         <MapPin className="w-5 h-5" strokeWidth={2} />
                       </div>
@@ -1160,13 +1160,13 @@ const ParallaxLandingPage = () => {
                     onClick={() => setSelectedBelief(selectedBelief === 'tested' ? null : 'tested')}
                     className={`group p-4 rounded-xl border transition-all duration-300 cursor-pointer ${
                       selectedBelief === 'tested' 
-                        ? 'bg-gradient-to-br from-purple-50/50 to-violet-50/40 border-purple-400/60 shadow-md shadow-purple-500/10 -translate-y-1' 
-                        : 'bg-white/50 border-warm-taupe/10 hover:bg-white hover:shadow-md hover:shadow-purple-500/5 hover:-translate-y-1'
+                        ? 'bg-gradient-to-br from-violet-50/50 to-purple-50/40 border-violet-300/40 shadow-md shadow-violet-400/10 -translate-y-1' 
+                        : 'bg-white/50 border-warm-taupe/10 hover:bg-white hover:shadow-md hover:shadow-violet-400/5 hover:-translate-y-1'
                     }`}
                   >
                     <div className="flex flex-col items-center gap-2 text-center">
                       <div className={`w-10 h-10 rounded-full flex items-center justify-center group-hover:scale-110 transition-all duration-300 ${
-                        selectedBelief === 'tested' ? 'bg-purple-400 text-white' : 'bg-purple-500/10 text-purple-600 group-hover:bg-purple-500/15'
+                        selectedBelief === 'tested' ? 'bg-violet-300 text-white' : 'bg-violet-200/30 text-violet-700 group-hover:bg-violet-200/40'
                       }`}>
                         <Shield className="w-5 h-5" strokeWidth={2} />
                       </div>

@@ -718,68 +718,146 @@ const ParallaxLandingPage = () => {
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#FAF8F5]/50 to-[#FAF8F5]"></div>
       </div>
 
-      {/* Enhanced Featured Products Section with modern design */}
-      <section 
-        className="py-10 sm:py-12 lg:py-16 bg-gradient-to-b from-[#FAF8F5] via-[#F8F5F0] to-[#F5F0EA] relative overflow-hidden"
-      >
-        {/* Subtle background elements */}
-        <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          <div 
-            className="absolute top-20 right-16 w-64 sm:w-96 h-64 sm:h-96 rounded-full bg-gradient-to-r from-stone-100/20 to-sage-200/15 blur-3xl"
-            style={{
-              animation: 'float 25s ease-in-out infinite'
-            }}
-          />
-          <div 
-            className="absolute bottom-32 left-20 w-60 sm:w-80 h-60 sm:h-80 rounded-full bg-gradient-to-r from-sage-200/20 to-taupe-200/15 blur-3xl"
-            style={{
-              animation: 'float 30s ease-in-out infinite reverse'
-            }}
-          />
-        </div>
-
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          {/* Enhanced Section Header */}
+      {/* Mysterious Product Preview Section - Just 2-3 Products */}
+      <section className="py-16 sm:py-24 lg:py-32 bg-gradient-to-b from-[#FAF8F5] to-[#F5F0EA] relative overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          
+          {/* Minimal Header with Mystery */}
           <motion.div 
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
             variants={fadeInUp}
-            className="text-center mb-8 sm:mb-10 lg:mb-12"
+            className="text-center mb-16 sm:mb-20 lg:mb-24"
           >
-            <div className="mb-2 sm:mb-3">
-              <span className="text-[0.65rem] sm:text-xs text-stone-500 tracking-[0.3em] uppercase font-light">Featured</span>
-            </div>
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-light text-stone-700 mb-3 sm:mb-4 tracking-wide leading-tight px-4">
-              Our Collection
+            <span className="text-[0.65rem] sm:text-xs text-stone-500 tracking-[0.4em] uppercase font-light mb-4 block">
+              Signature Collection
+            </span>
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-light text-stone-800 mb-4 tracking-tight">
+              A Glimpse of Luxury
             </h2>
-            <div className="w-16 sm:w-20 h-0.5 bg-gradient-to-r from-transparent via-olive-300 to-transparent mx-auto mb-3 sm:mb-4"></div>
-            <p className="text-xs sm:text-sm text-stone-600/80 font-light max-w-xl mx-auto leading-relaxed px-4">
-              Drag to explore our curated selection of botanical skincare
+            <p className="text-sm sm:text-base text-stone-600/70 font-light max-w-md mx-auto leading-relaxed">
+              Discover the essence of botanical elegance
             </p>
           </motion.div>
-        </div>
 
-        {/* Infinite Scrollable Product Carousel */}
-        <InfiniteProductCarousel />
+          {/* Two Featured Products - Mysterious Layout */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 max-w-6xl mx-auto mb-16">
+            
+            {/* Product 1 - Radiance Serum */}
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-100px" }}
+              variants={slideInFromLeft}
+              className="group relative"
+            >
+              <div className="relative overflow-hidden rounded-2xl bg-white/40 backdrop-blur-sm border border-stone-200/50 shadow-lg hover:shadow-2xl transition-all duration-700">
+                {/* Product Image with Overlay */}
+                <div className="relative aspect-[3/4] overflow-hidden">
+                  <img 
+                    src={getAssetPath('/images/products/slider/Product5.jpg')}
+                    alt="Radiance Serum"
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  />
+                  {/* Gradient Overlay for Mystery */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-80 group-hover:opacity-70 transition-opacity duration-700"></div>
+                  
+                  {/* Floating Product Info */}
+                  <div className="absolute bottom-0 left-0 right-0 p-6 sm:p-8">
+                    <div className="transform translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
+                      <span className="text-[0.6rem] sm:text-xs text-white/70 tracking-[0.3em] uppercase font-light block mb-2">
+                        Botanical Elixir
+                      </span>
+                      <h3 className="text-xl sm:text-2xl lg:text-3xl font-light text-white mb-3 tracking-wide">
+                        Radiance Serum
+                      </h3>
+                      <p className="text-xs sm:text-sm text-white/80 font-light leading-relaxed mb-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
+                        A luminous blend of rice extract and vitamin C for radiant, youthful skin
+                      </p>
+                      <Link
+                        to="/products"
+                        className="inline-flex items-center gap-2 text-xs sm:text-sm text-white border-b border-white/40 pb-1 hover:border-white transition-all duration-300 opacity-0 group-hover:opacity-100 delay-200"
+                      >
+                        <span className="tracking-wide">Discover More</span>
+                        <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4 transition-transform duration-300 group-hover:translate-x-1" />
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          {/* Enhanced Call-to-Action */}
-          <motion.div 
+            {/* Product 2 - Eye Luce */}
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-100px" }}
+              variants={slideInFromRight}
+              className="group relative"
+            >
+              <div className="relative overflow-hidden rounded-2xl bg-white/40 backdrop-blur-sm border border-stone-200/50 shadow-lg hover:shadow-2xl transition-all duration-700">
+                {/* Product Image with Overlay */}
+                <div className="relative aspect-[3/4] overflow-hidden">
+                  <img 
+                    src={getAssetPath('/images/products/slider/Product6.jpg')}
+                    alt="Eye Luce"
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  />
+                  {/* Gradient Overlay for Mystery */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-80 group-hover:opacity-70 transition-opacity duration-700"></div>
+                  
+                  {/* Floating Product Info */}
+                  <div className="absolute bottom-0 left-0 right-0 p-6 sm:p-8">
+                    <div className="transform translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
+                      <span className="text-[0.6rem] sm:text-xs text-white/70 tracking-[0.3em] uppercase font-light block mb-2">
+                        Illuminating Care
+                      </span>
+                      <h3 className="text-xl sm:text-2xl lg:text-3xl font-light text-white mb-3 tracking-wide">
+                        Eye Luce
+                      </h3>
+                      <p className="text-xs sm:text-sm text-white/80 font-light leading-relaxed mb-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
+                        Brightening eye drops that reduce dark circles and refresh tired eyes
+                      </p>
+                      <Link
+                        to="/products"
+                        className="inline-flex items-center gap-2 text-xs sm:text-sm text-white border-b border-white/40 pb-1 hover:border-white transition-all duration-300 opacity-0 group-hover:opacity-100 delay-200"
+                      >
+                        <span className="tracking-wide">Discover More</span>
+                        <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4 transition-transform duration-300 group-hover:translate-x-1" />
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+
+          {/* Mysterious CTA - Hint at More */}
+          <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
             variants={fadeInUp}
-            className="text-center mt-12 sm:mt-16"
+            className="text-center"
           >
-            <Link 
+            <p className="text-xs sm:text-sm text-stone-500/70 font-light mb-6 tracking-wide">
+              Two of our finest. More wonders await...
+            </p>
+            <Link
               to="/products"
-              className="group inline-flex items-center gap-2 sm:gap-3 px-6 sm:px-8 py-3 sm:py-4 rounded-lg bg-[#d4c8b8] text-stone-800 border border-[#c9baa6] hover:bg-[#c9baa6] transition-all duration-300 tracking-wide transform hover:scale-105 shadow-sm hover:shadow-md text-sm sm:text-base"
+              className="group inline-flex items-center gap-3 px-8 py-4 rounded-full bg-stone-800/5 backdrop-blur-sm border border-stone-300/30 hover:bg-stone-800 hover:border-stone-800 transition-all duration-500 text-stone-700 hover:text-white"
             >
-              <span className="relative z-10 font-medium">View Complete Collection</span>
-              <ArrowRight className="relative z-10 w-4 h-4 sm:w-5 sm:h-5 transition-transform duration-300 group-hover:translate-x-1" strokeWidth={1.5} />
+              <span className="text-sm tracking-widest uppercase font-light">Explore Full Collection</span>
+              <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-2" />
             </Link>
           </motion.div>
+        </div>
+
+        {/* Ambient Background Elements */}
+        <div className="absolute inset-0 pointer-events-none overflow-hidden opacity-30">
+          <div className="absolute top-1/4 left-10 w-72 h-72 rounded-full bg-gradient-to-r from-stone-200/30 to-transparent blur-3xl"></div>
+          <div className="absolute bottom-1/4 right-10 w-96 h-96 rounded-full bg-gradient-to-l from-amber-100/20 to-transparent blur-3xl"></div>
         </div>
       </section>
 

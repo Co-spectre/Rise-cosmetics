@@ -1,8 +1,280 @@
 ﻿
 import React, { useEffect, useRef, useState, useCallback } from 'react';
-import { Leaf, Droplets, Heart, Sparkles, ChevronDown, ChevronLeft, ChevronRight, Droplet, Sun, Moon } from 'lucide-react';
+import { Leaf, Droplets, Heart, Sparkles, ChevronDown, ChevronLeft, ChevronRight, Droplet, Sun, Moon, MapPin } from 'lucide-react';
 import { getAssetPath } from '@/utils/assetPath';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Link } from 'react-router-dom';
+
+// Product carousel images
+const carouselImages = [
+  { src: '/images/products/slider/Girl1.jpg', alt: 'RISE Product Girl 1' },
+  { src: '/images/products/slider/Girl2.jpg', alt: 'RISE Product Girl 2' },
+  { src: '/images/products/slider/Girl3.jpg', alt: 'RISE Product Girl 3' },
+  { src: '/images/products/slider/Product1.jpg', alt: 'RISE Product 1' },
+  { src: '/images/products/slider/Product2.jpg', alt: 'RISE Product 2' },
+  { src: '/images/products/slider/product3.jpg', alt: 'RISE Product 3' },
+  { src: '/images/products/slider/product4.jpg', alt: 'RISE Product 4' },
+  { src: '/images/products/slider/Product5.jpg', alt: 'RISE Product 5' },
+  { src: '/images/products/slider/Product6.jpg', alt: 'RISE Product 6' },
+  { src: '/images/products/slider/Product7.jpg', alt: 'RISE Product 7' },
+  { src: '/images/products/slider/product8.jpg', alt: 'RISE Product 8' },
+  { src: '/images/products/slider/product9.jpg', alt: 'RISE Product 9' },
+];
+
+// Infinite Product Carousel Component
+const InfiniteProductCarousel = () => {
+  const carouselRef = useRef<HTMLDivElement>(null);
+  const isDragging = useRef(false);
+  const startX = useRef(0);
+  const scrollStart = useRef(0);
+  const animationFrameId = useRef<number>();
+  const velocityRef = useRef(0);
+  const lastXRef = useRef(0);
+  const lastTimeRef = useRef(0);
+  const momentumFrameId = useRef<number>();
+
+  const extendedImages = [...carouselImages, ...carouselImages, ...carouselImages];
+
+  useEffect(() => {
+    if (carouselRef.current) {
+      const singleSetWidth = carouselRef.current.scrollWidth / 3;
+      carouselRef.current.scrollLeft = singleSetWidth;
+    }
+  }, []);
+
+  const checkLoop = useCallback(() => {
+    if (!carouselRef.current) return;
+    const { scrollLeft, scrollWidth } = carouselRef.current;
+    const setWidth = scrollWidth / 3;
+    
+    if (scrollLeft >= setWidth * 2 - 10) {
+      carouselRef.current.scrollLeft = scrollLeft - setWidth;
+    } else if (scrollLeft <= 10) {
+      carouselRef.current.scrollLeft = scrollLeft + setWidth;
+    }
+  }, []);
+
+  const handleMouseDown = useCallback((e: React.MouseEvent) => {
+    if (!carouselRef.current) return;
+    e.preventDefault();
+    
+    if (momentumFrameId.current) {
+      cancelAnimationFrame(momentumFrameId.current);
+    }
+    
+    isDragging.current = true;
+    startX.current = e.pageX;
+    lastXRef.current = e.pageX;
+    lastTimeRef.current = Date.now();
+    velocityRef.current = 0;
+    scrollStart.current = carouselRef.current.scrollLeft;
+    
+    if (carouselRef.current) {
+      carouselRef.current.style.cursor = 'grabbing';
+      carouselRef.current.style.scrollBehavior = 'auto';
+    }
+  }, []);
+
+  const applyMomentum = useCallback(() => {
+    if (!carouselRef.current) return;
+    
+    const friction = 0.95;
+    const minVelocity = 0.5;
+    
+    const animate = () => {
+      if (!carouselRef.current || Math.abs(velocityRef.current) < minVelocity) {
+        velocityRef.current = 0;
+        return;
+      }
+      
+      carouselRef.current.scrollLeft += velocityRef.current;
+      velocityRef.current *= friction;
+      checkLoop();
+      
+      momentumFrameId.current = requestAnimationFrame(animate);
+    };
+    
+    momentumFrameId.current = requestAnimationFrame(animate);
+  }, [checkLoop]);
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      if (!isDragging.current || !carouselRef.current) return;
+      
+      if (animationFrameId.current) {
+        cancelAnimationFrame(animationFrameId.current);
+      }
+      
+      animationFrameId.current = requestAnimationFrame(() => {
+        if (!carouselRef.current) return;
+        
+        const currentTime = Date.now();
+        const currentX = e.pageX;
+        const timeDelta = currentTime - lastTimeRef.current;
+        
+        if (timeDelta > 0) {
+          const distance = lastXRef.current - currentX;
+          velocityRef.current = distance / timeDelta * 16;
+        }
+        
+        lastXRef.current = currentX;
+        lastTimeRef.current = currentTime;
+        
+        const dx = e.pageX - startX.current;
+        carouselRef.current.scrollLeft = scrollStart.current - dx;
+        checkLoop();
+      });
+    };
+
+    const handleMouseUp = () => {
+      if (!isDragging.current) return;
+      
+      isDragging.current = false;
+      if (carouselRef.current) {
+        carouselRef.current.style.cursor = 'grab';
+      }
+      if (animationFrameId.current) {
+        cancelAnimationFrame(animationFrameId.current);
+      }
+      
+      applyMomentum();
+    };
+
+    window.addEventListener('mousemove', handleMouseMove, { passive: true });
+    window.addEventListener('mouseup', handleMouseUp);
+
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('mouseup', handleMouseUp);
+      if (animationFrameId.current) {
+        cancelAnimationFrame(animationFrameId.current);
+      }
+      if (momentumFrameId.current) {
+        cancelAnimationFrame(momentumFrameId.current);
+      }
+    };
+  }, [checkLoop, applyMomentum]);
+
+  const handleTouchStart = useCallback((e: React.TouchEvent) => {
+    if (!carouselRef.current) return;
+    
+    if (momentumFrameId.current) {
+      cancelAnimationFrame(momentumFrameId.current);
+    }
+    
+    isDragging.current = true;
+    startX.current = e.touches[0].pageX;
+    lastXRef.current = e.touches[0].pageX;
+    lastTimeRef.current = Date.now();
+    velocityRef.current = 0;
+    scrollStart.current = carouselRef.current.scrollLeft;
+  }, []);
+
+  const handleTouchMove = useCallback((e: React.TouchEvent) => {
+    if (!isDragging.current || !carouselRef.current) return;
+    
+    if (animationFrameId.current) {
+      cancelAnimationFrame(animationFrameId.current);
+    }
+    
+    animationFrameId.current = requestAnimationFrame(() => {
+      if (!carouselRef.current) return;
+      
+      const currentTime = Date.now();
+      const currentX = e.touches[0].pageX;
+      const timeDelta = currentTime - lastTimeRef.current;
+      
+      if (timeDelta > 0) {
+        const distance = lastXRef.current - currentX;
+        velocityRef.current = distance / timeDelta * 16;
+      }
+      
+      lastXRef.current = currentX;
+      lastTimeRef.current = currentTime;
+      
+      const dx = e.touches[0].pageX - startX.current;
+      carouselRef.current.scrollLeft = scrollStart.current - dx;
+      checkLoop();
+    });
+  }, [checkLoop]);
+
+  const handleTouchEnd = useCallback(() => {
+    if (!isDragging.current) return;
+    
+    isDragging.current = false;
+    if (animationFrameId.current) {
+      cancelAnimationFrame(animationFrameId.current);
+    }
+    
+    applyMomentum();
+  }, [applyMomentum]);
+
+  const handleWheel = useCallback((e: React.WheelEvent) => {
+    if (!carouselRef.current) return;
+    e.preventDefault();
+    carouselRef.current.scrollLeft += e.deltaY * 0.5;
+    checkLoop();
+  }, [checkLoop]);
+
+  return (
+    <div className="relative w-full py-4">
+      <div className="absolute left-0 top-0 bottom-0 w-16 sm:w-24 bg-gradient-to-r from-[#FAF8F5] to-transparent z-10 pointer-events-none" />
+      <div className="absolute right-0 top-0 bottom-0 w-16 sm:w-24 bg-gradient-to-l from-[#F5F0EA] to-transparent z-10 pointer-events-none" />
+      
+      <div
+        ref={carouselRef}
+        className="flex gap-4 sm:gap-6 overflow-x-auto scrollbar-hide px-8 sm:px-16 select-none"
+        style={{
+          cursor: 'grab',
+          scrollbarWidth: 'none',
+          msOverflowStyle: 'none',
+          WebkitOverflowScrolling: 'touch',
+        }}
+        onMouseDown={handleMouseDown}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+        onWheel={handleWheel}
+      >
+        {extendedImages.map((image, index) => (
+          <div
+            key={`${image.src}-${index}`}
+            className="flex-shrink-0"
+            style={{ userSelect: 'none' }}
+          >
+            <div className="w-48 sm:w-56 md:w-64 lg:w-72 aspect-[3/4] rounded-2xl overflow-hidden bg-stone-100 shadow-lg hover:shadow-2xl transition-shadow duration-300 relative group">
+              <img
+                src={getAssetPath(image.src)}
+                alt={image.alt}
+                className="w-full h-full object-cover"
+                draggable="false"
+                loading="lazy"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <div className="absolute bottom-4 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <Link
+                  to="/products"
+                  className="px-4 py-2 bg-white/95 backdrop-blur-sm rounded-full text-xs sm:text-sm font-medium text-stone-800 hover:bg-white transition-colors duration-200 shadow-lg"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  View Collection
+                </Link>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+      
+      <div className="text-center mt-6 text-stone-400 text-xs tracking-wider">
+        <span className="inline-flex items-center gap-2">
+          <span className="w-8 h-px bg-stone-300"></span>
+          Drag to explore
+          <span className="w-8 h-px bg-stone-300"></span>
+        </span>
+      </div>
+    </div>
+  );
+};
 
 // Ritual Steps Data
 const ritualSteps = [
@@ -798,8 +1070,130 @@ const About = () => {
           </div>
         </div>
 
+        {/* Italian Rice Fields - Origin Story Section */}
+        <div className="py-20 sm:py-28 md:py-36 bg-gradient-to-b from-[#fdfcf9] via-[#FAF6F0] to-[#f5f1e8] px-4 sm:px-6">
+          <div className="max-w-7xl mx-auto">
+            <div className="text-center mb-12 sm:mb-16">
+              <div className="inline-flex items-center gap-2 mb-4">
+                <MapPin className="w-4 h-4 text-amber-700" />
+                <span className="text-[0.65rem] sm:text-xs text-stone-500 tracking-[0.4em] uppercase font-light">
+                  From the Heart of Italy
+                </span>
+              </div>
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-light text-stone-800 mb-6 tracking-tight">
+                Where Nature Meets Tradition
+              </h2>
+              <p className="text-sm sm:text-base text-stone-600/80 font-light max-w-2xl mx-auto leading-relaxed">
+                Our signature ingredient begins its journey in the golden rice fields of Piedmont, where centuries-old traditions meet modern sustainable farming
+              </p>
+            </div>
+
+            {/* Image Grid with Story */}
+            <div className="grid md:grid-cols-2 gap-8 lg:gap-12 items-center mb-16">
+              {/* Left: Image */}
+              <motion.div
+                initial={{ opacity: 0, x: -50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8 }}
+                className="relative"
+              >
+                <div className="relative aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl">
+                  {/* Placeholder for rice field image - you'll need to add actual images */}
+                  <div className="w-full h-full bg-gradient-to-br from-amber-100 via-yellow-50 to-green-50 flex items-center justify-center">
+                    <div className="text-center p-8">
+                      <Leaf className="w-16 h-16 text-amber-600/30 mx-auto mb-4" />
+                      <p className="text-sm text-stone-500 font-light">Italian Rice Fields Image</p>
+                      <p className="text-xs text-stone-400 mt-2">Vercelli, Piedmont</p>
+                    </div>
+                  </div>
+                  {/* Overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+                </div>
+                {/* Floating badge */}
+                <div className="absolute -bottom-6 -right-6 bg-white rounded-full p-6 shadow-xl">
+                  <div className="text-center">
+                    <div className="text-2xl font-playfair text-amber-700 mb-1">100%</div>
+                    <div className="text-xs text-stone-600 font-light">Italian Rice</div>
+                  </div>
+                </div>
+              </motion.div>
+
+              {/* Right: Story */}
+              <motion.div
+                initial={{ opacity: 0, x: 50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, delay: 0.2 }}
+                className="space-y-6"
+              >
+                <div>
+                  <h3 className="text-xl sm:text-2xl font-light text-stone-800 mb-4">The Vercelli Heritage</h3>
+                  <p className="text-sm sm:text-base text-stone-600/90 font-light leading-relaxed">
+                    In the heart of Piedmont lies Vercelli, Italy's rice capital. Here, amid the stunning landscape of flooded paddies that mirror the sky, our story begins. For over 600 years, these fields have produced some of the world's finest rice.
+                  </p>
+                </div>
+                <div>
+                  <h3 className="text-xl sm:text-2xl font-light text-stone-800 mb-4">Ancient Wisdom, Modern Science</h3>
+                  <p className="text-sm sm:text-base text-stone-600/90 font-light leading-relaxed">
+                    Rice has been cherished in Asian beauty rituals for millennia. We've partnered with local Italian farmers to cultivate premium rice varieties, extracting their precious nutrients through sustainable, cutting-edge technology that preserves their natural potency.
+                  </p>
+                </div>
+                <div className="pt-4">
+                  <div className="flex items-start gap-4">
+                    <div className="w-1 h-12 bg-gradient-to-b from-amber-600 to-transparent"></div>
+                    <div>
+                      <p className="text-xs sm:text-sm text-stone-500 italic font-light leading-relaxed">
+                        "Every drop of our serum carries the essence of Italian sun, alpine waters, and centuries of agricultural mastery."
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            </div>
+
+            {/* Bottom Stats */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 pt-12 border-t border-stone-200/50">
+              <div className="text-center">
+                <div className="text-2xl sm:text-3xl font-playfair text-amber-700 mb-2">600+</div>
+                <div className="text-xs sm:text-sm text-stone-600 font-light">Years of Tradition</div>
+              </div>
+              <div className="text-center">
+                <div className="text-2xl sm:text-3xl font-playfair text-amber-700 mb-2">100%</div>
+                <div className="text-xs sm:text-sm text-stone-600 font-light">Italian Rice</div>
+              </div>
+              <div className="text-center">
+                <div className="text-2xl sm:text-3xl font-playfair text-amber-700 mb-2">0</div>
+                <div className="text-xs sm:text-sm text-stone-600 font-light">Pesticides</div>
+              </div>
+              <div className="text-center">
+                <div className="text-2xl sm:text-3xl font-playfair text-amber-700 mb-2">5th</div>
+                <div className="text-xs sm:text-sm text-stone-600 font-light">Generation Farmers</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Product Collection Carousel */}
+        <div className="py-16 sm:py-20 md:py-24 bg-gradient-to-b from-[#f5f1e8] to-[#FAF8F5]">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 mb-12">
+            <div className="text-center">
+              <span className="text-[0.65rem] sm:text-xs text-stone-500 tracking-[0.3em] uppercase font-light block mb-4">
+                Our Collection
+              </span>
+              <h2 className="text-3xl sm:text-4xl font-light text-stone-800 mb-4 tracking-tight">
+                Botanical Elegance
+              </h2>
+              <p className="text-sm sm:text-base text-stone-600/70 font-light max-w-xl mx-auto leading-relaxed">
+                Explore our curated range of rice-infused skincare
+              </p>
+            </div>
+          </div>
+          <InfiniteProductCarousel />
+        </div>
+
         {/* CTA */}
-        <div className="py-12 sm:py-16 md:py-20 text-center bg-[#fdfcf9] px-4">
+        <div className="py-12 sm:py-16 md:py-20 text-center bg-[#FAF8F5] px-4">
           <a 
             href="/products"
             className="inline-block px-8 sm:px-10 md:px-12 py-3 sm:py-4 border-2 border-[#c9baa6] bg-[#d4c8b8] text-stone-800 font-light tracking-[0.15em] sm:tracking-[0.2em] uppercase text-xs sm:text-sm hover:bg-[#c9baa6] transition-all duration-300 rounded-sm"
